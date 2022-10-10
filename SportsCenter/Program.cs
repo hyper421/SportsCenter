@@ -1,7 +1,21 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+{
+    //未登入時會自動導到這個網址
+    option.LoginPath = new PathString("/Login/NoLogin");
+    //沒權限
+    option.AccessDeniedPath = new PathString("/Login/NoAccess");
+    //登入時間設置
+    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
+});
+
 
 var app = builder.Build();
 
@@ -18,6 +32,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//登入驗證
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
