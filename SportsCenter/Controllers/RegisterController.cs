@@ -18,23 +18,20 @@ namespace SportsCenter.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Signin([Bind("MemberName,MemberAccount,MemberPassword,MemberAddress,MemberCellphone,MemberEmail")] Member member)
+        public async Task<IActionResult> Signin([Bind("Member_CreateTime,Member_Name,Member_Account,Member_Password,Member_Address,Member_Phone,Member_Email")] Member member)
         {
             if (ModelState.IsValid)
             {
+                member.Member_CreateTime = DateTime.Now.ToString();
+                var salt = member.Member_Password.Substring(0, 2);
                 //Hash
-                var salt = DateTime.Now.ToString();
-                member.Member_Salt = salt;
-                var password = hashingPassword.HashPassword($"{member.Member_Password}{member.Member_Salt}");
-                member.Member_Password = password;
-
-
-
+                member.Member_Password = hashingPassword.HashPassword($"{member.Member_Password}{salt}");
                 //等待連結資料庫
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
+            var x = ModelState.Root.Children;
             return View();
         }
     }
