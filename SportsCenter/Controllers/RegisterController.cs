@@ -8,9 +8,9 @@ namespace SportsCenter.Controllers
     {
         HashingPassword hashingPassword = new HashingPassword();
         private readonly SportsCenterDbContext _context;
-        public RegisterController(SportsCenterDbContext mVCProjectContext)
+        public RegisterController(SportsCenterDbContext SportsCenterDbContext)
         {
-            this._context = mVCProjectContext;
+            this._context = SportsCenterDbContext;
         }
         public IActionResult Signin()
         {
