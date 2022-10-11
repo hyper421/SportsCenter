@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using SportsCenter.Models.Table;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<SportsCenterDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
