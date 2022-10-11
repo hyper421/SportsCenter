@@ -18,6 +18,10 @@ namespace SportsCenter.Models.Table
         public string? Location_Address { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
+        public string? Location_partition { get; set; } //劃分場館
+
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
         public string? Location_Phone { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]

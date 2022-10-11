@@ -111,6 +111,10 @@ namespace SportsCenter.Migrations
                     b.Property<int>("Location_ValidFlag")
                         .HasColumnType("int");
 
+                    b.Property<string>("Location_partition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Location_Id");
 
                     b.ToTable("Location");
@@ -132,6 +136,9 @@ namespace SportsCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Member_CreateTime")
+                        .HasColumnType("nvarchar(MAX)");
+
                     b.Property<string>("Member_Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -141,7 +148,7 @@ namespace SportsCenter.Migrations
 
                     b.Property<string>("Member_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Member_Password")
                         .IsRequired()
@@ -151,12 +158,11 @@ namespace SportsCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Member_Salt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Member_ValidFlag")
                         .HasColumnType("int");
+
+                    b.Property<string>("Member_img")
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("MemberId");
 
