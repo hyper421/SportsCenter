@@ -9,14 +9,18 @@ namespace SportsCenter.Models.Table
         [Key]
         public int Products_Id { get; set; }
         [Required]
-        public int Products_Price { get; set; }
-        [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? Products_Name { get; set; }
+        [Required]
+        public int Products_Price { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? Products_DateTime { get; set; }
         [Required]
         public int Products_Inventory { get; set; } //庫存
+
+
+
+        public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }

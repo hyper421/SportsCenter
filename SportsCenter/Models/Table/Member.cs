@@ -10,9 +10,6 @@ namespace SportsCenter.Models.Table
     {
         [Key]
         public int MemberId { get; set; }
-        [Required]
-        [DefaultValue(0)]
-        public int Member_Level { get; set; }
         [DefaultValue(0)]
         public int Member_ValidFlag { get; set; }
 
@@ -35,9 +32,15 @@ namespace SportsCenter.Models.Table
         [Column(TypeName = "nvarchar(50)")]
         [Required]
         public string? Member_Phone { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string? Member_CreateTime { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string? Member_img { get; set; }
+        [DefaultValue(0)]
+        public int Member_Role { get; set; } //0:User1:Company2:Empolyee3:Host
+
+
+
+        public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }

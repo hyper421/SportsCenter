@@ -9,16 +9,14 @@ namespace SportsCenter.Models.Table
         [Key]
         public int Location_Id { get; set; }
         [Required]
-        public int Item_Id { get; set; }
-        [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? Location_Name { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Address { get; set; }
+        public string? Location_Area { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string? Location_partition { get; set; } //劃分場館
+        public string? Location_Address { get; set; }
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
@@ -26,11 +24,6 @@ namespace SportsCenter.Models.Table
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? Location_Email { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Area { get; set; }
-        [Required]
-        public int Location_Price { get; set; }
         [Required]
         [DefaultValue(0)]
         public int Location_ValidFlag { get; set; }
