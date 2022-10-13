@@ -1,11 +1,150 @@
-﻿<script src="https://accounts.google.com/gsi/client" async defer></script>
-<link href="~/david/res.css" rel="stylesheet" />
-
-
-
-<head>
+﻿<head>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
     <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="~/david/css/signin.css" rel="stylesheet" />
 </head>
+<body>
+    <div class="wrapper" id="app">
+        <!-- 選擇方法 -->
+        <ul class="nav nav-tabs row row-cols-2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active ATag" data-bs-toggle="tab" href="#Login">登入</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ATag" data-bs-toggle="tab" href="#Signin">註冊</a>
+            </li>
+        </ul>
+        <!-- 登入/註冊 -->
+        <div class="tab-content">
+            <!-- 登入 -->
+            <div id="Login" class="container tab-pane active">
+                <br>
+                <form action="#">
+                    <div id="LoginAccount" class="form-group d-flex align-items-center">
+                        <div id="Loginicon" class="icon"><span class="far fa-user-circle"></span></div>
+                        <input autocomplete="off" type="text" class="form-control" placeholder="Account">
+                    </div>
+                    <div id="LoginPassword" class="form-group d-flex align-items-center">
+                        <div id="Loginicon" class="icon"><span class="fas fa-key"></span></div>
+                        <input autocomplete="off" type="password" class="form-control"
+                               placeholder="Password">
+                        <div class="icon btn"><span class="fas fa-eye-slash"></span></div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="option">
+                            Remember me
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <button id="LoginBtn" class="btn btn-primary mb-3">Login</button>
+                    <div class="connect border-bottom mt-4 mb-4"></div>
+                    <ul class="p-0 social-links">
+                        <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
+                        <li><a href="#"><span class="fab fa-google"></span></a></li>
+                        <li><a href="#"><span class="fab fa-github"></span></a></li>
+                    </ul>
+                </form>
+            </div>
+            <!-- 註冊 -->
+            <div id="Signin" class="container tab-pane fade">
+                <br>
+                <form action="#">
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="far fa-user"></span></div>
+                        <input v-model="SigninList.Member_Name" autocomplete="off" type="text" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="far fa-envelope"></span></div>
+                        <input v-model="SigninList.Member_Email" autocomplete="off" type="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="fas fa-phone"></span></div>
+                        <input v-model="SigninList.Member_Phone" autocomplete="off" type="tel" class="form-control" placeholder="Phone">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="fas fa-map-marker-alt"></span></div>
+                        <input v-model="SigninList.Member_Address" autocomplete="off" type="text" class="form-control" placeholder="City">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="far fa-user-circle"></span></div>
+                        <input v-model="SigninList.Member_Account" autocomplete="off" type="text" class="form-control" placeholder="Account">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="icon"><span class="fas fa-key"></span></div>
+                        <input v-model="SigninList.Member_Password" autocomplete="off" type="password" class="form-control"
+                               placeholder="Password">
+                        <div class="icon btn"><span class="fas fa-eye-slash"></span></div>
+                    </div>
+                    <button @@click="AddToMember(SigninList)" class="btn btn-primary mb-3">Signup</button>
+                    <div class="connect border-bottom mt-4 mb-4"></div>
+                    <ul class="p-0 social-links">
+                        <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
+                        <li><a href="#"><span class="fab fa-google"></span></a></li>
+                        <li><a href="#"><span class="fab fa-github"></span></a></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            LoginList: [],
+            SigninList: [{
+                Member_Name: "",
+                Member_Account: "",
+                Member_Password: "",
+                Member_Address: "",
+                Member_Email: "",
+                Member_Phone: "",
+            }]
+        },
+        methods: {
+            AddToMember: function (SigninList) {
+                let data = {
+                    Member_Name: SigninList.Member_Name,
+                    Member_Account: SigninList.Member_Account,
+                    Member_Password: SigninList.Member_Password,
+                    Member_Address: SigninList.Member_Address,
+                    Member_Email: SigninList.Member_Email,
+                    Member_Phone: SigninList.Member_Account,
+                }
+                let body = JSON.stringify(data)
+                fetch("/Register/Signin", {
+              
+                    //headers: {
+                    //    'content-type': 'application/json'
+                    //},
+                    body: body,
+                    method: 'POST'
+                })
+                    .then(function (response) { response.text(data) })
+                    .then(function (result) {
+                        if (result) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '註冊成功',
+                                text: '您已成功加入!'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+
+                    })
+
+            }
+        },
+    })
+</script>

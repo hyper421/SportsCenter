@@ -9,7 +9,6 @@ using System.Security.Claims;
 
 namespace SportsCenter.Controllers.Api
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class VerifyApiController : ControllerBase
     {
@@ -21,14 +20,16 @@ namespace SportsCenter.Controllers.Api
             this._context = SportsCenterDbContext;
         }
         #endregion
+        [Route("api/Login")]
         [HttpPost]
-        public async Task<bool> Login(Member member)
+        public bool Login(string Account, string Password )
         {
+            if (Account == null || Password == null) { return false; }
             HashingPassword hashingPassword = new HashingPassword();
-            if (member.Member_Account == null || member.Member_Password == null) { return false;}
-            member.Member_Password = hashingPassword.HashPassword($"{member.Member_Password}{member.Member_Password.Substring(0, 2)}");
 
-            var user = _context.Member.FirstOrDefault(x => x.Member_Account == member.Member_Account && x.Member_Password == member.Member_Password);
+            Password = hashingPassword.HashPassword($"{Password}{Password.Substring(0, 2)}");
+
+            var user = _context.Member.FirstOrDefault(x => x.Member_Account == Account && x.Member_Password == Password);
 
             if (user == null)
             {
@@ -48,7 +49,7 @@ namespace SportsCenter.Controllers.Api
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var clainPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, clainPrincipal);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, clainPrincipal);
 
             }
             return true;

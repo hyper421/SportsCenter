@@ -17,8 +17,9 @@ namespace SportsCenter.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Signin([Bind("Member_CreateTime,Member_Name,Member_Account,Member_Password,Member_Address,Member_Phone,Member_Email")] Member member)
+        //[ValidateAntiForgeryToken]
+        //[Bind("Member_CreateTime,Member_Name,Member_Account,Member_Password,Member_Address,Member_Phone,Member_Email")]
+        public bool Signin( Member member)
         {
             if (ModelState.IsValid)
             {
@@ -28,10 +29,10 @@ namespace SportsCenter.Controllers
                 member.Member_Password = hashingPassword.HashPassword($"{member.Member_Password}{salt}");
                 //等待連結資料庫
                 _context.Add(member);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                _context.SaveChangesAsync();
+                return true;
             }
-            return View();
+            return false;
         }
     }
 }
