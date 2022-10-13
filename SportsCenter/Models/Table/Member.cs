@@ -41,6 +41,6 @@ namespace SportsCenter.Models.Table
 
 
 
-        public virtual ICollection<ProductsCart> ProductsCart { get; set; }
+        //public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }
