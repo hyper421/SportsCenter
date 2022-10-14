@@ -42,8 +42,6 @@ namespace SportsCenter.Models.Table
         [DefaultValue(0)]
         public int Member_Role { get; set; } //0:User1:Company2:Empolyee3:Host
 
-
-
         //public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }

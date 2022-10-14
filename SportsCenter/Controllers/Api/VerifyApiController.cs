@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Table;
 using System.Security.Claims;
+using SportsCenter.Models.DavidModel;
+using System.Diagnostics.Metrics;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -20,16 +22,18 @@ namespace SportsCenter.Controllers.Api
             this._context = SportsCenterDbContext;
         }
         #endregion
-        [Route("api/Login")]
         [HttpPost]
-        public bool Login(string Account, string Password )
+        [Route("api/Login")]
+        public bool Login(LoginModel model)
         {
-            if (Account == null || Password == null) { return false; }
+            if (model.Member_Account == null || model.Member_Password == null) { return false; }
             HashingPassword hashingPassword = new HashingPassword();
+            var salt = (from a in _context.Member
+                        where a.Member_Account == model.Member_Account
+                        select a.Member_Salt).ToList<string>();
+            model.Member_Password = hashingPassword.HashPassword($"{model.Member_Password}{salt}");
 
-            Password = hashingPassword.HashPassword($"{Password}{Password.Substring(0, 2)}");
-
-            var user = _context.Member.FirstOrDefault(x => x.Member_Account == Account && x.Member_Password == Password);
+            var user = _context.Member.FirstOrDefault(x => x.Member_Account == model.Member_Account && x.Member_Password == model.Member_Password);
 
             if (user == null)
             {
