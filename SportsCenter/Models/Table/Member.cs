@@ -21,6 +21,9 @@ namespace SportsCenter.Models.Table
         [Required]
         public string? Member_Account { get; set; }
         [Column(TypeName = "nvarchar(Max)")]
+        public string? Member_Salt { get; set; }
+
+        [Column(TypeName = "nvarchar(Max)")]
         [Required]
         public string? Member_Password { get; set; }
         [Column(TypeName = "nvarchar(50)")]
