@@ -215,7 +215,7 @@ namespace SportsCenter.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Member_Salt")
-                        .HasColumnType("nvarchar(Max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Member_ValidFlag")
                         .HasColumnType("int");

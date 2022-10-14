@@ -49,7 +49,7 @@ namespace SportsCenter.Migrations
                     Member_ValidFlag = table.Column<int>(type: "int", nullable: false),
                     Member_Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Member_Account = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Member_Salt = table.Column<string>(type: "nvarchar(Max)", nullable: true),
+                    Member_Salt = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Member_Password = table.Column<string>(type: "nvarchar(Max)", nullable: false),
                     Member_Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Member_Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
