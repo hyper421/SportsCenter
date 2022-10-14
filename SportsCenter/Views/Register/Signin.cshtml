@@ -4,8 +4,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
     <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <link href="~/david/css/signin.css" rel="stylesheet" />
+ <link href="~/david/css/signin.css" rel="stylesheet" />
 </head>
 <body>
     <div class="wrapper" id="app">
@@ -80,7 +79,7 @@
                                placeholder="Password">
                         <div class="icon btn"><span class="fas fa-eye-slash"></span></div>
                     </div>
-                    <button @@click="AddToMember(SigninList)" class="btn btn-primary mb-3">Signup</button>
+                    <button v-on:click="AddToMember(SigninList)" class="btn btn-primary mb-3">Signup</button>
                     <div class="connect border-bottom mt-4 mb-4"></div>
                     <ul class="p-0 social-links">
                         <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
@@ -96,18 +95,22 @@
     var app = new Vue({
         el: '#app',
         data: {
-            LoginList: [],
-            SigninList: [{
+            LoginList: {
+                Member_Account:"",
+                Member_Password:""
+            },
+            SigninList: {
                 Member_Name: "",
                 Member_Account: "",
                 Member_Password: "",
                 Member_Address: "",
                 Member_Email: "",
-                Member_Phone: "",
-            }]
+                Member_Phone: ""
+            }
         },
         methods: {
             AddToMember: function (SigninList) {
+                console.log(SigninList);
                 let data = {
                     Member_Name: SigninList.Member_Name,
                     Member_Account: SigninList.Member_Account,
@@ -116,35 +119,37 @@
                     Member_Email: SigninList.Member_Email,
                     Member_Phone: SigninList.Member_Account,
                 }
-                let body = JSON.stringify(data)
+
                 fetch("/Register/Signin", {
-              
-                    //headers: {
-                    //    'content-type': 'application/json'
-                    //},
-                    body: body,
+
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
                     method: 'POST'
                 })
-                    .then(function (response) { response.text(data) })
+                    .then(function (response) { return response.text() })
                     .then(function (result) {
-                        if (result) {
+                        if (result == true) {
                             Swal.fire({
                                 icon: 'success',
-                                title: '註冊成功',
-                                text: '您已成功加入!'
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong!',
-                                footer: '<a href="">Why do I have this issue?</a>'
+                                title: '水拉',
+                                text: '註冊成功!',
                             })
                         }
-
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '挖靠',
+                                text: '註冊失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
                     })
-
-            }
+            }   
+            //註冊
+            LoginMethodst:function
         },
     })
 </script>
+

@@ -11,8 +11,8 @@ using SportsCenter.Models.Table;
 namespace SportsCenter.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    [Migration("20221014050922_salt")]
-    partial class salt
+    [Migration("20221014114430_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -238,6 +238,9 @@ namespace SportsCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Products_Id"), 1L, 1);
 
+                    b.Property<int>("Item_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Products_DateTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -253,6 +256,8 @@ namespace SportsCenter.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Products_Id");
+
+                    b.HasIndex("Item_Id");
 
                     b.ToTable("Products");
                 });
@@ -380,6 +385,17 @@ namespace SportsCenter.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("SportsCenter.Models.Table.Products", b =>
+                {
+                    b.HasOne("SportsCenter.Models.Table.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("Item_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("SportsCenter.Models.Table.ProductsCart", b =>

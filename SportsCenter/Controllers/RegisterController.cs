@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Table;
 
@@ -19,20 +22,33 @@ namespace SportsCenter.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //[Bind("Member_CreateTime,Member_Name,Member_Account,Member_Password,Member_Address,Member_Phone,Member_Email")]
-        public bool Signin( Member member)
+        public bool Signin([FromBody] SigninModel signin)
         {
+            Random random = new Random();//亂數
+
+            signin.Member_Salt = random.Next(0, 100).ToString();
+            signin.Member_Password = hashingPassword.HashPassword($"{signin.Member_Password}{signin.Member_Salt}");                //Hash
+                                                                                                                                   //等待連結資料庫
+            _context.Member.Add(new Models.Table.Member
+            {
+                Member_Name = signin.Member_Name,
+                Member_Account = signin.Member_Account,
+                Member_Password = signin.Member_Password,
+                Member_Salt = signin.Member_Salt,
+                Member_Phone = signin.Member_Phone,
+                Member_Email = signin.Member_Email,
+                Member_Address = signin.Member_Address,
+                Member_CreateTime = DateTime.Now.ToString()
+            }); ;
             if (ModelState.IsValid)
             {
-                member.Member_CreateTime = DateTime.Now.ToString();
-                var salt = member.Member_Password.Substring(0, 2);
-                //Hash
-                member.Member_Password = hashingPassword.HashPassword($"{member.Member_Password}{salt}");
-                //等待連結資料庫
-                _context.Add(member);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }

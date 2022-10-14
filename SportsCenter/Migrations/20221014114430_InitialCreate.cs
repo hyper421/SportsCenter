@@ -49,6 +49,7 @@ namespace SportsCenter.Migrations
                     Member_ValidFlag = table.Column<int>(type: "int", nullable: false),
                     Member_Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Member_Account = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Member_Salt = table.Column<string>(type: "nvarchar(Max)", nullable: true),
                     Member_Password = table.Column<string>(type: "nvarchar(Max)", nullable: false),
                     Member_Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Member_Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
@@ -68,6 +69,7 @@ namespace SportsCenter.Migrations
                 {
                     Products_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Item_Id = table.Column<int>(type: "int", nullable: false),
                     Products_Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Products_Price = table.Column<int>(type: "int", nullable: false),
                     Products_DateTime = table.Column<string>(type: "nvarchar(50)", nullable: false),
@@ -76,6 +78,12 @@ namespace SportsCenter.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Products_Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Item_Item_Id",
+                        column: x => x.Item_Id,
+                        principalTable: "Item",
+                        principalColumn: "Item_Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,6 +254,11 @@ namespace SportsCenter.Migrations
                 column: "Member_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_Item_Id",
+                table: "Products",
+                column: "Item_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductsCart_Member_Id",
                 table: "ProductsCart",
                 column: "Member_Id");
@@ -284,9 +297,6 @@ namespace SportsCenter.Migrations
                 name: "ProductsOrder");
 
             migrationBuilder.DropTable(
-                name: "Item");
-
-            migrationBuilder.DropTable(
                 name: "Location");
 
             migrationBuilder.DropTable(
@@ -294,6 +304,9 @@ namespace SportsCenter.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Item");
         }
     }
 }

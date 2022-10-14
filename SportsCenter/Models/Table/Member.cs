@@ -20,7 +20,7 @@ namespace SportsCenter.Models.Table
         [Column(TypeName = "nvarchar(100)")]
         [Required]
         public string? Member_Account { get; set; }
-        [Column(TypeName = "nvarchar(Max)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string? Member_Salt { get; set; }
 
         [Column(TypeName = "nvarchar(Max)")]
