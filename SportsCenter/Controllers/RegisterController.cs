@@ -9,16 +9,21 @@ namespace SportsCenter.Controllers
 {
     public class RegisterController : Controller
     {
+        #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
         private readonly SportsCenterDbContext _context;
         public RegisterController(SportsCenterDbContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }
+        #endregion
+        #region 主頁面
         public IActionResult Signin()
         {
             return View();
         }
+        #endregion
+        #region 註冊api
         [HttpPost]
         //[ValidateAntiForgeryToken]
         //[Bind("Member_CreateTime,Member_Name,Member_Account,Member_Password,Member_Address,Member_Phone,Member_Email")]
@@ -51,5 +56,6 @@ namespace SportsCenter.Controllers
                 return false;
             }
         }
+        #endregion
     }
 }
