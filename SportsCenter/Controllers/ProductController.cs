@@ -34,6 +34,7 @@ namespace SportsCenter.Controllers
         //}
 
         [HttpGet]
+        [Route("Product/Basketball")]
         public IEnumerable<Products> Basketball()
         {
             var basketball = (from a in _dbContext.Products where a.Item_Id == 1 select a);
