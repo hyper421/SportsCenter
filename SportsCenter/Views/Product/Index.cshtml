@@ -74,7 +74,7 @@
                         {{items.products_Name}}
                     </div>
                 </div>
-                <div class="row">
+@*                <div class="row">
                     <div class="col col-xl-3">
                         <div class="card p-3 my-1 " style="border:none">
                             <img :src="item.img" class="card-img-top" alt="">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div>
                                     <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
-                                            :data-bs-target="@*temp.target*@">
+                                            :data-bs-target="temp.target">
                                         詳細資料
                                     </button>
                                 </div>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -110,27 +110,23 @@
 
 <script>
     let counts = new Vue({
-        el: '#counts',
+        el: "#counts",
         data: {
-            //products: [
-            //    { id: 1, name: "LeBron James球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
-            //    { id: 2, name: "Luka Doncic球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Luka Doncic球衣.webp", target: "#LukaDoncic" },
-            //    { id: 3, name: "Antetokounmpo球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Giannis Antetokounmpo球衣.webp", target: "#Antetokounmpo" },
-            //    { id: 4, name: "Kyrie Irving球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kyrie Irving球衣.webp", target: "#KyrieIrving" },
-            //    { id: 5, name: "vince carter復古球衣", price: 3200, count: 0, img: "/Leo/image/籃球/vince carter球衣.webp", target: "#vincecarter" },
-            //    { id: 6, name: "kevin garnett復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/kevin garnett球衣.webp", target: "#kevingarnett" },
-            //    { id: 7, name: "GRANT HIL復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/GRANT HIL球衣.webp", target: "#GRANTHIL" },
-            //    { id: 8, name: "T-MAC異色版球衣", price: 3500, count: 0, img: "/Leo/image/籃球/T-MAC球衣.webp", target: "#TMAC" },
-            //    { id: 9, name: "Kawhi Leonard球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kawhi Leonard.webp", target: "#KawhiLeonard" },
-            //    { id: 10, name: "Donovan Mitchell球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Donovan Mitchell球衣.webp", target: "#DonovanMitchell" },
-            //    { id: 11, name: "Kevin Durant球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kevin Durant球衣.webp", target: "#KevinDurant" },
-            //    { id: 12, name: "Zion Williamson球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Zion Williamson 球衣.webp", target: "#ZionWilliamson" },
-            //],
-            BasketBall:[],
-            //Pool:[],
-            //Badminton:[],
-            //Squash:[],
-            //TableTennis:[],
+            products: [
+                { id: 1, name: "LeBron James球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
+                { id: 2, name: "Luka Doncic球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Luka Doncic球衣.webp", target: "#LukaDoncic" },
+                { id: 3, name: "Antetokounmpo球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Giannis Antetokounmpo球衣.webp", target: "#Antetokounmpo" },
+                { id: 4, name: "Kyrie Irving球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kyrie Irving球衣.webp", target: "#KyrieIrving" },
+                { id: 5, name: "vince carter復古球衣", price: 3200, count: 0, img: "/Leo/image/籃球/vince carter球衣.webp", target: "#vincecarter" },
+                { id: 6, name: "kevin garnett復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/kevin garnett球衣.webp", target: "#kevingarnett" },
+                { id: 7, name: "GRANT HIL復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/GRANT HIL球衣.webp", target: "#GRANTHIL" },
+                { id: 8, name: "T-MAC異色版球衣", price: 3500, count: 0, img: "/Leo/image/籃球/T-MAC球衣.webp", target: "#TMAC" },
+                { id: 9, name: "Kawhi Leonard球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kawhi Leonard.webp", target: "#KawhiLeonard" },
+                { id: 10, name: "Donovan Mitchell球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Donovan Mitchell球衣.webp", target: "#DonovanMitchell" },
+                { id: 11, name: "Kevin Durant球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kevin Durant球衣.webp", target: "#KevinDurant" },
+                { id: 12, name: "Zion Williamson球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Zion Williamson 球衣.webp", target: "#ZionWilliamson" },
+            ],
+            BasketBall: [],
         },
         methods: {
             decrease: function (item) {
@@ -159,41 +155,15 @@
             //        method: 'POST',
             //    }
         },
-        mounted: {
-            BasketBallView: function () {
-                let self = this;
-                fetch("/Product/Basketball")
-                    .then(function (response) { return response.json() })
-                    .then(function (result) {
-                        self.BasketBall = result.map(function (x) {
-                            return x
-                        })
+        mounted: function () {
+            let self = this;
+            fetch("/Product/Basketball")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.BasketBall = result.map(function (x) {
+                        return x
                     })
-            },
-            //PoolView: function () {
-            //    let self = this;
-            //    fetch("/Product/Pool")
-            //        .then(function (response) { return response.json() })
-            //        .then(function (result) { self.Pool = result })
-            //},
-            //BadmintonView: function () {
-            //    let self = this;
-            //    fetch("/Product/Badminton")
-            //        .then(function (response) { return response.json() })
-            //        .then(function (result) { self.Badminton = result })
-            //},
-            //SquashView: function () {
-            //    let self = this;
-            //    fetch("/Product/Squash")
-            //        .then(function (response) { return response.json() })
-            //        .then(function (result) { self.BasketBall = result })
-            //},
-            //TableTennisView: function () {
-            //    let self = this;
-            //    fetch("/Product/TableTennis")
-            //        .then(function (response) { return response.json() })
-            //        .then(function (result) { self.BasketBall = result })
-            //}
+                })
         }
     })
 </script>
