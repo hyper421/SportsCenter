@@ -1,0 +1,435 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>撞球</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <style>
+        .product-title {
+            font-size: 40px;
+        }
+
+        body {
+            background-color: rgb(83, 82, 82);
+        }
+
+        .card {
+            background-color: #333;
+            color: white;
+        }
+
+        /* .modal-content{
+              background-color: gray;
+            } */
+
+        .modal-content .btn-close {
+            position: absolute;
+            left: 93%;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ededed;
+            top: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 10px;
+            z-index: 9;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        @*<div>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav"
+        style="background-color:rgb(69, 60, 192); padding:0;">
+        <div class="container">
+        <a class="navbar-brand" href="#page-top">場地租借中心</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+        <li class="nav-item"><a class="nav-link" href="#services">登入</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portfolio">註冊</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">商城</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        </div>
+        </div>
+        </nav>
+        </div>*@
+
+        <!-- 商品清單 -->
+        <div class="container-fluid my-5">
+            <div class="row">
+                <!-- 商品分類選單 -->
+                <div class="col-2">
+                    <div class="row">
+                        <div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 280px;">
+                            <p class="product-title text-light">商品種類</p>
+                            <ul class="nav nav-pills flex-column mb-auto" style="font-size:30px;">
+                                <li class="nav-item">
+                                    <a asp-controller="Product" asp-action="Index" class="nav-link text-light">籃球</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Badminton" class="nav-link text-light">羽球</a>
+                                </li>
+                                <li>
+                                    <a asp-action="TableTennis" class="nav-link text-light">桌球</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Pool" class="nav-link text-light">撞球</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Squash" class="nav-link text-light">壁球</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 商品清單 -->
+                <div class="container col-10 counts">
+                    <div class="row">
+                        <div class="col col-xl-3" v-for="item in product">
+                            <div class="card p-3 my-1" style="border:none">
+                                <img :src="item.img" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <div style="height:60px">
+                                        <h5 class="card-title">{{item.name}}</h5>
+                                        <p class="card-text">${{item.price}}</p>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
+                                                :data-bs-target="item.target">
+                                            詳細資料
+                                        </button>
+                                    </div>
+                                    <div class="my-2" style="display:block">
+                                        <div class="row">
+                                            <input type="button" value="-" v-on:click="decrease(item)" class="col-2">
+                                            <span class="col-8" style="text-align:center;">{{item.count}}</span>
+                                            <input type="button" value="+" v-on:click="increase(item)" class="col-2">
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-danger col-12" data-bs-toggle="modal">加入購物車</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    var counts = new Vue({
+        el: '.counts',
+        data: {
+            product: [
+                { id: 1, name: "Cuetec美國進口撞球桿", price: 23000, count: 0, img: "/Leo/image/撞球/Cuetec美國進口撞球桿.png", target: "#Cuetec美國進口撞球桿" },
+                { id: 2, name: "FURY撞球桿", price: 5200, count: 0, img: "/Leo/image/撞球/FURY撞球桿.jpg", target: "#FURY撞球桿" },
+                { id: 3, name: "獸骨八叉進口撞球桿(限量)", price: 15550, count: 0, img: "/Leo/image/撞球/獸骨八叉進口撞球桿(限量).jpg", target: "#獸骨八叉進口撞球桿" },
+                { id: 4, name: "THE ONE撞球桿", price: 22000, count: 0, img: "/Leo/image/撞球/THE ONE撞球桿.jpg", target: "#THEONE撞球桿" },
+                { id: 5, name: "鱷魚皮紋路球筒", price: 3100, count: 0, img: "/Leo/image/撞球/鱷魚皮紋路球筒.jpg", target: "#鱷魚皮紋路球筒" },
+                { id: 6, name: "壓紋荔枝皮球筒", price: 3100, count: 0, img: "/Leo/image/撞球/壓紋荔枝皮球筒.jpg", target: "#壓紋荔枝皮球筒" },
+                { id: 7, name: "黑色軟性球袋", price: 250, count: 0, img: "/Leo/image/撞球/黑色軟性球袋.jpg", target: "#黑色軟性球袋" },
+                { id: 8, name: "比利時進口紅點白母球", price: 850, count: 0, img: "/Leo/image/撞球/比利時進口紅點白母球.jpg", target: "#比利時進口紅點白母球" },
+            ]
+        },
+        methods: {
+            decrease: function (item) {
+                if (item.count > 0) {
+                    item.count--;
+                } else {
+                    item.count = 0;
+                }
+            },
+            increase: function (item) {
+                if (item.count >= 0) {
+                    item.count++;
+                }
+            }
+        }
+    })
+</script>
+</script>
+
+</html>
+
+<!-- 商品詳細資料 -->
+<div class="detail">
+    <div class="modal fade" id="Cuetec美國進口撞球桿" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/Cuetec美國進口撞球桿.png" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>Cuetec美國進口撞球桿</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$23000</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>重量:19.5 oz</h6>
+                                    <h6>顏色：核桃木紋</h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>不鏽鋼大輪拆除後可以輕易增加減少法碼,調整球桿重量。</h6>
+                                    <h6>中輪及大輪搭配高級拋光不鏽鋼材質，凸顯球桿氣質、高雅。</h6>
+                                    <h6>美國TIGER Sniper原廠精製、多層皮頭。耐潮耐濕，好上巧克，不易滑桿，控球精準。</h6>
+                                    <h6>世界冠軍艾麗森.費雪及美國選手 史翠南，美國公開賽冠軍Shane Van Boening強力代言。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="FURY撞球桿" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/FURY撞球桿.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>FURY撞球桿</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$5200</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>系列使用白纖維先角。</h6>
+                                    <h6>全系列使用PU運動握把。</h6>
+                                    <h6>全系列使用北美硬楓木前節。</h6>
+                                    <h6>全系列用美國虎牌珠峰EVEREST皮頭。</h6>
+                                    <h6>進口威利FURY原裝進口新式樣，極簡潮流3D數位橡膠握把打桿</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="獸骨八叉進口撞球桿" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/獸骨八叉進口撞球桿(限量).jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>獸骨八叉進口撞球桿(限量)</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$15500</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>全球同步全新推出、加拿大FALCON知名品牌法肯限量桿。</h6>
+                                    <h6>特選纖維先角，不易沾巧克粉，皮頭選用日本KAMUI原廠 13mm皮頭。</h6>
+                                    <h6>特選高級黑檀木鋼琴烤漆，上下白色獸骨鑲嵌四長四短八叉咖啡色原木染烤。</h6>
+                                    <h6>中輪不鏽鋼烙印法肯LOGO、大輪採用黑色格狀布紋電木製作烙印88/12限量編號、材質堅韌、外顯美感。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="THEONE撞球桿" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/THE ONE撞球桿.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>THE ONE撞球桿</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$22000</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>全系列使用XTC先角。</h6>
+                                    <h6>全系列使用真皮壓製蜥蜴皮紋路。</h6>
+                                    <h6>系列使用日本KAMUI皮頭Original</h6>
+                                    <h6>知名品牌THE ONE最新EX系列，白底玫瑰金。</h6>
+                                    <h6>中輪不鏽鋼烙印法肯LOGO、大輪採用黑色格狀布紋電木製作烙印88/12限量編號、材質堅韌、外顯美感。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="鱷魚皮紋路球筒" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/鱷魚皮紋路球筒.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>鱷魚皮紋路球筒</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$3100</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>可放4支後節與6支前節。</h6>
+                                    <h6>Vincitore®壓紋鱷魚皮款式。</h6>
+                                    <h6>背袋，貼身肩背時，柔軟舒適。</h6>
+                                    <h6>球筒輕盈，側背舒適、無重力感。</h6>
+                                    <h6>球筒可背、可拿、可提隨君方便。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="壓紋荔枝皮球筒" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/壓紋荔枝皮球筒.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>壓紋荔枝皮球筒</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$3100</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>可放4支後節與6支前節4B6S。</h6>
+                                    <h6>Vincitore®壓紋荔枝皮款式黑色。</h6>
+                                    <h6>球筒輕盈，側背舒適、無重力感。</h6>
+                                    <h6>球筒可背、可拿、可提隨君方便。</h6>
+                                    <h6>內層 硬管 間隔處理，內襯採用柔軟絨毛，避免球桿碰撞。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="黑色軟性球袋" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/黑色軟性球袋.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>黑色軟性球袋</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$250</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>可放1支後節與1支前節。</h6>
+                                    <h6>開口處使用魔鬼沾密合。</h6>
+                                    <h6>球筒輕盈，側背舒適、無重力感。</h6>
+                                    <h6>球筒可背、可拿、可提隨君方便。</h6>
+                                    <h6>表面為乳膠皮材質，觸感類似真皮。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="比利時進口紅點白母球" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/image/撞球/比利時進口紅點白母球.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>比利時進口紅點白母球</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$850</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>適合職業球場添補白母球用。</h6>
+                                    <h6>特殊材質製造不易破裂，不像國產球容易破裂。</h6>
+                                    <h6>比利時Aramith進口牙6個紅點白母球，電視TV撞球比賽專用球。</h6>
+                                    <h6>進口材質石碳酸製作，質地堅硬，不易碎裂，光澤明亮，歷久彌新。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
