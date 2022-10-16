@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.Table;
+using System.Security.Claims;
 
 namespace SportsCenter.Controllers
 {
@@ -33,30 +35,35 @@ namespace SportsCenter.Controllers
         //    return View("Squash");
         //}
 
-
-        public IEnumerable<Products> Basketball(int id)
+        [HttpGet]
+        public IEnumerable<Products> Basketball()
         {
-            var basketball = (from a in _dbContext.Products where a.Item_Id == id select a);
+            var basketball = (from a in _dbContext.Products where a.Item_Id == 1 select a);
+            foreach (var product in basketball) { Console.WriteLine(product); }
             return basketball;
         }
-        public IEnumerable<Products> Badminton(int id)
+        [HttpGet]
+        public IEnumerable<Products> Badminton()
         {
-            var badminton = (from a in _dbContext.Products where a.Item_Id == id select a);
+            var badminton = (from a in _dbContext.Products where a.Item_Id == 2 select a);
             return badminton;
         }
-        public IEnumerable<Products> TableTennis(int id)
+        [HttpGet]
+        public IEnumerable<Products> TableTennis()
         {
-            var tableTennis = (from a in _dbContext.Products where a.Item_Id == id select a);
+            var tableTennis = (from a in _dbContext.Products where a.Item_Id == 3 select a);
             return tableTennis;
         }
-        public IEnumerable<Products> Pool(int id)
+        [HttpGet]
+        public IEnumerable<Products> Pool()
         {
-            var pool = (from a in _dbContext.Products where a.Item_Id == id select a);
+            var pool = (from a in _dbContext.Products where a.Item_Id == 4 select a);
             return pool;
         }
-        public IEnumerable<Products> Squash(int id)
+        [HttpGet]
+        public IEnumerable<Products> Squash()
         {
-            var squash = (from a in _dbContext.Products where a.Item_Id == id select a);
+            var squash = (from a in _dbContext.Products where a.Item_Id == 5 select a);
             return squash;
         }
 
