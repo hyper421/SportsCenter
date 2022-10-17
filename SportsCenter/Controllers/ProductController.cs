@@ -15,6 +15,7 @@ namespace SportsCenter.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             return View();                    
         }
 
@@ -38,7 +39,7 @@ namespace SportsCenter.Controllers
         [HttpGet]
         public IEnumerable<Products> Basketball()
         {
-            var basketball = (from a in _dbContext.Products where a.Item_Id == 1 select a);
+            var basketball = (from a in _dbContext.Products where a.Item_Id == 3 select a);
             foreach (var product in basketball) { Console.WriteLine(product); }
             return basketball;
         }
@@ -46,24 +47,28 @@ namespace SportsCenter.Controllers
         public IEnumerable<Products> Badminton()
         {
             var badminton = (from a in _dbContext.Products where a.Item_Id == 2 select a);
+            foreach(var product in badminton) { Console.WriteLine(product); }
             return badminton;
         }
         [HttpGet]
         public IEnumerable<Products> TableTennis()
         {
-            var tableTennis = (from a in _dbContext.Products where a.Item_Id == 3 select a);
+            var tableTennis = (from a in _dbContext.Products where a.Item_Id == 1 select a);
+            foreach (var product in tableTennis) { Console.WriteLine(product); }
             return tableTennis;
         }
         [HttpGet]
         public IEnumerable<Products> Pool()
         {
             var pool = (from a in _dbContext.Products where a.Item_Id == 4 select a);
+            foreach (var product in pool) { Console.WriteLine(product); }
             return pool;
         }
         [HttpGet]
         public IEnumerable<Products> Squash()
         {
             var squash = (from a in _dbContext.Products where a.Item_Id == 5 select a);
+            foreach (var product in squash) { Console.WriteLine(product); }
             return squash;
         }
 

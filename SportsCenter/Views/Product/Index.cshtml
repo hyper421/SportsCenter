@@ -20,8 +20,8 @@
     }
 
     /* .modal-content{
-                                  background-color: gray;
-                                } */
+                                      background-color: gray;
+                                    } */
 
     .modal-content .btn-close {
         position: absolute;
@@ -36,7 +36,11 @@
         z-index: 9;
     }
 </style>
-
+@*<div v-for="items in BasketBall">
+                <div>
+                {{items.products_Name}}
+                </div>
+                </div>*@
 
 <div>
     <!-- 商品 -->
@@ -68,92 +72,103 @@
                 </div>
             </div>
             <!-- 商品清單 -->
-            <div class="container col-10" id="counts">
-                <div v-for="items in BasketBall">
-                    <div>
-                        {{items.products_Name}}
-                    </div>
-                </div>
-@*                <div class="row">
-                    <div class="col col-xl-3">
-                        <div class="card p-3 my-1 " style="border:none">
-                            <img :src="item.img" class="card-img-top" alt="">
-                            <div class="card-body">
-                                <div style="height:60px">
-                                    <h5 class="card-title">{{items.products_Name}}</h5>
-                                    <p class="card-text">${{items.products_Price}}</p>
-                                </div>
-                                <div>
-                                    <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
-                                            :data-bs-target="temp.target">
-                                        詳細資料
-                                    </button>
-                                </div>
-                                <div class="my-2" style="display:block">
-                                    <div class="row">
-                                        <input type="button" value="-" v-on:click="decrease(item)" class="col-2">
-                                        <span class="col-8" style="text-align:center;">{{temp.count}}</span>
-                                        <input type="button" value="+" v-on:click="increase(item)" class="col-2">
+            <div class="container col-10" id="app1">                
+                <div class="row">
+                    <div class="col col-xl-3" v-for="items in BasketBall" >
+                            <div class="card p-3 my-1 " style="border:none">
+                                <img src="/Leo/image/籃球/Lebron James球衣.webp" class="card-img-top" alt="" data-bs-toggle="modal"
+                                 data-bs-target="#LeBronJames">
+                                <div class="card-body">
+                                    <div style="height:60px">
+                                        <h5 class="card-title">{{items.products_Name}}</h5>
+                                        <p class="card-text">${{items.products_Price}}</p>
                                     </div>
+                                    @*<div>
+                                        <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
+                                                :data-bs-target="temp.target">
+                                            詳細資料
+                                        </button>
+                                    </div>*@
+                                    <div class="my-2" style="display:block">
+                                     <vue-number-input v-model="items.qty" :min="0" :max="1000" inline controls></vue-number-input>
+                                    </div>
+                                    <button @@click="addCart(items)" class="btn btn-danger col-12" @*data-bs-toggle="modal"*@>加入購物車</button>
                                 </div>
-                                <button type="button" class="btn btn-danger col-12" data-bs-toggle="modal">加入購物車</button>
                             </div>
-                        </div>
-                    </div>
-                </div>*@
+                     </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<script src="~/js/vue-number-input.js"></script>
+<
 
 <script>
-    let counts = new Vue({
-        el: "#counts",
+    Vue.use(VueNumberInput);
+    Vue.component('vue-number-input', VueNumberInput);
+    let app1 = new Vue({
+        el: "#app1",
         data: {
-            products: [
-                { id: 1, name: "LeBron James球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
-                { id: 2, name: "Luka Doncic球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Luka Doncic球衣.webp", target: "#LukaDoncic" },
-                { id: 3, name: "Antetokounmpo球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Giannis Antetokounmpo球衣.webp", target: "#Antetokounmpo" },
-                { id: 4, name: "Kyrie Irving球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kyrie Irving球衣.webp", target: "#KyrieIrving" },
-                { id: 5, name: "vince carter復古球衣", price: 3200, count: 0, img: "/Leo/image/籃球/vince carter球衣.webp", target: "#vincecarter" },
-                { id: 6, name: "kevin garnett復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/kevin garnett球衣.webp", target: "#kevingarnett" },
-                { id: 7, name: "GRANT HIL復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/GRANT HIL球衣.webp", target: "#GRANTHIL" },
-                { id: 8, name: "T-MAC異色版球衣", price: 3500, count: 0, img: "/Leo/image/籃球/T-MAC球衣.webp", target: "#TMAC" },
-                { id: 9, name: "Kawhi Leonard球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kawhi Leonard.webp", target: "#KawhiLeonard" },
-                { id: 10, name: "Donovan Mitchell球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Donovan Mitchell球衣.webp", target: "#DonovanMitchell" },
-                { id: 11, name: "Kevin Durant球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kevin Durant球衣.webp", target: "#KevinDurant" },
-                { id: 12, name: "Zion Williamson球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Zion Williamson 球衣.webp", target: "#ZionWilliamson" },
-            ],
+            //products: [
+            //    { count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
+            //    { count: 0, img: "/Leo/image/籃球/Luka Doncic球衣.webp", target: "#LukaDoncic" },
+            //    { count: 0, img: "/Leo/image/籃球/Giannis Antetokounmpo球衣.webp", target: "#Antetokounmpo" },
+            //    { count: 0, img: "/Leo/image/籃球/Kyrie Irving球衣.webp", target: "#KyrieIrving" },
+            //    { count: 0, img: "/Leo/image/籃球/vince carter球衣.webp", target: "#vincecarter" },
+            //    { count: 0, img: "/Leo/image/籃球/kevin garnett球衣.webp", target: "#kevingarnett" },
+            //    { count: 0, img: "/Leo/image/籃球/GRANT HIL球衣.webp", target: "#GRANTHIL" },
+            //    { count: 0, img: "/Leo/image/籃球/T-MAC球衣.webp", target: "#TMAC" },
+            //    { count: 0, img: "/Leo/image/籃球/Kawhi Leonard.webp", target: "#KawhiLeonard" },
+            //    { count: 0, img: "/Leo/image/籃球/Donovan Mitchell球衣.webp", target: "#DonovanMitchell" },
+            //    { count: 0, img: "/Leo/image/籃球/Kevin Durant球衣.webp", target: "#KevinDurant" },
+            //    { count: 0, img: "/Leo/image/籃球/Zion Williamson 球衣.webp", target: "#ZionWilliamson" },
+            //],
+            //products: [
+            //    { id: 1, name: "LeBron James球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
+            //    { id: 2, name: "Luka Doncic球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Luka Doncic球衣.webp", target: "#LukaDoncic" },
+            //    { id: 3, name: "Antetokounmpo球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Giannis Antetokounmpo球衣.webp", target: "#Antetokounmpo" },
+            //    { id: 4, name: "Kyrie Irving球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kyrie Irving球衣.webp", target: "#KyrieIrving" },
+            //    { id: 5, name: "vince carter復古球衣", price: 3200, count: 0, img: "/Leo/image/籃球/vince carter球衣.webp", target: "#vincecarter" },
+            //    { id: 6, name: "kevin garnett復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/kevin garnett球衣.webp", target: "#kevingarnett" },
+            //    { id: 7, name: "GRANT HIL復古球衣", price: 3000, count: 0, img: "/Leo/image/籃球/GRANT HIL球衣.webp", target: "#GRANTHIL" },
+            //    { id: 8, name: "T-MAC異色版球衣", price: 3500, count: 0, img: "/Leo/image/籃球/T-MAC球衣.webp", target: "#TMAC" },
+            //    { id: 9, name: "Kawhi Leonard球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kawhi Leonard.webp", target: "#KawhiLeonard" },
+            //    { id: 10, name: "Donovan Mitchell球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Donovan Mitchell球衣.webp", target: "#DonovanMitchell" },
+            //    { id: 11, name: "Kevin Durant球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Kevin Durant球衣.webp", target: "#KevinDurant" },
+            //    { id: 12, name: "Zion Williamson球衣", price: 2680, count: 0, img: "/Leo/image/籃球/Zion Williamson 球衣.webp", target: "#ZionWilliamson" },
+            //],
             BasketBall: [],
+            
         },
         methods: {
-            decrease: function (item) {
-                if (item.count > 0) {
-                    item.count--;
-                } else {
-                    item.count = 0;
-                }
-            },
-            increase: function (item) {
-                if (item.count >= 0) {
-                    item.count++;
-                }
-            },
-            //addCart: function (products) {
-            //    console.log(products);
-            //    let data = {
-            //        productId:
-            //            amount:
+            //decrease: function (item) {
+            //    if (item.count > 0) {
+            //        item.count--;
+            //    } else {
+            //        item.count = 0;
             //    }
-            //    fetch("/api/Cart/", {
-            //        body: JSON.stringify(data),
-            //        headers: {
-            //            'content-type': 'application/json'
-            //        },
-            //        method: 'POST',
+            //},
+            //increase: function (item) {
+            //    if (item.count >= 0) {
+            //        item.count++;
             //    }
+            //},
+            addCart: function (products) {
+                console.log(products)
+                let data ={
+                    productId: products.id,
+                    amount: products.qty
+                }
+                fetch("api/Cart"{
+                    body: JSON.stringify(data),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'POST',
+                })
+                }
         },
         mounted: function () {
             let self = this;
@@ -161,6 +176,7 @@
                 .then(function (response) { return response.json() })
                 .then(function (result) {
                     self.BasketBall = result.map(function (x) {
+                        x.qty=0 ;
                         return x
                     })
                 })

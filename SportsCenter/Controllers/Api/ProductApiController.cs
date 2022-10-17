@@ -10,7 +10,7 @@ namespace SportsCenter.Controllers.Api
     [ApiController]
     public class ProductApiController : ControllerBase
     {
-        private SportsCenterDbContext dbContext;
+        private readonly SportsCenterDbContext dbContext;
 
         public  ProductApiController(SportsCenterDbContext dbContext)
         {
@@ -19,36 +19,36 @@ namespace SportsCenter.Controllers.Api
 
 
 
-        // GET: api/<ProductController>
-        //[HttpGet]
-        //public IEnumerable<Products> Get()
-        //{
-        //    return dbContext.Products;
-        //}
+        //GET: api/<ProductController>
+        [HttpGet]
+        public IEnumerable<Products> Get()
+        {
+            return dbContext.Products;
+        }
 
-        //// GET api/<ProductController>/5
-        //[HttpGet("{id}")]
-        //public Products Get(int Item_Id)
-        //{
-        //    return dbContext.Products.Find(Item_Id);    
-        //}
+        // GET api/<ProductController>/5
+        [HttpGet("{id}")]
+        public Products Get(int Item_Id)
+        {
+            return dbContext.Products.Find(Item_Id);
+        }
 
-        //// POST api/<ProductController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST api/<ProductController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-        //// PUT api/<ProductController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<ProductController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-        //// DELETE api/<ProductController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<ProductController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 }
