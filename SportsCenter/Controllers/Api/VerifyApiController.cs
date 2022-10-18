@@ -48,7 +48,7 @@ namespace SportsCenter.Controllers.Api
                 new Claim(ClaimTypes.Email, user.Member_Email),
                 new Claim(ClaimTypes.StreetAddress, user.Member_Address),
                 new Claim(ClaimTypes.HomePhone, user.Member_Phone),
-
+                new Claim(ClaimTypes.Role, user.Member_Role.ToString()),
             };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var clainPrincipal = new ClaimsPrincipal(claimsIdentity);

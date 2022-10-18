@@ -1,8 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Table;
+using System.Data;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportsCenter.Controllers
 {
@@ -20,9 +28,6 @@ namespace SportsCenter.Controllers
         {
             return View();
         }
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
     }
 }
+
