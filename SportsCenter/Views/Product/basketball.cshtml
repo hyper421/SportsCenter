@@ -5,6 +5,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+
 <style>
     .product-title {
         font-size: 40px;
@@ -53,7 +54,7 @@
                         <p class="product-title text-light">商品種類</p>
                         <ul class="nav nav-pills flex-column mb-auto" style="font-size:30px;">
                             <li class="nav-item">
-                                <a asp-controller="Product" asp-action="Index" class="nav-link text-light">籃球</a>
+                                <a asp-controller="Product" asp-action="Basketball" class="nav-link text-light">籃球</a>
                             </li>
                             <li>
                                 <a asp-action="Badminton" class="nav-link text-light">羽球</a>
@@ -72,7 +73,7 @@
                 </div>
             </div>
             <!-- 商品清單 -->
-            <div class="container col-10" id="app1">                
+            <div class="container col-10" id="BasketBall">                
                 <div class="row">
                     <div class="col col-xl-3" v-for="items in BasketBall" >
                             <div class="card p-3 my-1 " style="border:none">
@@ -92,7 +93,7 @@
                                     <div class="my-2" style="display:block">
                                      <vue-number-input v-model="items.qty" :min="0" :max="1000" inline controls></vue-number-input>
                                     </div>
-                                    <button @@click="addCart(items)" class="btn btn-danger col-12" @*data-bs-toggle="modal"*@>加入購物車</button>
+                                    <button @@click="addCart(items)" class="btn btn-danger col-12" >加入購物車</button>
                                 </div>
                             </div>
                      </div>
@@ -103,13 +104,12 @@
 </div>
 
 <script src="~/js/vue-number-input.js"></script>
-<
 
 <script>
     Vue.use(VueNumberInput);
     Vue.component('vue-number-input', VueNumberInput);
-    let app1 = new Vue({
-        el: "#app1",
+    let BasketBall = new Vue({
+        el: "#BasketBall",
         data: {
             //products: [
             //    { count: 0, img: "/Leo/image/籃球/Lebron James球衣.webp", target: "#LeBronJames" },
@@ -143,36 +143,24 @@
             
         },
         methods: {
-            //decrease: function (item) {
-            //    if (item.count > 0) {
-            //        item.count--;
-            //    } else {
-            //        item.count = 0;
-            //    }
-            //},
-            //increase: function (item) {
-            //    if (item.count >= 0) {
-            //        item.count++;
-            //    }
-            //},
-            addCart: function (products) {
-                console.log(products)
-                let data ={
-                    productId: products.id,
-                    amount: products.qty
+            addCart: function (product) {
+                console.log(product)
+                let data = {
+                    productId: product.id,
+                    count: product.qty
                 }
-                fetch("api/Cart"{
+                fetch("/api/Cart", {
                     body: JSON.stringify(data),
                     headers: {
                         'content-type': 'application/json'
                     },
                     method: 'POST',
                 })
-                }
+            }
         },
         mounted: function () {
             let self = this;
-            fetch("/Product/Basketball")
+            fetch("/Product/BasketballView")
                 .then(function (response) { return response.json() })
                 .then(function (result) {
                     self.BasketBall = result.map(function (x) {
