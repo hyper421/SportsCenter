@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Models;
 using System.Diagnostics;
 
@@ -27,6 +28,21 @@ namespace SportsCenter.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult FawenYanzheng()
+        {
+            return View();
+        }
+
+        public IActionResult AurtherArticle()
+        {
+            return View();
+        }
+        public IActionResult Team()
+        {
+            return View();
         }
     }
 }
