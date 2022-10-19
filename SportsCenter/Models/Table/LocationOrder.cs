@@ -17,6 +17,7 @@ namespace SportsCenter.Models.Table
         [ForeignKey("Member")]
         public int Member_Id { get; set; }
         [Required]
+<<<<<<< HEAD:SportsCenter/Models/Table/LocationOrder.cs
         public int LocationOrder_Price { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
@@ -29,5 +30,18 @@ namespace SportsCenter.Models.Table
         public virtual Member Member { get; set; }
 
         public virtual Location Location { get; set; }
+=======
+        public int Order_Price { get; set; }
+        [Required]
+        public string? Order_Duration { get; set; }
+        [Required]
+        public string? Order_Date { get; set; }
+        [Required]
+        public string? Location_Branch { get; set; }
+        [Required]
+        [DefaultValue(0)]
+        public int Order_ValidFlag { get; set; }
+
+>>>>>>> 2838dc10716329e048da088f8e7dd95237db9ff4:SportsCenter/Models/Table/Order.cs
     }
 }

@@ -35,6 +35,7 @@ namespace SportsCenter.Models.Table
         [Column(TypeName = "nvarchar(50)")]
         [Required]
         public string? Member_Phone { get; set; }
+<<<<<<< HEAD
         [Column(TypeName = "nvarchar(50)")]
         public string? Member_CreateTime { get; set; }
         [Column(TypeName = "nvarchar(50)")]
@@ -44,5 +45,9 @@ namespace SportsCenter.Models.Table
                                              //0:未認證1:User,2:Company,3:Empolyee,4:Host
 
         //public virtual ICollection<ProductsCart> ProductsCart { get; set; }
+=======
+
+        public virtual ICollection<Order> Orders { get; set; }
+>>>>>>> 2838dc10716329e048da088f8e7dd95237db9ff4
     }
 }
