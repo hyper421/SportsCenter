@@ -20,10 +20,8 @@ namespace SportsCenter.Models.Table
         public int LocationOrder_Price { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string? LocationOrder_StartDateTime { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? LocationOrder_EndDateTime { get; set; }
+        public string? LocationOrder_DateTime { get; set; }
+
 
         //建立關聯
         public virtual Member Member { get; set; }

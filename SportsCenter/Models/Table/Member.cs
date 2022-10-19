@@ -40,8 +40,9 @@ namespace SportsCenter.Models.Table
         [Column(TypeName = "nvarchar(50)")]
         public string? Member_img { get; set; }
         [DefaultValue(0)]
-        public int Member_Role { get; set; } //0:User1:Company2:Empolyee3:Host
+        public int Member_Role { get; set; }
+        //0:未認證1:User,2:Company,3:Empolyee,4:Host
 
-        //public virtual ICollection<ProductsCart> ProductsCart { get; set; }
+        public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }
