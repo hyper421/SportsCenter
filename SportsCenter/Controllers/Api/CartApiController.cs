@@ -39,6 +39,11 @@ namespace SportsCenter.Controllers.Api
             var tempdata = user.ProductsCart.Select(x => new TempCartModel
             {
                 //塞要的資料
+                ProductId = x.Products_Id,
+                ProductName = x.Products_Name,
+                ProductPrice = x.Products_Price,
+                ProductCount = x.ProductsCart_Count,
+                ProductTotal = x.ProductsCart_Total,
             });
             result.Data.AddRange(tempdata);
             result.Status = true;
@@ -56,12 +61,13 @@ namespace SportsCenter.Controllers.Api
         [HttpPost]
         public bool Post([FromBody] AddCartModel model)
         {
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
-            if (userId == null)
-            {
-                return false;
-            }
-            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            
+            //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+            //if (userId == null)
+            //{
+            //    return false;
+            //}
+            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == 2);
             if (user == null)
             {
                 return false;
@@ -71,8 +77,8 @@ namespace SportsCenter.Controllers.Api
             {
                 dbContext.ProductsCart.Add(new Models.Table.ProductsCart
                 {
-                    Member_Id = int.Parse(userId),
-                    Products_Id = model.ProductId,
+                Member_Id = 2,
+                Products_Id = model.ProductId,
                     ProductsCart_Count = model.Count,
                 });
             }

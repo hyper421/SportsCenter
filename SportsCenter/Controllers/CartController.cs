@@ -4,7 +4,7 @@ namespace SportsCenter.Controllers
 {
     public class CartController : Controller
     {
-        public IActionResult Cart()
+        public IActionResult Index()
         {
             return View();
         }
