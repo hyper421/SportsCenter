@@ -20,9 +20,13 @@ namespace SportsCenter.Models.Table
         public string? Products_DateTime { get; set; }
         [Required]
         public int Products_Inventory { get; set; } //庫存
+        [Column(TypeName = "nvarchar(50)")]
+        public string Products_Target { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        public string Products_img { get; set; }
 
 
         public virtual Item Item { get; set; }
-        //public virtual ICollection<ProductsCart> ProductsCart { get; set; }
+        public virtual ICollection<ProductsCart> ProductsCart { get; set; }
     }
 }

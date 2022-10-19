@@ -24,10 +24,12 @@ namespace SportsCenter.Controllers
             this._context = SportsCenterDbContext;
         }
         #endregion
+        #region 會員修改主畫面
         public IActionResult Index()
         {
             return View();
         }
+        #endregion
     }
 }
 

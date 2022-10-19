@@ -6,6 +6,7 @@ using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Service;
 using SportsCenter.Models.Table;
+using System.Diagnostics.Metrics;
 using System.Security.Claims;
 
 namespace SportsCenter.Controllers
@@ -53,6 +54,7 @@ namespace SportsCenter.Controllers
                     Member_Address = signin.Member_Address,
                     Member_CreateTime = DateTime.Now.ToString()
                 });
+                _context.SaveChanges();
                 return true;
             }
             else

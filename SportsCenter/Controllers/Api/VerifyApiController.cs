@@ -22,7 +22,6 @@ namespace SportsCenter.Controllers.Api
             this._context = SportsCenterDbContext;
         }
         #endregion
-
         #region 登入api
         [HttpPost]
         [Route("api/Login")]
