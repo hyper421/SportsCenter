@@ -35,8 +35,6 @@ namespace SportsCenter.Controllers.Api
             return _context.Member.Find(id);
         }
         #endregion
-
-
         #region 回傳會員資料
         [HttpPost]
         public bool Post([FromBody] MemberEditModel model)

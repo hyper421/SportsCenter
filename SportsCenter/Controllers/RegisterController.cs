@@ -21,12 +21,14 @@ namespace SportsCenter.Controllers
             this._context = SportsCenterDbContext;
         }
         #endregion
+
         #region 主頁面
         public IActionResult Signin()
         {
             return View();
         }
         #endregion
+
         #region 註冊api
         [HttpPost]
         //[ValidateAntiForgeryToken]
