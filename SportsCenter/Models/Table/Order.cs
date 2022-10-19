@@ -16,15 +16,14 @@ namespace SportsCenter.Models.Table
         [Required]
         public int Order_Price { get; set; }
         [Required]
-        public int Order_Duration { get; set; }
+        public string? Order_Duration { get; set; }
         [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Order_StartDateTime { get; set; }
+        public string? Order_Date { get; set; }
         [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Order_EndDateTime { get; set; }
+        public string? Location_Branch { get; set; }
         [Required]
         [DefaultValue(0)]
         public int Order_ValidFlag { get; set; }
+
     }
 }

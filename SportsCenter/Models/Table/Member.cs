@@ -45,5 +45,7 @@ namespace SportsCenter.Models.Table
         [RegularExpression("[0-9]+",ErrorMessage ="請輸入數字")]
         [Required]
         public string? Member_Phone { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
