@@ -107,8 +107,8 @@
             addCart: function (products) {
                 console.log(products)
                 let data = {
-                    productId: products.id,
-                    amount: products.qty
+                    ProductId: product.products_Id,
+                    Count: products.qty
                 }
                 fetch("/api/Cart", {
                     body: JSON.stringify(data),

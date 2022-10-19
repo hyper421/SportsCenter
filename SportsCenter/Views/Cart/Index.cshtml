@@ -68,16 +68,16 @@
                             </tr>
                         </thead>
                         <div>
-                        <tr v-for="(order,index) in product" :key="order.ProductId">
-                            <td scope="row">{{order.ProductId}}</td>
-                            <td class="product_name">{{order.ProductName}}</td>
-                            <td class="product_price">${{order.ProductPrice}}</td>
+                        <tr v-for="(order,index) in product" :key="order.productId">
+                            <td scope="row">{{order.productId}}</td>
+                            <td class="product_name">{{order.productName}}</td>
+                            <td class="product_price">${{order.productPrice}}</td>
                             <td class="product_count">
                                 <input type="button" value="-" v-on:click="decrease(order)" class="decreasebtn">
-                                <span>{{order.ProductCount}}</span>
+                                <span>{{order.productCount}}</span>
                                 <input type="button" value="+" v-on:click="increase(order)" class="increasebtn">
                             </td>
-                            <td class="product_total">${{order.ProductPrice*order.ProductCount}}</td>
+                            <td class="product_total">${{order.productPrice*order.productCount}}</td>
                             <td class="move">
                                 <button v-on:click="move(index)" class="movebtn">刪除</button>
                             </td>
@@ -206,7 +206,7 @@
             totalPrice: function () {
                 var totalPrice = 0
                 for (let i = 0; i < this.product.length; i++) {
-                    totalPrice += this.product[i].ProductCount * this.product[i].ProductPrice;
+                    totalPrice += this.product[i].productCount * this.product[i].productPrice;
                 }            
                 return totalPrice;
             }

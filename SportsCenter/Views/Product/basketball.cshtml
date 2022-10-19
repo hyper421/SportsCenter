@@ -146,8 +146,8 @@
             addCart: function (product) {
                 console.log(product)
                 let data = {
-                    productId: product.productId,
-                    count: product.qty
+                    ProductId: product.products_Id,
+                    Count: product.qty
                 }
                 fetch("/api/Cart", {
                     body: JSON.stringify(data),
@@ -160,6 +160,7 @@
         },
         mounted: function () {
             let self = this;
+
             fetch("/Product/BasketballView")
                 .then(function (response) { return response.json() })
                 .then(function (result) {

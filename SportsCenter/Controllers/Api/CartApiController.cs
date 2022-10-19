@@ -26,12 +26,13 @@ namespace SportsCenter.Controllers.Api
                 Status = false,
                 Data = new List<TempCartModel>()
             };
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
-            if (userId == null)
-            {
-                return result;
-            }
-            var user = dbContext.Member.Include(x=>x.ProductsCart).ThenInclude(y=>y.Products).FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+            //if (userId == null)
+            //{
+            //    return result;
+            //}
+            //var user = dbContext.Member.Include(x=>x.ProductsCart).ThenInclude(y=>y.Products).FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.MemberId == 2);
             if (user == null)
             {
                 return result;
@@ -68,6 +69,7 @@ namespace SportsCenter.Controllers.Api
             //    return false;
             //}
             var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == 2);
+            //var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == int.Parse(userId));
             if (user == null)
             {
                 return false;
@@ -77,9 +79,14 @@ namespace SportsCenter.Controllers.Api
             {
                 dbContext.ProductsCart.Add(new Models.Table.ProductsCart
                 {
-                Member_Id = 2,
-                Products_Id = model.ProductId,
+                    Member_Id = 2,
+                    //Member_Id = int.Parse(userId),
+                    Products_Id = model.ProductId,
                     ProductsCart_Count = model.Count,
+                    Products_Name = (from a in dbContext.Products 
+                                     where a.Products_Id == model.ProductId select a.Products_Name).FirstOrDefault(),
+                    Products_Price = (from a in dbContext.Products 
+                                      where a.Products_Id == model.ProductId select a.Products_Price).FirstOrDefault(),
                 });
             }
             else
