@@ -1,0 +1,119 @@
+﻿<link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="~/david/css/memberedit.css" rel="stylesheet" />
+
+
+
+
+<div class="container bootstrap snippets bootdey wrapper" id="Medit">
+    <h1 class="text-primary">會員中心</h1>
+    <hr>
+    <div>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-3">
+                <div class="text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <h6>上傳圖片</h6>
+
+                    <input type="file" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-2"></div>
+
+
+            <!-- edit form column -->
+            <div class="col-md-7 personal-info">
+                <h3 style="color:aliceblue">會員基本資料</h3>
+                <div v-for="item in Member">
+                    <div>{{item.Member_Name}}</div>
+                </div>
+
+                <form>
+                    <div v-for="item in Member">
+                        <div class="form-group d-flex align-items-center">
+                            <div class="icon"><span class="far fa-user"></span></div>
+                            <input v-model="item.member_Name" autocomplete="off" type="text" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <div class="icon"><span class="far fa-user-circle"></span></div>
+                            <input v-model="item.member_Account" autocomplete="off" type="text" class="form-control" placeholder="Account">
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <div class="icon"><span class="far fa-envelope"></span></div>
+                            <input v-model="item.member_Email" autocomplete="off" type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <div class="icon"><span class="fas fa-map-marker-alt"></span></div>
+                            <input v-model="item.member_Address" autocomplete="off" type="tel" class="form-control" placeholder="Address">
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <div class="icon"><span class="fas fa-phone"></span></div>
+                            <input v-model="item.member_Phone" autocomplete="off" type="tel" class="form-control" placeholder="Phone">
+                        </div>
+                        <button type="button" @@click="ReviseMember(item)" class="btn btn-primary mb-3">完成</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: "#Medit",
+        data: {
+            Member: []
+        },
+        methods: {
+            ReviseMember: function (Member) {
+                console.log(Member);
+                let data = {
+                    Member_Name: Member.member_Name,
+                    Member_Account: Member.member_Account,
+                    Member_Address: Member.member_Address,
+                    Member_Email: Member.member_Email,
+                    Member_Phone: Member.member_Phone
+                }
+                fetch("/api/MemberEdit/", {
+                    body: JSON.stringify(data),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'POST',
+                }).then(function (response) { return response.text()})
+                    .then(function (result) {
+                        if (result) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '儲存成功',
+                                text: '您已成功加入!'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '儲存失敗!',
+                                footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+
+                    })
+            }
+        },
+        mounted: function () {
+            let self = this;
+            fetch("/api/MemberEdit")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.Member = result.map(function (x) {
+                        return x
+                    })
+                })
+        }
+    })
+</script>

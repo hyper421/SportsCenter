@@ -5,26 +5,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportsCenter.Models.Table
 {
-    public class Order
+    //只能信用卡 沒有以繳費選項
+    public class LocationOrder
     {
         [Key]
         public int Order_Id { get; set; }
         [Required]
+        [ForeignKey("Location")]
         public int Location_Id { get; set; }
         [Required]
+        [ForeignKey("Member")]
         public int Member_Id { get; set; }
         [Required]
-        public int Order_Price { get; set; }
-        [Required]
-        public int Order_Duration { get; set; }
+        public int LocationOrder_Price { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string? Order_StartDateTime { get; set; }
+        public string? LocationOrder_StartDateTime { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string? Order_EndDateTime { get; set; }
-        [Required]
-        [DefaultValue(0)]
-        public int Order_ValidFlag { get; set; }
+        public string? LocationOrder_EndDateTime { get; set; }
+
+        //建立關聯
+        public virtual Member Member { get; set; }
+
+        public virtual Location Location { get; set; }
     }
 }
