@@ -90,16 +90,20 @@ namespace SportsCenter.Controllers
         }
         #endregion
 
-        #region 修改密碼畫面
+        #region 忘記密碼輸入信箱畫面
 
         public IActionResult ForgetPassword()
         {
             return View();
         }
+        #endregion
+        #region 忘記密碼輸入密碼畫面
         public IActionResult ResetPassword()
         {
             return View();
         }
+        #endregion
+        #region 忘記密碼信封
         public IActionResult MailToReset()
         {
             return View();
@@ -160,6 +164,21 @@ namespace SportsCenter.Controllers
         public void logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+        #endregion
+
+        #region 未登入畫面 待完成
+        [HttpGet("NoLogin")]
+        public string noLogin()
+        {
+            return "未登入";
+        }
+        #endregion
+        #region 沒權限畫面 待完成
+        [HttpGet("NoAccess")]
+        public string NoAccess()
+        {
+            return "未登入";
         }
         #endregion
     }

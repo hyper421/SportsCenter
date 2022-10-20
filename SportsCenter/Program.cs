@@ -13,9 +13,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"))
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     //未登入時會自動導到這個網址
-    option.LoginPath = new PathString("/Login/NoLogin");
+    option.LoginPath = new PathString("/Register/NoLogin");
     //沒權限
-    option.AccessDeniedPath = new PathString("/Login/NoAccess");
+    option.AccessDeniedPath = new PathString("/Register/NoAccess");
     //登入時間設置
     option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
 });
