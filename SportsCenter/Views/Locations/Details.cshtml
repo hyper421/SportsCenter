@@ -1,0 +1,122 @@
+﻿@model SportsCenter.Models.Table.Location
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js" integrity="sha512-0qU9M9jfqPw6FKkPafM3gy2CBAvUWnYVOfNPDYKVuRTel1PrciTj+a9P3loJB+j0QmN2Y0JYQmkBBS8W+mbezg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<h1>場館介紹</h1>
+
+<div>
+    <hr />
+
+     <iframe width="1200" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=@Html.DisplayFor(model => model.Location_Address)&z=16&output=embed&t=></iframe>
+   @*  <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_EngName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_EngName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Area)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_Area)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_Phone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_Website)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_Website)
+        </dd>
+       <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Location_ValidFlag)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Location_ValidFlag)
+        </dd>*@
+    </dl>
+</div>
+<div>
+@*    <a asp-action="Edit" asp-route-id="@Model?.Location_Id">Edit</a> |*@
+    <a asp-action="Index">回場館介紹</a>
+</div>
+
+
+        <div class="container py-4 my-4 mx-auto d-flex flex-column">
+    <div class="header">
+        <div class="row r1">
+            <div class="col-md-9 abc">
+                <h2>@Html.DisplayFor(model => model.Location_Name)  @Html.DisplayFor(model => model.Location_EngName)</h2>
+              <h3> <span class="badge rounded-pill bg-warning"> @Html.DisplayFor(model => model.Location_Area)</span></h3>
+            </div>
+        </div>
+    </div>
+    <div class="container-body mt-4">
+        <div class="row r3">
+            <div class="col-md-5 p-0 klo">
+                
+                   <h5><ul><i class="fa-solid fa-location-dot"></i>    @Html.DisplayFor(model => model.Location_Address)</ul>
+                    <ul><i class="fa-solid fa-square-phone"></i>    @Html.DisplayFor(model => model.Location_Phone)</ul>
+                    <ul><i class="fa-brands fa-square-font-awesome"></i>   @Html.DisplayFor(model => model.Location_Website)</ul></h5>
+
+         
+            </div>
+            <div class="col-md-7"> <img src="~/picture/@Model.Location_ImageName" asp-append-version="true" width="90%" height="95%" style="border-radius:5%"> </div>
+        </div>
+    </div>
+    <div class="footer d-flex flex-column mt-5">
+<div class="col-md-3 text-right pqr"></div>
+    </div>
+</div>
+
+<template>
+    <div id="app" class="app">
+        <!--天氣狀況-->
+        <div class="weather-show">
+            <div class="temperature">
+
+            </div>
+            <div class="weather"></div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<script>
+export default
+    {
+name:'app',
+
+        data() {
+        api_key:
+
+
+
+        }
+
+    }
+
+
+</script>

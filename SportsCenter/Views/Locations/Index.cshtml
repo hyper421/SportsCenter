@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SportsCenter.Models.Table.Location>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>場館資訊</h1>
+
+
+
+
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+    <!--div class="row px-4 pt-4 justify-content-center"-->
+
+
+    
+@foreach (var item in Model)
+
+{                       
+                                 
+                        <div class="col card shadow mb-5 d-flex align-items-stretch"> 
+                        <!--div class="card h-100 shadow-sm rounded" style="width:15rem"-->
+                            <!-- 照片-->
+                            <img class="card-img-top" src="~/picture/@item.Location_ImageName" alt="..." asp-append-version="true" accept="image/*"/>
+                            <!-- 資料-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!--名字-->
+                                    <h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Location_Name)</h5>
+                                     <h6 class="fw-bolder">@Html.DisplayFor(modelItem => item.Location_EngName) </h6>
+
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-success mt-auto" asp-action="Details"asp-route-id="@item.Location_Id">詳細資訊</a></div>
+
+                            </div>
+
+            </div>
+            }
+                     
+
+@*
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_EngName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_ValidFlag)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_EngName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location_ValidFlag)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Location_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Location_Id">Details</a> |
+               <a asp-action="Delete" asp-route-id="@item.Location_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@

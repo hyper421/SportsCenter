@@ -89,10 +89,13 @@ namespace SportsCenter.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Location_Area")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Location_EngName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Location_Email")
+                    b.Property<string>("Location_ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
@@ -106,6 +109,9 @@ namespace SportsCenter.Migrations
 
                     b.Property<int>("Location_ValidFlag")
                         .HasColumnType("int");
+
+                    b.Property<string>("Location_Website")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Location_Id");
 
