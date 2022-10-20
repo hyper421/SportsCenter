@@ -7,9 +7,50 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SportsCenter.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon-->
+   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+   <!-- Font Awesome icons (free version)-->
+  @*  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>*@
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+     
+
 </head>
 <body>
     <header>
+        <!-- Navbar-->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" id="mainNav"> 
+
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><!--img src="assets/img/navbar-logo.svg" alt="..." /--></a>
+
+               @* <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>*@
+
+                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+              @*  </button>*@
+                </button>
+                <div class="avbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarResponsive">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house-chimney" color="#0dcaf0"></i></a></li>
+                        <li class="nav-item"><a class="nav-link"asp-controller="MessageBoard" asp-action="Index">揪團</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">商城</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team">會員中心</a></li>
+                        <li class="nav-item"><a class="nav-link"asp-controller="Locations" asp-action="Index">場館資訊</a></li>
+                        <li class="nav-item"><a class="nav-link"asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-cart-shopping" color="#0dcaf0"></i></a></li>
+                        <li class="nav-item"><a class="nav-link"asp-controller="Register" asp-action="Signin">註冊/登入</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        </header>
+    @*<!--舊的在這邊要拿回來用直接複製下面--!>
+        <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportsCenter</a>
@@ -29,21 +70,26 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>*@
     <div class="container">
         <main role="main" class="pb-3">
+
             @RenderBody()
         </main>
     </div>
+      
 
-    <footer class="border-top footer text-muted">
+   @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - SportsCenter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+      <!-- Footer-->
 </html>
