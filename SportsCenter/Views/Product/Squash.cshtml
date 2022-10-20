@@ -72,8 +72,8 @@
                 <div class="row">
                     <div class="col col-xl-3" v-for="items in Squash">
                         <div class="card p-3 my-1 " style="border:none">
-                            <img src="/Leo/image/壁球/PERFLY SR900 壁球拍.jpg" class="card-img-top" alt="" data-bs-toggle="modal"
-                                 data-bs-target="#SR900壁球拍">
+                            <img :src="items.products_img" class="card-img-top" alt="" data-bs-toggle="modal"
+                                 :data-bs-target="items.products_Target">
                             <div class="card-body">
                                 <div style="height:60px">
                                     <h5 class="card-title">{{items.products_Name}}</h5>

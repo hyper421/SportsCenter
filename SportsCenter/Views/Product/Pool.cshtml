@@ -72,8 +72,8 @@
                 <div class="row">
                     <div class="col col-xl-3" v-for="items in Pool">
                         <div class="card p-3 my-1 " style="border:none">
-                            <img src="/Leo/image/撞球/Cuetec美國進口撞球桿.png" class="card-img-top" alt="" data-bs-toggle="modal"
-                                 data-bs-target="#Cuetec美國進口撞球桿">
+                            <img :src="items.products_img" class="card-img-top" alt="" data-bs-toggle="modal"
+                                 :data-bs-target="items.products_Target">
                             <div class="card-body">
                                 <div style="height:60px">
                                     <h5 class="card-title">{{items.products_Name}}</h5>

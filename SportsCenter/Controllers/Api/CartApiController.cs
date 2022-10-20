@@ -21,17 +21,40 @@ namespace SportsCenter.Controllers.Api
         [HttpGet]
         public CommonApiFormat<List<TempCartModel>> Get()
         {
-            var result = new CommonApiFormat<List<TempCartModel>>()
-            {
-                Status = false,
-                Data = new List<TempCartModel>()
-            };
+            //var result = new CommonApiFormat<List<TempCartModel>>()
+            //{
+            //    Status = false,
+            //    Data = new List<TempCartModel>()
+            //};
             //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
             //if (userId == null)
             //{
             //    return result;
             //}
-            //var user = dbContext.Member.Include(x=>x.ProductsCart).ThenInclude(y=>y.Products).FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            //var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            //if (user == null)
+            //{
+            //    return result;
+            //}
+            //var tempdata = user.ProductsCart.Select(x => new TempCartModel
+            //{
+            //    //塞要的資料
+            //    ProductId = x.ProductsCart_ID,
+            //    ProductName = x.Products_Name,
+            //    ProductPrice = x.Products_Price,
+            //    ProductCount = x.ProductsCart_Count,
+            //    ProductTotal = x.ProductsCart_Total,
+            //});
+            //result.Data.AddRange(tempdata);
+            //result.Status = true;
+            //return result;
+
+            //測試用
+            var result = new CommonApiFormat<List<TempCartModel>>()
+            {
+                Status = false,
+                Data = new List<TempCartModel>()
+            };
             var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.MemberId == 2);
             if (user == null)
             {
@@ -40,7 +63,7 @@ namespace SportsCenter.Controllers.Api
             var tempdata = user.ProductsCart.Select(x => new TempCartModel
             {
                 //塞要的資料
-                ProductId = x.Products_Id,
+                ProductId = x.ProductsCart_ID,
                 ProductName = x.Products_Name,
                 ProductPrice = x.Products_Price,
                 ProductCount = x.ProductsCart_Count,
@@ -62,14 +85,51 @@ namespace SportsCenter.Controllers.Api
         [HttpPost]
         public bool Post([FromBody] AddCartModel model)
         {
-            
+            //var ProductsName = (from a in dbContext.Products
+            //                    where a.Products_Id == model.ProductId
+            //                    select a.Products_Name).FirstOrDefault();
+            //var ProductsPrice = (from a in dbContext.Products
+            //                     where a.Products_Id == model.ProductId
+            //                     select a.Products_Price).FirstOrDefault();
+
             //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
             //if (userId == null)
             //{
             //    return false;
             //}
-            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == 2);
             //var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == int.Parse(userId));
+            //if (user == null)
+            //{
+            //    return false;
+            //}
+            //var userCart = user.ProductsCart.FirstOrDefault(x => x.Products_Id == model.ProductId);
+            //if (userCart == null)
+            //{
+            //    dbContext.ProductsCart.Add(new Models.Table.ProductsCart
+            //    {
+            //        Member_Id = int.Parse(userId),
+            //        Products_Id = model.ProductId,
+            //        ProductsCart_Count = model.Count,
+            //        Products_Name = ProductsName,
+            //        Products_Price = ProductsPrice,
+            //    });
+            //}
+            //else
+            //{
+            //    userCart.ProductsCart_Count += model.Count;
+            //}
+            //dbContext.SaveChanges();
+            //return true;
+
+            //測試用
+            var ProductsName = (from a in dbContext.Products
+                                where a.Products_Id == model.ProductId
+                                select a.Products_Name).FirstOrDefault();
+            var ProductsPrice = (from a in dbContext.Products
+                                 where a.Products_Id == model.ProductId
+                                 select a.Products_Price).FirstOrDefault();
+
+            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == 2);
             if (user == null)
             {
                 return false;
@@ -80,13 +140,10 @@ namespace SportsCenter.Controllers.Api
                 dbContext.ProductsCart.Add(new Models.Table.ProductsCart
                 {
                     Member_Id = 2,
-                    //Member_Id = int.Parse(userId),
                     Products_Id = model.ProductId,
                     ProductsCart_Count = model.Count,
-                    Products_Name = (from a in dbContext.Products 
-                                     where a.Products_Id == model.ProductId select a.Products_Name).FirstOrDefault(),
-                    Products_Price = (from a in dbContext.Products 
-                                      where a.Products_Id == model.ProductId select a.Products_Price).FirstOrDefault(),
+                    Products_Name = ProductsName,
+                    Products_Price = ProductsPrice,
                 });
             }
             else
@@ -103,11 +160,23 @@ namespace SportsCenter.Controllers.Api
         public void Put(int id, [FromBody] string value)
         {
         }
-
+        //刪除
         // DELETE api/<CartApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public bool Delete(int Products_Id)
+        //{
+        //    var findItem = dbContext.ProductsCart.Where(a => a.Products_Id == Products_Id).Select(a => a).FirstOrDefault();
+
+        //    if(findItem == default(Models.Table.ProductsCart))
+        //    {
+
+        //    }
+        //    else
+        //    {
+        //        dbContext.ProductsCart.Remove(findItem);
+        //    }
+        //    dbContext.SaveChanges();
+        //    return true;
+        //}
     }
 }
