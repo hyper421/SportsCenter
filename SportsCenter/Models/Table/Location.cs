@@ -29,8 +29,8 @@ namespace SportsCenter.Models.Table
 
         public string? Location_ImageName { get; set; }
         public string? Location_Website { get; set; }
-        [Required]
-        [DefaultValue(0)]
-        public int Location_ValidFlag { get; set; }
+        //[Required]
+        //[DefaultValue(0)]
+        //public int Location_ValidFlag { get; set; }
     }
 }

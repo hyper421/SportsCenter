@@ -69,7 +69,7 @@ namespace SportsCenter.Controllers
                 return RedirectToAction("Create");
             }
 
-            var path = Path.Combine(environment.ContentRootPath, "wwwroot\\picture", files.FileName);
+            var path = Path.Combine(environment.ContentRootPath, "wwwroot\\Jena\\picture", files.FileName);
             using (FileStream fs = new FileStream(path, FileMode.Create))
             //    var root = $@"{environment.ContentRootPath}\wwwroot\picture";
             //var imagePath = root + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + files.FileName;

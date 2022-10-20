@@ -11,7 +11,7 @@ using SportsCenter.Models.Table;
 namespace SportsCenter.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    [Migration("20221020024259_InitialCreate")]
+    [Migration("20221020042046_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
