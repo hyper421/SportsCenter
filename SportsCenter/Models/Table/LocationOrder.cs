@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
 
 namespace SportsCenter.Models.Table
 {
@@ -9,12 +10,10 @@ namespace SportsCenter.Models.Table
     public class LocationOrder
     {
         [Key]
-        public int Order_Id { get; set; }
+        public int LocationOrder_Id { get; set; }
         [Required]
         [ForeignKey("Location")]
         public int Location_Id { get; set; }
-        [Required]
-        [ForeignKey("LocationBranch")]
         public int LocationBranch_Id { get; set; }
         [Required]
         [ForeignKey("Member")]
@@ -32,7 +31,6 @@ namespace SportsCenter.Models.Table
 
         //建立關聯
         public virtual Member Member { get; set; }
-        public virtual Member LocationBranch { get; set; }
 
         public virtual Location Location { get; set; }
     }

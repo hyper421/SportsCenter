@@ -11,7 +11,7 @@ using SportsCenter.Models.Table;
 namespace SportsCenter.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    [Migration("20221020042046_InitialCreate")]
+    [Migration("20221020150217_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,9 +109,6 @@ namespace SportsCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Location_ValidFlag")
-                        .HasColumnType("int");
-
                     b.Property<string>("Location_Website")
                         .HasColumnType("nvarchar(max)");
 
@@ -152,11 +149,14 @@ namespace SportsCenter.Migrations
 
             modelBuilder.Entity("SportsCenter.Models.Table.LocationOrder", b =>
                 {
-                    b.Property<int>("Order_Id")
+                    b.Property<int>("LocationOrder_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Order_Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationOrder_Id"), 1L, 1);
+
+                    b.Property<int>("LocationBranch_Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("LocationOrder_DateTime")
                         .IsRequired()
@@ -165,13 +165,17 @@ namespace SportsCenter.Migrations
                     b.Property<int>("LocationOrder_Price")
                         .HasColumnType("int");
 
+                    b.Property<string>("LocationOrder_Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("Location_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Member_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Order_Id");
+                    b.HasKey("LocationOrder_Id");
 
                     b.HasIndex("Location_Id");
 

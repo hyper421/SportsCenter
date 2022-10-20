@@ -34,8 +34,7 @@ namespace SportsCenter.Migrations
                     Location_Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Location_Phone = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Location_ImageName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Location_Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location_ValidFlag = table.Column<int>(type: "int", nullable: false)
+                    Location_Website = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -146,16 +145,18 @@ namespace SportsCenter.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    Order_Id = table.Column<int>(type: "int", nullable: false)
+                    LocationOrder_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Location_Id = table.Column<int>(type: "int", nullable: false),
+                    LocationBranch_Id = table.Column<int>(type: "int", nullable: false),
                     Member_Id = table.Column<int>(type: "int", nullable: false),
                     LocationOrder_Price = table.Column<int>(type: "int", nullable: false),
-                    LocationOrder_DateTime = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    LocationOrder_DateTime = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    LocationOrder_Time = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Order_Id);
+                    table.PrimaryKey("PK_Order", x => x.LocationOrder_Id);
                     table.ForeignKey(
                         name: "FK_Order_Location_Location_Id",
                         column: x => x.Location_Id,
