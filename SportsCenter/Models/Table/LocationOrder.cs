@@ -14,6 +14,9 @@ namespace SportsCenter.Models.Table
         [ForeignKey("Location")]
         public int Location_Id { get; set; }
         [Required]
+        [ForeignKey("LocationBranch")]
+        public int LocationBranch_Id { get; set; }
+        [Required]
         [ForeignKey("Member")]
         public int Member_Id { get; set; }
         [Required]
@@ -21,10 +24,15 @@ namespace SportsCenter.Models.Table
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? LocationOrder_DateTime { get; set; }
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
+        public string? LocationOrder_Time { get; set; }
+
 
 
         //建立關聯
         public virtual Member Member { get; set; }
+        public virtual Member LocationBranch { get; set; }
 
         public virtual Location Location { get; set; }
     }
