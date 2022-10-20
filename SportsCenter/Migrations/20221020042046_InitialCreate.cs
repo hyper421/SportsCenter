@@ -29,10 +29,12 @@ namespace SportsCenter.Migrations
                     Location_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Location_Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Location_Area = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Location_EngName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Location_Area = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Location_Address = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Location_Phone = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Location_Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Location_ImageName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Location_Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location_ValidFlag = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -73,7 +75,9 @@ namespace SportsCenter.Migrations
                     Products_Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Products_Price = table.Column<int>(type: "int", nullable: false),
                     Products_DateTime = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Products_Inventory = table.Column<int>(type: "int", nullable: false)
+                    Products_Inventory = table.Column<int>(type: "int", nullable: false),
+                    Products_Target = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Products_img = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,8 +151,7 @@ namespace SportsCenter.Migrations
                     Location_Id = table.Column<int>(type: "int", nullable: false),
                     Member_Id = table.Column<int>(type: "int", nullable: false),
                     LocationOrder_Price = table.Column<int>(type: "int", nullable: false),
-                    LocationOrder_StartDateTime = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    LocationOrder_EndDateTime = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    LocationOrder_DateTime = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
