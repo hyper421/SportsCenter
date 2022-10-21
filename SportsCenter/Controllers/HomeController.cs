@@ -22,7 +22,26 @@ namespace SportsCenter.Controllers
         {
             return View();
         }
-
+        public IActionResult Basketball()
+        {
+            return View();
+        }
+        public IActionResult Badminton()
+        {
+            return View();
+        }
+        public IActionResult TablaTennis()
+        {
+            return View();
+        }
+        public IActionResult Pool()
+        {
+            return View();
+        }
+        public IActionResult Squash()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
