@@ -26,7 +26,7 @@ namespace SportsCenter.Controllers.Api
         public IEnumerable<Member> Get()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
-            var user = (from a in _context.Member where a.MemberId == int.Parse(id) select a);
+            var user = (from a in _context.Member where a.Id == int.Parse(id) select a);
             return user;
         }
         [HttpGet("{id}")]

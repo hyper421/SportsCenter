@@ -9,40 +9,41 @@ namespace SportsCenter.Models.Table
     public class Member
     {
         [Key]
-        public int MemberId { get; set; }
-        [DefaultValue(0)]
-        public int Member_ValidFlag { get; set; }
+        public int Id { get; set; }
+
+        public int IsActive { get; set; }
+
+        [Column(TypeName = "nvarchar(max)"), Required]
+        public string Name { get; set; }
+
+
+        [Column(TypeName = "nvarchar(100)"), Required]
+        public string Account { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
-        [Required]
-        public string? Member_Name { get; set; }
+        public string? Salt { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
-        [Required]
-        public string? Member_Account { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Member_Salt { get; set; }
+        [Column(TypeName = "nvarchar(Max)"), Required]
+        public string Password { get; set; }
 
-        [Column(TypeName = "nvarchar(Max)")]
-        [Required]
-        public string? Member_Password { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        [Required]
-        public string? Member_Address { get; set; }
+        public string Address { get; set; }
         [Column(TypeName = "nvarchar(50)")]
-        [Required]
-        public string? Member_Email { get; set; }
+
+        public string Email { get; set; }
+
         [Column(TypeName = "nvarchar(50)")]
-        [Required]
-        public string? Member_Phone { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Member_CreateTime { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Member_img { get; set; }
-        [DefaultValue(0)]
-        public int Member_Role { get; set; }
+        public string Phone { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public int Role { get; set; }
         //0:未認證1:User,2:Company,3:Empolyee,4:Host
 
         public virtual ICollection<ProductsCart> ProductsCart { get; set; }
+        public virtual ICollection<ProductsOrder> ProductsOrders { get; set; }
+        public virtual ICollection<LocationOrder> LocationOrders { get; set; }
     }
 }

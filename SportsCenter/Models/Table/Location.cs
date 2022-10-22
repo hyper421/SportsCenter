@@ -7,30 +7,18 @@ namespace SportsCenter.Models.Table
     public class Location
     {
         [Key]
-        public int Location_Id { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Name { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_EngName { get; set; }
+        public int Id { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Area { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Address { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Location_Phone { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
+        public string EnglishName { get; set; }
+        public string Address { get; set; }
+        public string Description { get; set; }
+        public string ContactPhone { get; set; }
+        public string ImagePath { get; set; }
+        public string Website { get; set; }
 
-        public string? Location_ImageName { get; set; }
-        public string? Location_Website { get; set; }
-        //[Required]
-        //[DefaultValue(0)]
-        //public int Location_ValidFlag { get; set; }
+        public virtual ICollection<LocationBranch> LocationBranch { get; set; }
+        public virtual ICollection<LocationImage> LocationImage { get; set; }
     }
 }

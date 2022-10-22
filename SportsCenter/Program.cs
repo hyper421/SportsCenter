@@ -9,8 +9,6 @@ builder.Services.AddControllersWithViews();
 //Google登入
 builder.Services.AddAuthentication(option =>
 {
-
-
     option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie(option =>
 {
@@ -20,9 +18,8 @@ builder.Services.AddAuthentication(option =>
     option.AccessDeniedPath = new PathString("/Register/NoAccess");
     //登入時間設置
     option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
-})(option =>
+}).AddGoogle(option =>
 {
-
     option.ClientId = builder.Configuration.GetSection("Auth:Google:ClientId").Value;
     option.ClientSecret = builder.Configuration.GetSection("Auth:Google:ClientSecret").Value;
 });

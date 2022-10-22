@@ -7,17 +7,16 @@ namespace SportsCenter.Models.Table
     public class ProductsCart
     {
         [Key]
-        public int ProductsCart_ID { get; set; }
-        [Required]
+        public int ID { get; set; }
+
+
         [ForeignKey("Member")]
         public int Member_Id { get; set; }
+
         [ForeignKey("Products")]
         public int Products_Id { get; set; }
-        [Column(TypeName = "nvarchar(50)")]
-        public string? Products_Name { get; set; }
-        public int Products_Price { get; set; }
-        public int ProductsCart_Count { get; set; }
-        public int ProductsCart_Total { get; set; }
+
+        public int Count { get; set; }
 
 
         //建立關聯

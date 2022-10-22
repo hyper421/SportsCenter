@@ -7,25 +7,26 @@ namespace SportsCenter.Models.Table
     public class LocationBranch
     {
         [Key]
-        public int LocationBranch_Id { get; set; }
-        [Required]
+        public int Id { get; set; }
         [ForeignKey("Location")]
         public int Location_Id { get; set; }
-        [Required]
-        [ForeignKey("Item")]
-        public int Item_Id { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string? LocationBranch_partition { get; set; } //劃分場館
-        [Required]
-        public int LocationBranch_Price { get; set; }
+        [ForeignKey("Category")]
+        public int Category_Id { get; set; }
+        /// <summary>
+        /// 劃分場館
+        /// </summary>
+        public string Name { get; set; } 
+        public int Price { get; set; }
+        public string Memo { get; set; }
+        public string ImagePath { get; set; }
 
 
 
         //建立關聯
-        public virtual Item Item { get; set; }
+        public virtual Category Category { get; set; }
 
         public virtual Location Location { get; set; }
+        public virtual ICollection<LocationOrder> LocationOrders { get; set; }
 
     }
 }
