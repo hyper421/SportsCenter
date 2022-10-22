@@ -26,7 +26,7 @@ namespace SportsCenter.Controllers.Api
         public IEnumerable<Member> Get()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
-            var user = (from a in _context.Member where a.MemberId == int.Parse(id) select a).ToList();
+            var user = (from a in _context.Member where a.MemberId == int.Parse(id) select a);
             return user;
         }
         [HttpGet("{id}")]
@@ -35,8 +35,6 @@ namespace SportsCenter.Controllers.Api
             return _context.Member.Find(id);
         }
         #endregion
-
-
         #region 回傳會員資料
         [HttpPost]
         public bool Post([FromBody] MemberEditModel model)

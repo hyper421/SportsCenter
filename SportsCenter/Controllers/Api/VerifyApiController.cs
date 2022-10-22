@@ -22,6 +22,7 @@ namespace SportsCenter.Controllers.Api
             this._context = SportsCenterDbContext;
         }
         #endregion
+        #region 登入api
         [HttpPost]
         [Route("api/Login")]
         public bool Login([FromBody] LoginModel model)
@@ -58,5 +59,6 @@ namespace SportsCenter.Controllers.Api
             }
             return true;
         }
+        #endregion
     }
 }

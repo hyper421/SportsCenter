@@ -137,7 +137,7 @@
                                 icon: 'success',
                                 title: '水拉',
                                 text: '註冊成功!',
-                            })
+                            }).then(function () { window.location.href = '/Register/Signin' })
                         }
                         else {
                             Swal.fire({
@@ -169,7 +169,7 @@
                                 icon: 'success',
                                 title: '水拉',
                                 text: '登入成功!',
-                            })
+                            }).then(function () { window.location.href = '/home/index'})
                         }
                         else {
                             Swal.fire({

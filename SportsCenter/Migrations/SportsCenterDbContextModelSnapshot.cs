@@ -89,10 +89,13 @@ namespace SportsCenter.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Location_Area")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Location_EngName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Location_Email")
+                    b.Property<string>("Location_ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
@@ -104,8 +107,8 @@ namespace SportsCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Location_ValidFlag")
-                        .HasColumnType("int");
+                    b.Property<string>("Location_Website")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Location_Id");
 
@@ -144,20 +147,23 @@ namespace SportsCenter.Migrations
 
             modelBuilder.Entity("SportsCenter.Models.Table.LocationOrder", b =>
                 {
-                    b.Property<int>("Order_Id")
+                    b.Property<int>("LocationOrder_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Order_Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationOrder_Id"), 1L, 1);
 
-                    b.Property<string>("LocationOrder_EndDateTime")
+                    b.Property<int>("LocationBranch_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LocationOrder_DateTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("LocationOrder_Price")
                         .HasColumnType("int");
 
-                    b.Property<string>("LocationOrder_StartDateTime")
+                    b.Property<string>("LocationOrder_Time")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
@@ -167,7 +173,7 @@ namespace SportsCenter.Migrations
                     b.Property<int>("Member_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Order_Id");
+                    b.HasKey("LocationOrder_Id");
 
                     b.HasIndex("Location_Id");
 
@@ -252,6 +258,14 @@ namespace SportsCenter.Migrations
 
                     b.Property<int>("Products_Price")
                         .HasColumnType("int");
+
+                    b.Property<string>("Products_Target")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Products_img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Products_Id");
 
@@ -399,13 +413,13 @@ namespace SportsCenter.Migrations
             modelBuilder.Entity("SportsCenter.Models.Table.ProductsCart", b =>
                 {
                     b.HasOne("SportsCenter.Models.Table.Member", "Member")
-                        .WithMany()
+                        .WithMany("ProductsCart")
                         .HasForeignKey("Member_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SportsCenter.Models.Table.Products", "Products")
-                        .WithMany()
+                        .WithMany("ProductsCart")
                         .HasForeignKey("Products_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -432,6 +446,16 @@ namespace SportsCenter.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("SportsCenter.Models.Table.Member", b =>
+                {
+                    b.Navigation("ProductsCart");
+                });
+
+            modelBuilder.Entity("SportsCenter.Models.Table.Products", b =>
+                {
+                    b.Navigation("ProductsCart");
                 });
 #pragma warning restore 612, 618
         }
