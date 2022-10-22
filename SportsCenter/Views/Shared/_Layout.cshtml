@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SportsCenter.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <!--cdb-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/cdb.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/cdb.min.js"></script>
+
     <!-- Favicon-->
    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
    <!-- Font Awesome icons (free version)-->
@@ -33,16 +40,16 @@
                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-              @*  </button>*@
+
                 </button>
-                <div class="avbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarResponsive">
+                <div class="navbar collapse d-sm-inline-flex justify-content-between" id="navbarResponsive">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-house-chimney" color="#0dcaf0"></i></a></li>
                         <li class="nav-item"><a class="nav-link"asp-controller="MessageBoard" asp-action="Index">揪團</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">商城</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">會員中心</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="Badminton">商城</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="" asp-action=""></a></li>
                         <li class="nav-item"><a class="nav-link"asp-controller="Locations" asp-action="Index">場館資訊</a></li>
-                        <li class="nav-item"><a class="nav-link"asp-controller="Home" asp-action="Privacy"><i class="fa-solid fa-cart-shopping" color="#0dcaf0"></i></a></li>
+                        <li class="nav-item"><a class="nav-link"asp-controller="Cart" asp-action="Index"><i class="fa-solid fa-cart-shopping" color="#0dcaf0"></i></a></li>
                         <li class="nav-item"><a class="nav-link"asp-controller="Register" asp-action="Signin">註冊/登入</a></li>
                     </ul>
                 </div>
