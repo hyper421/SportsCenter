@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.DavidModel;
+using SportsCenter.Models.Entity;
 using SportsCenter.Models.Hashing;
-using SportsCenter.Models.Table;
 using System.Diagnostics.Metrics;
 using System.Security.Claims;
 
@@ -15,8 +15,8 @@ namespace SportsCenter.Controllers.Api
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly SportsCenterDbContext _context;
-        public MemberEditApiController(SportsCenterDbContext SportsCenterDbContext)
+        private readonly db_a8ea3c_sportscenterContext _context;
+        public MemberEditApiController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }

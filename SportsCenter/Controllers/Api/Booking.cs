@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Models.Table;
+using SportsCenter.Models.Entity;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,9 +11,9 @@ namespace SportsCenter.Controllers.Api
     [ApiController]
     public class BookingController : ControllerBase
     {
-        public readonly SportsCenterDbContext DbContext;
+        public readonly db_a8ea3c_sportscenterContext DbContext;
 
-        public BookingController(SportsCenterDbContext dbContext)
+        public BookingController(db_a8ea3c_sportscenterContext dbContext)
         {
             DbContext = dbContext;
         }

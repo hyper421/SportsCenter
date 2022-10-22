@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.JenaModel;
-using SportsCenter.Models.Table;
 
 namespace SportsCenter.Controllers
 {

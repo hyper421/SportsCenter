@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using SportsCenter.Models.Table;
+using SportsCenter.Models.Entity;
 
 namespace SportsCenter.Models.JenaModel
 {

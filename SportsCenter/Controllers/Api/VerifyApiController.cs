@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.Hashing;
-using SportsCenter.Models.Table;
 using System.Security.Claims;
 using SportsCenter.Models.DavidModel;
 using System.Diagnostics.Metrics;
+using SportsCenter.Models.Entity;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -16,8 +16,8 @@ namespace SportsCenter.Controllers.Api
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly SportsCenterDbContext _context;
-        public VerifyApiController(SportsCenterDbContext SportsCenterDbContext)
+        private readonly db_a8ea3c_sportscenterContext _context;
+        public VerifyApiController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }

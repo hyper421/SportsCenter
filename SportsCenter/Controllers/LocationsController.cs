@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SportsCenter.Models.Entity;
 using SportsCenter.Models.JenaModel;
-using SportsCenter.Models.Table;
 
 namespace SportsCenter.Controllers
 {
     public class LocationsController : Controller
     {
-        private readonly SportsCenterDbContext _context;
+        private readonly db_a8ea3c_sportscenterContext _context;
         private readonly IHostEnvironment environment;
 
-        public LocationsController(SportsCenterDbContext context, IHostEnvironment environment)
+        public LocationsController(db_a8ea3c_sportscenterContext context, IHostEnvironment environment)
         {
             _context = context;
             this.environment = environment; //傳照片用
@@ -63,11 +63,11 @@ namespace SportsCenter.Controllers
         public async Task<IActionResult> Create(LocationViewModel model, IFormFile files)
         {
 
-            if (files == null || files.Length == 0)
-            {
-                //return Content("沒有選取檔案，請回上一頁");
-                //return RedirectToAction("Create");
-            }
+            //if (files == null || files.Length == 0)
+            //{
+            //    return Content("沒有選取檔案，請回上一頁");
+            //    return RedirectToAction("Create");
+            //}
 
             var path = Path.Combine(environment.ContentRootPath, "wwwroot\\Jena\\picture", files.FileName);
             using (FileStream fs = new FileStream(path, FileMode.Create))

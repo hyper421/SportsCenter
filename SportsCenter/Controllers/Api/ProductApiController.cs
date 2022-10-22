@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Models.Table;
+using SportsCenter.Models.Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,9 +10,9 @@ namespace SportsCenter.Controllers.Api
     [ApiController]
     public class ProductApiController : ControllerBase
     {
-        private readonly SportsCenterDbContext dbContext;
+        private readonly db_a8ea3c_sportscenterContext dbContext;
 
-        public  ProductApiController(SportsCenterDbContext dbContext)
+        public  ProductApiController(db_a8ea3c_sportscenterContext dbContext)
         {
             this.dbContext = dbContext;
         }

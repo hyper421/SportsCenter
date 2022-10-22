@@ -3,7 +3,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
-using SportsCenter.Models.Table;
 using System.Data;
 using System.Net.Mail;
 using System.Net;
@@ -11,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
+using SportsCenter.Models.Entity;
 
 namespace SportsCenter.Controllers
 {
@@ -18,8 +18,8 @@ namespace SportsCenter.Controllers
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly SportsCenterDbContext _context;
-        public MemberEditController(SportsCenterDbContext SportsCenterDbContext)
+        private readonly db_a8ea3c_sportscenterContext _context;
+        public MemberEditController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SportsCenter.Models.Entity;
 using SportsCenter.Models.LeoModel;
-using SportsCenter.Models.Table;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,8 +12,8 @@ namespace SportsCenter.Controllers.Api
     [ApiController]
     public class CartApiController : ControllerBase
     {
-        private readonly SportsCenterDbContext dbContext;
-        public CartApiController(SportsCenterDbContext dbContext)
+        private readonly db_a8ea3c_sportscenterContext dbContext;
+        public CartApiController(db_a8ea3c_sportscenterContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -63,9 +63,9 @@ namespace SportsCenter.Controllers.Api
             var tempdata = user.ProductsCart.Select(x => new TempCartModel
             {
                 //塞要的資料
-                ProductId = x.Products_Id,
-                ProductName = x.Products.Products_Name,
-                ProductPrice = x.Products.Products_Price,                
+                ProductId = x.ProductsId,
+                ProductName = x.Products.ProductsName,
+                ProductPrice = x.Products.ProductsPrice,                
             });
             result.Data.AddRange(tempdata);
             result.Status = true;
@@ -121,24 +121,24 @@ namespace SportsCenter.Controllers.Api
 
             //測試用
             var ProductsName = (from a in dbContext.Products
-                                where a.Products_Id == model.ProductId
-                                select a.Products_Name).FirstOrDefault();
+                                where a.ProductsId == model.ProductId
+                                select a.ProductsName).FirstOrDefault();
             var ProductsPrice = (from a in dbContext.Products
-                                 where a.Products_Id == model.ProductId
-                                 select a.Products_Price).FirstOrDefault();
+                                 where a.ProductsId == model.ProductId
+                                 select a.ProductsPrice).FirstOrDefault();
 
             var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.Id == 2);
             if (user == null)
             {
                 return false;
             }
-            var userCart = user.ProductsCart.FirstOrDefault(x => x.Products_Id == model.ProductId);
+            var userCart = user.ProductsCart.FirstOrDefault(x => x.ProductsId == model.ProductId);
             if (userCart == null)
             {
-                dbContext.ProductsCart.Add(new Models.Table.ProductsCart
+                dbContext.ProductsCart.Add(new Models.Entity.ProductsCart
                 {
-                    Member_Id = 2,
-                    Products_Id = model.ProductId,
+                    MemberId = 2,
+                    ProductsId = model.ProductId,
                     Count = model.Count,
                     //Products_Name = ProductsName,
                     //Products_Price = ProductsPrice,
@@ -166,10 +166,10 @@ namespace SportsCenter.Controllers.Api
             var id = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
             //var findItem = dbContext.ProductsCart.Where(a => a.Products_Id == Products_Id).Select(a => a).FirstOrDefault();
             var findItem = (from a in dbContext.ProductsCart
-                            where a.Member_Id == int.Parse(id) && a.Products_Id == Products_Id
+                            where a.MemberId == int.Parse(id) && a.ProductsId == Products_Id
                             select a).FirstOrDefault();
 
-            if (findItem == default(Models.Table.ProductsCart))
+            if (findItem == default(Models.Entity.ProductsCart))
             {
                 return false;
             }

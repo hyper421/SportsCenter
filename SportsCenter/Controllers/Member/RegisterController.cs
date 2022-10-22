@@ -6,7 +6,7 @@ using Razor.Templating.Core;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Service;
-using SportsCenter.Models.Table;
+using SportsCenter.Models.Entity;
 
 namespace SportsCenter.Controllers
 {
@@ -14,9 +14,9 @@ namespace SportsCenter.Controllers
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly SportsCenterDbContext _context;
+        private readonly db_a8ea3c_sportscenterContext _context;
 
-        public RegisterController(SportsCenterDbContext SportsCenterDbContext)
+        public RegisterController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }
@@ -42,7 +42,7 @@ namespace SportsCenter.Controllers
                 signin.Member_Salt = random.Next(0, 100).ToString();
                 signin.Member_Password = hashingPassword.HashPassword($"{signin.Member_Password}{signin.Member_Salt}");                //Hash
                                                                                                                                        //等待連結資料庫
-                _context.Member.Add(new Models.Table.Member
+                _context.Member.Add(new Models.Entity.Member
                 {
                     Name = signin.Member_Name,
                     Account = signin.Member_Account,
