@@ -44,14 +44,14 @@ namespace SportsCenter.Controllers
                                                                                                                                        //等待連結資料庫
                 _context.Member.Add(new Models.Table.Member
                 {
-                    Member_Name = signin.Member_Name,
-                    Member_Account = signin.Member_Account,
-                    Member_Password = signin.Member_Password,
-                    Member_Salt = signin.Member_Salt,
-                    Member_Phone = signin.Member_Phone,
-                    Member_Email = signin.Member_Email,
-                    Member_Address = signin.Member_Address,
-                    Member_CreateTime = DateTime.Now.ToString()
+                    Name = signin.Member_Name,
+                    Account = signin.Member_Account,
+                    Password = signin.Member_Password,
+                    Salt = signin.Member_Salt,
+                    Phone = signin.Member_Phone,
+                    Email = signin.Member_Email,
+                    Address = signin.Member_Address,
+                    CreateTime = DateTime.Now
                 });
                 HttpContext.Response.Cookies.Append("UserEmail", signin.Member_Email);
                 var msg = await RazorTemplateEngine.RenderAsync<SigninModel>("Views/Register/Authorize.cshtml", signin);
@@ -77,9 +77,9 @@ namespace SportsCenter.Controllers
         {
             string cookie = Request.Cookies["UserEmail"];
             Member? member = (from a in _context.Member
-                              where a.Member_Email == cookie
+                              where a.Email == cookie
                               select a).FirstOrDefault();
-            member.Member_Role = 1;
+            member.Role = 1;
             string msg = "驗證完成";
             _context.Entry(member).State = EntityState.Modified;
             _context.SaveChanges();
@@ -117,15 +117,15 @@ namespace SportsCenter.Controllers
                 return false;
             }
             Member? member = (from a in _context.Member
-                              where a.Member_Email == model.Member_Email
+                              where a.Email == model.Member_Email
                               select a).FirstOrDefault();
             if (member == null)
             {
                 return false;
             }
-            HttpContext.Response.Cookies.Append("ID", member.MemberId.ToString());
+            HttpContext.Response.Cookies.Append("ID", member.Id.ToString());
             var msg = await RazorTemplateEngine.RenderAsync<Member>("Views/Register/MailToReset.cshtml", member);
-            mail.SendMail(member.Member_Email, msg, "開約GO 密碼重設信件");
+            mail.SendMail(member.Email, msg, "開約GO 密碼重設信件");
             return true;
         }
         #endregion
@@ -140,7 +140,7 @@ namespace SportsCenter.Controllers
                 return false;
             }
             var user = (from b in _context.Member
-                        where b.MemberId == int.Parse(userID)
+                        where b.Id == int.Parse(userID)
                         select b).FirstOrDefault();
             if (user == null)
             {
@@ -148,7 +148,7 @@ namespace SportsCenter.Controllers
             }
             else
             {
-                user.Member_Password = model.Member_Password;
+                user.Password = model.Member_Password;
                 _context.Update(user);
             }
             _context.SaveChanges();
@@ -183,20 +183,5 @@ namespace SportsCenter.Controllers
 
 
 
-        public async Task<IActionResult> LoginResult()
-        {
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-
-            var json = result.Principal.Claims.Select(x => new
-            {
-                x.Type,
-                x.Value,
-                x.Issuer,
-                x.OriginalIssuer
-
-            });
-            return Json(json);
-        }
     }
 }

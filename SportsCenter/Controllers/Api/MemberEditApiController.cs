@@ -23,21 +23,16 @@ namespace SportsCenter.Controllers.Api
         #endregion
         #region 取會員資料
         [HttpGet]
-        public IEnumerable<Member> Get()
+        public IEnumerable<Member> GetMember()
         {
             var id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
             var user = (from a in _context.Member where a.Id == int.Parse(id) select a);
             return user;
         }
-        [HttpGet("{id}")]
-        public Member Get(int id)
-        {
-            return _context.Member.Find(id);
-        }
         #endregion
         #region 回傳會員資料
         [HttpPost]
-        public bool Post([FromBody] MemberEditModel model)
+        public bool ResetMember([FromBody] MemberEditModel model)
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
             if (userId == null)
@@ -45,7 +40,7 @@ namespace SportsCenter.Controllers.Api
                 return false;
             }
             var user = (from b in _context.Member
-                      where b.MemberId == int.Parse(userId)
+                      where b.Id == int.Parse(userId)
                         select b).FirstOrDefault();
             if (user == null)
             {
@@ -53,11 +48,11 @@ namespace SportsCenter.Controllers.Api
             }
             else
             {
-                user.Member_Account = model.Member_Account;
-                user.Member_Name = model.Member_Name;
-                user.Member_Phone = model.Member_Phone;
-                user.Member_Email = model.Member_Email;
-                user.Member_Address = model.Member_Address;
+                user.Account = model.Member_Account;
+                user.Name = model.Member_Name;
+                user.Phone = model.Member_Phone;
+                user.Email = model.Member_Email;
+                user.Address = model.Member_Address;
                 _context.Update(user);
             }
             _context.SaveChanges();

@@ -38,7 +38,7 @@ namespace SportsCenter.Controllers
             }
 
             var location = await _context.Location
-                .FirstOrDefaultAsync(m => m.Location_Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (location == null)
             {
                 return NotFound();
@@ -65,8 +65,8 @@ namespace SportsCenter.Controllers
 
             if (files == null || files.Length == 0)
             {
-                return Content("沒有選取檔案，請回上一頁");
-                return RedirectToAction("Create");
+                //return Content("沒有選取檔案，請回上一頁");
+                //return RedirectToAction("Create");
             }
 
             var path = Path.Combine(environment.ContentRootPath, "wwwroot\\Jena\\picture", files.FileName);
@@ -78,20 +78,19 @@ namespace SportsCenter.Controllers
                 await files.CopyToAsync(fs);
                 fs.Close();
             }
-            model.Location.Location_ImageName = files.FileName;
+            model.Location.ImagePath = files.FileName;
 
             //if (ModelState.IsValid)
             if (model != null)
             {
                 var location = new Location
                 {
-                    Location_Name = model.Location.Location_Name,
-                    Location_EngName = model.Location.Location_EngName,
-                    Location_Area = model.Location.Location_Area,
-                    Location_Address = model.Location.Location_Address,
-                    Location_Phone = model.Location.Location_Phone,
-                    Location_Website = model.Location.Location_Website,
-                    Location_ImageName = model.Location.Location_ImageName,
+                    Name = model.Location.Name,
+                    EnglishName = model.Location.EnglishName,
+                    Address = model.Location.Address,
+                    ContactPhone = model.Location.ContactPhone,
+                    Website = model.Location.Website,
+                    ImagePath = model.Location.ImagePath,
 
                 };
                 _context.Add(location);
@@ -116,11 +115,11 @@ namespace SportsCenter.Controllers
         public async Task<IActionResult> Edit(LocationViewModel model, IFormFile files)
         {
 
-            if (files == null || files.Length == 0)
-            {
-                return Content("沒有選取檔案，請回上一頁");
-                return RedirectToAction("Edit");
-            }
+            //if (files == null || files.Length == 0)
+            //{
+            //    return Content("沒有選取檔案，請回上一頁");
+            //    return RedirectToAction("Edit");
+            //}
 
             var path = Path.Combine(environment.ContentRootPath, "wwwroot\\Jena\\picture", files.FileName);
             using (FileStream fs = new FileStream(path, FileMode.Create))
@@ -131,20 +130,19 @@ namespace SportsCenter.Controllers
                 await files.CopyToAsync(fs);
                 fs.Close();
             }
-            model.Location.Location_ImageName = files.FileName;
+            model.Location.ImagePath = files.FileName;
 
             //if (ModelState.IsValid)
             if (model != null)
             {
                 var location = new Location
                 {
-                    Location_Name = model.Location.Location_Name,
-                    Location_EngName = model.Location.Location_EngName,
-                    Location_Area = model.Location.Location_Area,
-                    Location_Address = model.Location.Location_Address,
-                    Location_Phone = model.Location.Location_Phone,
-                    Location_Website = model.Location.Location_Website,
-                    Location_ImageName = model.Location.Location_ImageName,
+                    Name = model.Location.Name,
+                    EnglishName = model.Location.EnglishName,
+                    Address = model.Location.Address,
+                    ContactPhone = model.Location.ContactPhone,
+                    Website = model.Location.Website,
+                    ImagePath = model.Location.ImagePath,
 
                 };
                 _context.Add(location);
@@ -212,7 +210,7 @@ namespace SportsCenter.Controllers
             }
 
             var location = await _context.Location
-                .FirstOrDefaultAsync(m => m.Location_Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (location == null)
             {
                 return NotFound();
@@ -242,7 +240,7 @@ namespace SportsCenter.Controllers
 #endregion
         private bool LocationExists(int id)
         {
-            return _context.Location.Any(e => e.Location_Id == id);
+            return _context.Location.Any(e => e.Id == id);
         }
     }
 }

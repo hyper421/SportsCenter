@@ -14,7 +14,8 @@ namespace SportsCenter.Models.Table
         public string EnglishName { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
-        public string ContactPhone { get; set; }
+        public string ContactPhone { get; set; } 
+        public string Area { get; set; }
         public string ImagePath { get; set; }
         public string Website { get; set; }
 

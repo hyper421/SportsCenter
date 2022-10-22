@@ -64,8 +64,8 @@
     <div class="header">
         <div class="row r1">
             <div class="col-md-9 abc">
-                <h2>@Html.DisplayFor(model => model.Location_Name)  @Html.DisplayFor(model => model.Location_EngName)</h2>
-              <h3> <span class="badge rounded-pill bg-warning"> @Html.DisplayFor(model => model.Location_Area)</span></h3>
+                <h2>@Html.DisplayFor(model => model.Name)  @Html.DisplayFor(model => model.EnglishName)</h2>
+              <h3> <span class="badge rounded-pill bg-warning"> @Html.DisplayFor(model => model.Area)</span></h3>
             </div>
         </div>
     </div>
@@ -73,17 +73,17 @@
         <div class="row r3">
             <div class="col-md-5 p-0 klo">
                 
-                   <h5><ul><i class="fa-solid fa-location-dot"></i>    @Html.DisplayFor(model => model.Location_Address)</ul>
-                    <ul><i class="fa-solid fa-square-phone"></i>    @Html.DisplayFor(model => model.Location_Phone)</ul>
-                    <ul><i class="fa-brands fa-square-font-awesome"></i>   @Html.DisplayFor(model => model.Location_Website)</ul></h5>
+                   <h5><ul><i class="fa-solid fa-location-dot"></i>    @Html.DisplayFor(model => model.Address)</ul>
+                    <ul><i class="fa-solid fa-square-phone"></i>    @Html.DisplayFor(model => model.ContactPhone)</ul>
+                    <ul><i class="fa-brands fa-square-font-awesome"></i>   @Html.DisplayFor(model => model.Website)</ul></h5>
 
          
             </div>
-            <div class="col-md-7"> <img src="~/Jena/picture/@Model.Location_ImageName" asp-append-version="true" width="90%" height="95%" style="border-radius:5%"> </div>
+            <div class="col-md-7"> <img src="~/Jena/picture/@Model.ImagePath" asp-append-version="true" width="90%" height="95%" style="border-radius:5%"> </div>
         </div>
     </div>
 
-         <iframe width="1200" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=@Html.DisplayFor(model => model.Location_Address)&z=16&output=embed&t=></iframe>
+         <iframe width="1200" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=@Html.DisplayFor(model => model.Address)&z=16&output=embed&t=></iframe>
 
     <div class="footer d-flex flex-column mt-5">
 <div class="col-md-3 text-right pqr"></div>

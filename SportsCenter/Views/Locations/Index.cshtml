@@ -21,19 +21,19 @@
                         <div class="col card shadow mb-5 d-flex align-items-stretch"> 
                         <!--div class="card h-100 shadow-sm rounded" style="width:15rem"-->
                             <!-- 照片-->
-                            <img class="card-img-top" src="~/Jena/picture/@item.Location_ImageName" alt="..." asp-append-version="true" accept="image/*"/>
+                            <img class="card-img-top" src="~/Jena/picture/@item.ImagePath" alt="..." asp-append-version="true" accept="image/*"/>
                             <!-- 資料-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!--名字-->
-                                    <h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Location_Name)</h5>
-                                     <h6 class="fw-bolder">@Html.DisplayFor(modelItem => item.Location_EngName) </h6>
+                                    <h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Name)</h5>
+                                     <h6 class="fw-bolder">@Html.DisplayFor(modelItem => item.EnglishName) </h6>
 
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-success mt-auto" asp-action="Details"asp-route-id="@item.Location_Id">詳細資訊</a></div>
+                                <div class="text-center"><a class="btn btn-outline-success mt-auto" asp-action="Details"asp-route-id="@item.Id">詳細資訊</a></div>
 
                             </div>
 

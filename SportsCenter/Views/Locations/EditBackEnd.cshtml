@@ -68,30 +68,30 @@
 </div>
  </tr>
 <td>
- <img height="50px" width="50px" src="~/picture/@item.Location_ImageName" asp-append-version="true" accept="image/*"/>
+ <img height="50px" width="50px" src="~/picture/@item.ImagePath" asp-append-version="true" accept="image/*"/>
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_Name)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_EngName)
+                @Html.DisplayFor(modelItem => item.EnglishName)
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_Area)
+                @Html.DisplayFor(modelItem => item.Area)
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_Address)
+                @Html.DisplayFor(modelItem => item.Address)
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_Phone)
+                @Html.DisplayFor(modelItem => item.ContactPhone)
             </td>
  <td class="text-nowrap align-middle">
-                @Html.DisplayFor(modelItem => item.Location_Website)
+                @Html.DisplayFor(modelItem => item.Website)
             </td>
  <td class="text-center align-middle">
 <div class="btn-group align-top">    
-<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Edit" asp-route-id="@item.Location_Id">修改</a> 
-<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Delete" asp-route-id="@item.Location_Id"><i class="fa fa-trash"></i></a>
+<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Edit" asp-route-id="@item.Id">修改</a> 
+<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
             </td>
 
 }

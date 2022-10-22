@@ -55,7 +55,7 @@ namespace SportsCenter.Controllers.Api
                 Status = false,
                 Data = new List<TempCartModel>()
             };
-            var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.MemberId == 2);
+            var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.Id == 2);
             if (user == null)
             {
                 return result;
@@ -63,12 +63,9 @@ namespace SportsCenter.Controllers.Api
             var tempdata = user.ProductsCart.Select(x => new TempCartModel
             {
                 //塞要的資料
-                ProductId = x.ProductsCart_ID,
-                ProductName = x.Products_Name,
-                ProductPrice = x.Products_Price,
-                ProductCount = x.ProductsCart_Count,
-                ProductTotal = x.ProductsCart_Total,
-                
+                ProductId = x.Products_Id,
+                ProductName = x.Products.Products_Name,
+                ProductPrice = x.Products.Products_Price,                
             });
             result.Data.AddRange(tempdata);
             result.Status = true;
@@ -130,7 +127,7 @@ namespace SportsCenter.Controllers.Api
                                  where a.Products_Id == model.ProductId
                                  select a.Products_Price).FirstOrDefault();
 
-            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.MemberId == 2);
+            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.Id == 2);
             if (user == null)
             {
                 return false;
@@ -142,14 +139,14 @@ namespace SportsCenter.Controllers.Api
                 {
                     Member_Id = 2,
                     Products_Id = model.ProductId,
-                    ProductsCart_Count = model.Count,
-                    Products_Name = ProductsName,
-                    Products_Price = ProductsPrice,
+                    Count = model.Count,
+                    //Products_Name = ProductsName,
+                    //Products_Price = ProductsPrice,
                 });
             }
             else
             {
-                userCart.ProductsCart_Count += model.Count;
+                userCart.Count += model.Count;
             }
             dbContext.SaveChanges();
             return true;

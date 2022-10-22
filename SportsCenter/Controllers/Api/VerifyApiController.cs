@@ -30,11 +30,11 @@ namespace SportsCenter.Controllers.Api
             if (model.Member_Account == null || model.Member_Password == null) { return false; }
             HashingPassword hashingPassword = new HashingPassword();
             var salt = (from a in _context.Member
-                        where a.Member_Account == model.Member_Account
-                        select a.Member_Salt).FirstOrDefault();
+                        where a.Account == model.Member_Account
+                        select a.Salt).FirstOrDefault();
             model.Member_Password = hashingPassword.HashPassword($"{model.Member_Password}{salt}");
 
-            var user = _context.Member.FirstOrDefault(x => x.Member_Account == model.Member_Account && x.Member_Password == model.Member_Password);
+            var user = _context.Member.FirstOrDefault(x => x.Account == model.Member_Account && x.Password == model.Member_Password);
 
             if (user == null)
             {
@@ -44,12 +44,12 @@ namespace SportsCenter.Controllers.Api
             {
                 var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Member_Name),
-                new Claim(ClaimTypes.Sid, user.MemberId.ToString()),
-                new Claim(ClaimTypes.Email, user.Member_Email),
-                new Claim(ClaimTypes.StreetAddress, user.Member_Address),
-                new Claim(ClaimTypes.HomePhone, user.Member_Phone),
-                new Claim(ClaimTypes.Role, user.Member_Role.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.StreetAddress, user.Address),
+                new Claim(ClaimTypes.HomePhone, user.Phone),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var clainPrincipal = new ClaimsPrincipal(claimsIdentity);
