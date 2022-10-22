@@ -80,18 +80,18 @@
                             <img :src="items.products_img" class="card-img-top" alt="" data-bs-toggle="modal"
                                  :data-bs-target="items.products_Target">
                                 <div class="card-body">
-                                    <div style="height:60px">
-                                        <h5 class="card-title">{{items.products_Name}}</h5>
-                                        <p class="card-text">${{items.products_Price}}</p>
+                                    <div style="height:60px" >
+                                        <h5 class="card-title" >{{items.products_Name}}</h5>
                                     </div>
+                                <p class="card-text">${{items.products_Price}}</p>
                                     @*<div>
                                         <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
                                                 :data-bs-target="temp.target">
                                             詳細資料
                                         </button>
                                     </div>*@
-                                    <div class="my-2" style="display:block">
-                                     <vue-number-input v-model="items.qty" :min="0" :max="1000" inline controls></vue-number-input>
+                                    <div class="my-2" style="display:block" >
+                                     <vue-number-input v-model="items.qty" :min="0" :max="1000" inline controls ></vue-number-input>
                                     </div>
                                     <button @@click="addCart(items)" class="btn btn-danger col-12" >加入購物車</button>
                                 </div>

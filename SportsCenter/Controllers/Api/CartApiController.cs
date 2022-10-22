@@ -68,6 +68,7 @@ namespace SportsCenter.Controllers.Api
                 ProductPrice = x.Products_Price,
                 ProductCount = x.ProductsCart_Count,
                 ProductTotal = x.ProductsCart_Total,
+                
             });
             result.Data.AddRange(tempdata);
             result.Status = true;
@@ -162,21 +163,25 @@ namespace SportsCenter.Controllers.Api
         }
         //刪除
         // DELETE api/<CartApiController>/5
-        //[HttpDelete("{id}")]
-        //public bool Delete(int Products_Id)
-        //{
-        //    var findItem = dbContext.ProductsCart.Where(a => a.Products_Id == Products_Id).Select(a => a).FirstOrDefault();
+        [HttpDelete("{id}")]
+        public bool Delete(int Products_Id)
+        {
+            var id = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+            //var findItem = dbContext.ProductsCart.Where(a => a.Products_Id == Products_Id).Select(a => a).FirstOrDefault();
+            var findItem = (from a in dbContext.ProductsCart
+                            where a.Member_Id == int.Parse(id) && a.Products_Id == Products_Id
+                            select a).FirstOrDefault();
 
-        //    if(findItem == default(Models.Table.ProductsCart))
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        dbContext.ProductsCart.Remove(findItem);
-        //    }
-        //    dbContext.SaveChanges();
-        //    return true;
-        //}
+            if (findItem == default(Models.Table.ProductsCart))
+            {
+                return false;
+            }
+            else
+            {
+                dbContext.ProductsCart.Remove(findItem);
+            }
+            dbContext.SaveChanges();
+            return true;
+        }
     }
 }

@@ -50,10 +50,10 @@
 
 
 <!-- 訂單資料表 -->
-<div>
+<div id="cart">
     <form action="">
         <div>
-            <div class="container-fluid" id="cart">
+            <div class="container-fluid" >
                 <div class="row">
                     <div class="col-12 ">
                         <table class="table">
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        <div>
+        <div >
             <div>
                 <label style="font-size:x-large;">收件人名稱 :</label>
                 <input type="text" style="width:400px">
@@ -168,7 +168,9 @@
             //        count: '1'
             //    },
             //],
-            product: [],
+            product: [ 
+                {name : "aaa" }
+            ],
         },
         methods: {
             getData: function () {
@@ -179,6 +181,14 @@
                         self.product = result.data
                     })
             },
+            //Delete: function () {
+            //    let self = this;
+            //    fetch("/api/Cart")
+            //        .then(function (response) { return response.json() })
+            //        .then(function (result) {
+            //            self.product = result.data
+            //        })
+            //},
             //decrease: function (order) {
             //    if (order.ProductCount > 0) {
             //        order.ProductCount--;
