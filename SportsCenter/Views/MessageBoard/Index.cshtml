@@ -1,4 +1,10 @@
-﻿
+﻿@{
+   // Layout = null;
+   //ViewData["Title"] = "Index";
+   ////var 
+   ////if (Session["Member_Account"]==null&&)
+
+}
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
 
 <style>
@@ -209,7 +215,7 @@
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     
-    <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="Home" asp-action="FawenYanzheng" style="text-decoration:none;" class="WoYao">我要發文</a></a>
+    <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="MessageBoard" asp-action="FawenYanzheng" style="text-decoration:none;" class="WoYao">我要發文</a></a>
 </div>
 
 <hr />
@@ -379,7 +385,7 @@
                 </div>
 
             </div>
-
+           
             <span id="conta">
                 <my-span v-for="n in range"></my-span>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -398,6 +404,7 @@
                                     <option>壁球</option>
                                 </select>
                                 <form>
+   
                                     <div class="mb-3">
                                         <label for="recipient-name" class="col-form-label">標題:</label>
                                         <input type="text" class="form-control" id="recipient-name">

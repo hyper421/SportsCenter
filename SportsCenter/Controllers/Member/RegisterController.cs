@@ -2,14 +2,11 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Razor.Templating.Core;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Service;
 using SportsCenter.Models.Table;
-using System.Diagnostics.Metrics;
-using System.Security.Claims;
 
 namespace SportsCenter.Controllers
 {
@@ -181,5 +178,25 @@ namespace SportsCenter.Controllers
             return "未登入";
         }
         #endregion
+
+
+
+
+
+        public async Task<IActionResult> LoginResult()
+        {
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+            var json = result.Principal.Claims.Select(x => new
+            {
+                x.Type,
+                x.Value,
+                x.Issuer,
+                x.OriginalIssuer
+
+            });
+            return Json(json);
+        }
     }
 }

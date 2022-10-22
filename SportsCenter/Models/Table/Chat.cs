@@ -10,13 +10,13 @@ namespace SportsCenter.Models.Table
         [Key]
 
         public int Chat_Id { get; set; }
-        [Required]
+        //[Required]
         [ForeignKey("Member")]
         public int Member_Id { get; set; }
-        [Required]
+       // [Required]
         [Column(TypeName = "nvarchar(MAX)")]
         public string? Chat_Message { get; set; }
-        [Required]
+        //[Required]
         [Column(TypeName = "nvarchar(50)")]
         public string? Chat_CreateDateTime { get; set; }
         public int Chat_LikeCount { get; set; }
