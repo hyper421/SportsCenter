@@ -1,0 +1,40 @@
+﻿/* 調整input間距 */
+body {
+    position: relative;
+}
+
+/*會員資訊*/
+.memberimg {
+    background-color: #555;
+}
+
+/*導覽列*/
+.nav-pills .nav-link {
+    top: 0;
+    background-color: rgb(217, 217, 217);
+    border-radius: 0;
+}
+
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+        background-color: rgb(217, 217, 217);
+        font-weight: bold;
+        color: black;
+        border-bottom: black 1px solid;
+        border-radius: 0;
+    }
+
+.collection {
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+}
+
+    .collection button {
+        padding: 8px;
+    }
+/* 調整input間距 */
+.wrapper .form-group {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2rem;
+}

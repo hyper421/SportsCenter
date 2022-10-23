@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SportsCenter.DataAccess.Entity.Location>
+
+@{
+    ViewData["Title"] = "EditBackEnd";
+}
+
+<h1>場館資訊</h1>
+
+
+@*    <thead>
+        <tr>
+             <td>
+                @Html.DisplayNameFor(model => model.Location_ImageName)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_EngName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location_Website)
+            </th>
+            <th></th>
+        </tr>
+    </thead>*@
+      <tr>
+         <td>
+    <div class="row flex-lg-nowrap">
+      <div class="col mb-7">
+        <div class="e-panel card">
+          <div class="card-body">
+            <div class="card-title">
+            </div>
+            <div class="e-table">
+              <div class="table-responsive table-lg mt-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+
+                      <th>場館照片</th>
+                      <th>場館名稱</th>
+                      <th>英文名稱</th>
+                      <th>場館縣市</th>
+                      <th>場館地址</th>
+                      <th>場館電話</th>
+                      <th>場館網站</th>
+                     <th>修改/刪除</th>
+                    </tr>
+                  </thead>
+
+
+   <tbody>
+          
+@foreach (var item in Model) {
+ <tr>
+ <td class="align-middle">
+<div class="custom-control custom-control-inline custom-control-nameless m-0 align-top">
+</div>
+ </tr>
+<td>
+ <img height="50px" width="50px" src="~/picture/@item.ImagePath" asp-append-version="true" accept="image/*"/>
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.EnglishName)
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+ <td class="text-nowrap align-middle">
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+ <td class="text-center align-middle">
+<div class="btn-group align-top">    
+<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Edit" asp-route-id="@item.Id">修改</a> 
+<a class="btn btn-sm btn-outline-secondary badge" type="button" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+            </td>
+
+}
+
+</table>
+
+
+
+
+                
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

@@ -1,0 +1,519 @@
+﻿@{
+   // Layout = null;
+   //ViewData["Title"] = "Index";
+   ////var 
+   ////if (Session["Member_Account"]==null&&)
+
+}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+
+<style>
+
+
+    .container {
+        display: flex;
+        width: 1040px;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        width: 300px;
+    }
+
+    .card-header img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        min-height: 250px;
+    }
+
+    .tag {
+        background: #cccccc;
+        border-radius: 50px;
+        font-size: 12px;
+        margin: 0;
+        color: #fff;
+        padding: 2px 10px;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+
+    .tag-teal {
+        background-color: #47bcd4;
+    }
+
+    .tag-purple {
+        background-color: #5e76bf;
+    }
+
+    .tag-pink {
+        background-color: #cd5b9f;
+    }
+
+    .tag-orange {
+        background-color: orange;
+    }
+
+    .tag-green {
+        background-color: #198754;
+    }
+
+    .tag-red {
+        background-color: #FF5151;
+    }
+
+
+
+    .card-body p {
+        font-size: 13px;
+        margin: 0 0 40px;
+    }
+
+    .user {
+        display: flex;
+        margin-top: auto;
+    }
+
+        .user img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+    .user-info h5 {
+        margin: 0;
+    }
+
+    .user-info small {
+        color: #545d7a;
+    }
+
+    .DaoLanWeiZhi {
+        margin: auto;
+        border-radius: 100px;
+        font-size: 20px;
+    }
+
+    body {
+        background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
+    }
+
+    .DaoLanWeiZhi:hover {
+        transform: translate(-0.05em, -0.05em);
+        box-shadow: 0.15em 0.15em;
+    }
+
+    .DaoLanWeiZhi:active {
+        transform: translate(0.05em, 0.05em);
+        box-shadow: 0.05em 0.05em;
+    }
+
+
+    .FaWen {
+        position: relative;
+        padding: 5px 20px;
+        margin: 0px 10px 10px 0px;
+        float: left;
+        border-radius: 3px;
+        font-size: 20px;
+        color: #FFF;
+        text-decoration: none;
+        background-color: #2ecc71;
+        border: none;
+        border-bottom: 5px solid #27ae60;
+        text-shadow: 0px -2px #27ae60;
+        -webkit-transition: all 0.1s;
+        transition: all 0.1s;
+    }
+
+        .FaWen:hover, .FaWen:active {
+            -webkit-transform: translate(0px,5px);
+            -ms-transform: translate(0px,5px);
+            transform: translate(0px,5px);
+            border-bottom: 1px solid #2ecc71;
+        }
+
+    .GuanBi {
+        position: relative;
+        padding: 5px 20px;
+        margin: 0px 10px 10px 0px;
+        float: left;
+        border-radius: 3px;
+        font-size: 20px;
+        color: #FFF;
+        text-decoration: none;
+        background-color: #6C757D;
+        border: none;
+        border-bottom: 5px solid #6C757D;
+        text-shadow: 0px -2px #6C757D;
+        -webkit-transition: all 0.1s;
+        transition: all 0.1s;
+    }
+
+        .GuanBi:hover, .GuanBi:active {
+            -webkit-transform: translate(0px,5px);
+            -ms-transform: translate(0px,5px);
+            transform: translate(0px,5px);
+            border-bottom: 1px solid #6C757D;
+        }
+
+
+    .WoYao {
+        padding: 15px 25px;
+        border: unset;
+        border-radius: 15px;
+        color: #212121;
+        z-index: 1;
+        background: #e8e8e8;
+        position: relative;
+        font-weight: 1000;
+        font-size: 17px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms;
+        overflow: hidden;
+    }
+
+        .WoYao::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            border-radius: 15px;
+            background-color: #212121;
+            z-index: -1;
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+            box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+            transition: all 250ms
+        }
+
+        .WoYao:hover {
+            color: #e8e8e8;
+        }
+
+            .WoYao:hover::before {
+                width: 100%;
+            }
+</style>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    
+    <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="MessageBoard" asp-action="FawenYanzheng" style="text-decoration:none;" class="WoYao">我要發文</a></a>
+</div>
+
+<hr />
+
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="222333">
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" onchange="Zonghe()">
+    <label class="DaoLanWeiZhi tag tag-red" for="btnradio0">綜合</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onchange="YuQiu()">
+    <label class="DaoLanWeiZhi tag tag-teal" for="btnradio1">羽球</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="LanQiu()">
+    <label class="DaoLanWeiZhi tag tag-purple" for="btnradio2">籃球</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="ZhuoQiu()">
+    <label class="DaoLanWeiZhi tag tag-pink" for="btnradio3">桌球</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onchange="ZhuangQiu()">
+    <label class="DaoLanWeiZhi tag tag-orange" for="btnradio4">撞球</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" onchange="BiQiu()">
+    <label class="DaoLanWeiZhi tag tag-green" for="btnradio5">壁球</label>
+
+</div>
+
+<div id="indexArticle">
+    <span id="Zongti">
+        <div class="container justify-content-center">
+            <a href="https://localhost:7187/Home/AurtherArticle" style="text-decoration:none; color:black;">
+                <span id="Yu">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover" />
+                        </div>
+                        <div class="card-body">
+                            <span class="tag tag-teal">羽球</span>
+                            <h4>
+                                新手上路有人要不要一起打？
+                            </h4>
+                            <p>
+                                新北有一家新開的感覺很不錯
+                            </p>
+                            <div class="user">
+                                <img src="https://file.qqtouxiang.com/dongwu/2020-04-10/11395a5d68df9aeaa37267012c8a2c34.jpeg" alt="user" />
+                                <div class="user-info">
+                                    <h5>無雙</h5>
+                                    <small>2022/10/10</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </a>
+            <span id="Lan">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://www.newsbtc.com/wp-content/uploads/2020/06/mesut-kaya-LcCdl__-kO0-unsplash-scaled.jpg" alt="ballons" />
+                    </div>
+                    <div class="card-body">
+                        <span class="tag tag-purple">籃球</span>
+                        <h4>
+                            求長期練習對象
+                        </h4>
+                        <p>
+                            週五晚上以及假日全天都可以
+                        </p>
+                        <div class="user">
+                            <img src="http://i1.wp.com/inews.gtimg.com/newsapp_bt/0/1775329636/641" alt="user" />
+                            <div class="user-info">
+                                <h5>伊凡</h5>
+                                <small>2022/10/12</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <span id="Zhuo">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://images6.alphacoders.com/312/thumb-1920-312773.jpg" alt="city" />
+                    </div>
+                    <div class="card-body">
+                        <span class="tag tag-pink">桌球</span>
+                        <h4>
+                            桌球俱樂部星期六晚上有舉辦活動
+                        </h4>
+                        <p>
+                            獎品豐富，名額有限，歡迎各位參加
+                        </p>
+                        <div class="user">
+                            <img src="https://img.99tu.com:9988/uploads/allimg/c200919/1600461L13G20-52O8.jpg" alt="user" />
+                            <div class="user-info">
+                                <h5>克麗絲</h5>
+                                <small>2022/10/22</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <span id="Zhuang">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000276/img/basic/a0000276_main.jpg?20170427165412&q=80" alt="city" />
+                    </div>
+                    <div class="card-body">
+                        <span class="tag tag-orange">撞球</span>
+                        <h4>
+                            尋求好場地
+                        </h4>
+                        <p>
+                            想找氣氛好一點的地方
+                        </p>
+                        <div class="user">
+                            <img src="https://img.syt5.com/2020/0529/20200529105745568.jpg.420.420.jpg" alt="user" />
+                            <div class="user-info">
+                                <h5>徜徉海景</h5>
+                                <small>2022/10/11</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <span id="Bi">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/G209%E5%9C%8B%E9%81%93%E9%99%84%E8%BF%91%E9%A2%A8%E6%99%AF.jpg" alt="city" />
+                    </div>
+                    <div class="card-body">
+                        <span class="tag tag-green">壁球</span>
+                        <h4>
+                            有推薦的球拍嗎
+                        </h4>
+                        <p>
+                            目前用的這個沒多久就壞掉了
+                        </p>
+                        <div class="user">
+                            <img src="https://p.qqan.com/up/2020-7/2020072108462958117.jpg" alt="user" />
+                            <div class="user-info">
+                                <h5>墨羽燃煙</h5>
+                                <small>2022/10/12</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <div class="card">
+                <div class="card-header">
+                    <img src="https://cdn1-digiphoto.techbang.com/system/images/124901/original/7d4012268131717149af4e7369d07187.jpg?1548392388" alt="city" />
+                </div>
+                <div class="card-body">
+                    <span class="tag tag-red">綜合</span>
+                    <h4>
+                        請問初學者入門運動的選擇
+                    </h4>
+                    <p>
+                        有沒有比較輕鬆學起來不會累的
+                    </p>
+                    <div class="user">
+                        <img src="https://img.syt5.com/2020/0603/20200603095328710.jpeg.420.420.jpg" alt="user" />
+                        <div class="user-info">
+                            <h5>一朵雲</h5>
+                            <small>2022/09/30</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+           
+            <span id="conta">
+                <my-span v-for="n in range"></my-span>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info text-white">
+                                <h5 class="modal-title" id="exampleModalLabel">新增貼文</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <select>
+                                    <option>羽球</option>
+                                    <option>籃球</option>
+                                    <option>桌球</option>
+                                    <option>撞球</option>
+                                    <option>壁球</option>
+                                </select>
+                                <form>
+   
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">標題:</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">內容:</label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="GuanBi" data-bs-dismiss="modal">關閉</button>
+                                <button type="button" class="FaWen" v-on:click="addForm()" data-bs-dismiss="modal">發文</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+    </span>
+
+</div>
+
+
+<script type="x-template" id="my-form">
+    <span>
+            <div class="card">
+              <div class="card-header">
+                                        <img src="https://wportfolio.wzu.edu.tw/blog/attach/23/55023/24/bf_94793_1303482_98970_3.jpg" alt="rover" />
+              </div>
+              <div class="card-body">
+                    <span class="tag tag-teal">羽球</span>
+                <h4>
+                  你好
+                </h4>
+                <p >
+                 你好
+                </p>
+                <div class="user">
+                          <img src="https://i2.wangminggu.com/f903571781a785df810d967a/be5b/bc54/ec591e128df5849fd952c17dc002ca60fc2f328b73ca83500e9b9cb9739e904072aeb8c2368d11.jpg" alt="user" />
+                  <div class="user-info">
+                    <h5>悠然</h5>
+                    <small>剛剛</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </span>
+</script>
+<script>
+
+    Vue.component('my-span', {
+        template: '#my-form'
+    });
+
+    new Vue({
+        el: '#Zongti',
+        data: {
+            range: 0
+        },
+
+        methods: {
+            addForm: function () {
+                this.range += 1;
+            }
+        }
+    })
+
+
+  
+    var Zongti = document.getElementById("Zongti").innerHTML;
+    var Yu = document.getElementById("Yu").innerHTML;
+    var Lan = document.getElementById("Lan").innerHTML;
+    var Zhuo = document.getElementById("Zhuo").innerHTML;
+    var Zhuang = document.getElementById("Zhuang").innerHTML;
+    var Bi = document.getElementById("Bi").innerHTML;
+
+    function Zonghe() {
+
+        document.getElementById("Zongti").innerHTML = Zongti;
+
+    }
+    function YuQiu() {
+
+        document.getElementById("Zongti").innerHTML = Yu;
+
+
+    }
+    function LanQiu() {
+
+        document.getElementById("Zongti").innerHTML = Lan;
+
+    }
+    function ZhuoQiu() {
+
+        document.getElementById("Zongti").innerHTML = Zhuo;
+
+    }
+    function ZhuangQiu() {
+
+        document.getElementById("Zongti").innerHTML = Zhuang;
+
+    }
+    function BiQiu() {
+
+        document.getElementById("Zongti").innerHTML = Bi;
+
+    }
+
+
+
+
+</script>

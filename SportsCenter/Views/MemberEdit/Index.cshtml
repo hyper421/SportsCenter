@@ -1,0 +1,162 @@
+﻿<link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="~/david/css//MemberCenter.css" rel="stylesheet" />
+
+
+
+
+    <div id="d1">
+        <!-- 你們的nav bar -->
+        <div class="container memberinfo pt-5">
+            <div class="row">
+                <div class="col-4 memberimg">
+                    會員照片在這
+                </div>
+                <div class="col-8">
+                    <h3>會員級別:{{member.level}}</h3>
+                    <p>姓名:{{member.name}}</p>
+                    <p>基本資料:???</p>
+                </div>
+            </div>
+        </div>
+        <!-- 導覽列(sticky) -->
+        <div class="collection container p-0">
+            <ul class="nav nav-justified mt-3 nav-pills" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-tab" data-bs-toggle="tab" data-bs-target="#tabone"
+                        type="button" role="tab" aria-controls="tabone" aria-selected="true">修改會員資料</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tabtwo-tab" data-bs-toggle="tab" data-bs-target="#tabtwo" type="button"
+                        role="tab" aria-controls="tabtwo" aria-selected="false">上傳照片</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tabthree-tab" data-bs-toggle="tab" data-bs-target="#tabthree"
+                        type="button" role="tab" aria-controls="tabthree" aria-selected="false">過往商品訂單紀錄</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tabtFour-tab" data-bs-toggle="tab" data-bs-target="#tabtFour"
+                        type="button" role="tab" aria-controls="tabtFour" aria-selected="false">過往場館訂單紀錄</button>
+                </li>
+            </ul>
+        </div>
+        <!-- 菜單 -->
+        <div class="menu">
+            <div class="tab-content">
+                <!-- 1 -->
+                <div class="tab-pane active" id="tabone" role="tabpanel" aria-labelledby="tabone-tab" tabindex="0">
+                    <div class="container tabone">
+                        <div class="container" >
+                            <form>
+                                <div v-for="item in Member" class="wrapper">
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="icon"><span class="far fa-user"></span></div>
+                                        <input v-model="item.Name" autocomplete="off" type="text" class="form-control" placeholder="Name">
+                                    </div>
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="icon"><span class="far fa-user-circle"></span></div>
+                                        <input v-model="item.Account" autocomplete="off" type="text" class="form-control" placeholder="Account">
+                                    </div>
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="icon"><span class="far fa-envelope"></span></div>
+                                        <input v-model="item.Email" autocomplete="off" type="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="icon"><span class="fas fa-map-marker-alt"></span></div>
+                                        <input v-model="item.Address" autocomplete="off" type="tel" class="form-control" placeholder="Address">
+                                    </div>
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="icon"><span class="fas fa-phone"></span></div>
+                                        <input v-model="item.Phone" autocomplete="off" type="tel" class="form-control" placeholder="Phone">
+                                    </div>
+                                    <button type="button" @@click="ReviseMember(item)" class="btn btn-primary mb-3">完成</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2 -->
+                <div class="tab-pane" id="tabtwo" role="tabpanel" aria-labelledby="tabtwo-tab" tabindex="0">
+                    <div class="container tabtwo">
+                        <div class="container">
+                            第二頁資訊
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div class="tab-pane" id="tabthree" role="tabpanel" aria-labelledby="tabthree-tab" tabindex="0">
+                    <div class="container tabthree">
+                        <div class="container">
+                            第三頁資訊
+                        </div>
+                    </div>
+                </div>
+                <!-- 4 -->
+                <div class="tab-pane" id="tabtFour" role="tabpanel" aria-labelledby="tabFour-tab" tabindex="0">
+                    <div class="container tabtFour">
+                        <div class="container">
+                            第四頁資訊
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let app = new Vue({
+        el: "#Medit",
+        data: {
+            Member: []
+        },
+        methods: {
+            ReviseMember: function (Member) {
+                console.log(Member);
+                let data = {
+                    Member_Name: Member.member_Name,
+                    Member_Account: Member.member_Account,
+                    Member_Address: Member.member_Address,
+                    Member_Email: Member.member_Email,
+                    Member_Phone: Member.member_Phone
+                }
+                fetch("/api/MemberEdit/", {
+                    body: JSON.stringify(data),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'POST',
+                }).then(function (response) { return response.text()})
+                    .then(function (result) {
+                        if (result) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '儲存成功',
+                                text: '您已成功加入!'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: '儲存失敗!',
+                                footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+
+                    })
+            }
+        },
+        mounted: function () {
+            let self = this;
+            fetch("/api/MemberEdit")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.Member = result.map(function (x) {
+                        return x
+                    })
+                })
+        }
+    })
+</script>

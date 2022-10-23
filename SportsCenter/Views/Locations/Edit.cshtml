@@ -1,0 +1,70 @@
+﻿@model SportsCenter.Models.JenaModel.LocationViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>修改場館資訊</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Location.Id" />
+
+            <div class="form-group">
+                    上傳照片
+                 <input type="file" name="files" id="files" accept="picture/*" /> (可接受.jpg.jpeg,png)
+            </div>
+         <div class="form-group">
+                    場館名稱
+                <input asp-for="Location.Name" class="form-control" />
+                <span asp-validation-for="Location.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    場館英文名稱
+                <input asp-for="Location.EnglishName" class="form-control" />
+                <span asp-validation-for="Location.EnglishName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    場館縣市
+                <input asp-for="Location.Area" class="form-control" />
+                <span asp-validation-for="Location.Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    場館地址
+                <input asp-for="Location.Address" class="form-control" />
+                <span asp-validation-for="Location.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    場館電話
+                <input asp-for="Location.ContactPhone" class="form-control" />
+                <span asp-validation-for="Location.ContactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    場館Email
+                <input asp-for="Location.Website" class="form-control" />
+                <span asp-validation-for="Location.Website" class="text-danger"></span>
+            </div>
+
+@*
+            <div class="form-group">
+                <label asp-for="Location_ValidFlag" class="control-label"></label>
+                <input asp-for="Location_ValidFlag" class="form-control" />
+                <span asp-validation-for="Location_ValidFlag" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

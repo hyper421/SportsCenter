@@ -1,0 +1,427 @@
+﻿<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+
+<style>
+    .product-title {
+        font-size: 40px;
+    }
+
+    body {
+        background-color:#FFFF;
+    }
+
+    .card {
+        background-color: #333;
+        color: black;
+    }
+
+    .modal-content .btn-close {
+        position: absolute;
+        left: 93%;
+        width: 30px;
+        height: 30px;
+        border: 1px solid black;
+        top: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 10px;
+        z-index: 9;
+    }
+</style>
+
+
+
+<div>
+    <!-- 商品清單 -->
+    <div class="container-fluid my-5">
+        <div class="row">
+            <!-- 商品分類選單 -->
+            <div class="col-2">
+                <div class="row">
+                    <div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 280px;">
+                        <p class="product-title text-light">商品種類</p>
+                        <ul class="nav nav-pills flex-column mb-auto" style="font-size:30px;">
+                            <li class="nav-item">
+                                <a asp-controller="Product" asp-action="Basketball" class="nav-link text-light">籃球</a>
+                            </li>
+                            <li>
+                                <a asp-action="Badminton" class="nav-link text-light">羽球</a>
+                            </li>
+                            <li>
+                                <a asp-action="TableTennis" class="nav-link text-light">桌球</a>
+                            </li>
+                            <li>
+                                <a asp-action="Pool" class="nav-link text-light">撞球</a>
+                            </li>
+                            <li>
+                                <a asp-action="Squash" class="nav-link text-light">壁球</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 商品清單 -->
+            <div class="container col-10" id="Squash">
+                <div class="row">
+                    <div class="col col-xl-3" v-for="items in Squash">
+                        <div class="card p-3 my-1 " style="border:none">
+                            <img :src="items.products_img" class="card-img-top" alt="" data-bs-toggle="modal"
+                                 :data-bs-target="items.products_Target">
+                            <div class="card-body">
+                                <div style="height:60px">
+                                    <h5 class="card-title">{{items.products_Name}}</h5>
+                                    <p class="card-text">${{items.products_Price}}</p>
+                                </div>
+                                @*<div>
+                                <button type="button" class="col-12 btn btn-secondary" data-bs-toggle="modal"
+                                :data-bs-target="temp.target">
+                                詳細資料
+                                </button>
+                                </div>*@
+                                <div class="my-2" style="display:block">
+                                    <vue-number-input v-model="items.qty" :min="0" :max="1000" inline controls></vue-number-input>
+                                </div>
+                                <button @@click="addCart(items)" class="btn btn-danger col-12" @*data-bs-toggle="modal"*@>加入購物車</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/vue-number-input.min.js"></script>
+<script>
+    Vue.use(VueNumberInput);
+    Vue.component('vue-number-input', VueNumberInput);
+    var counts = new Vue({
+        el: '#Squash',
+        data: {
+            //product: [
+            //    { id: 1, name: "PERFLY SR900 壁球拍", price: 2100, count: 0, img: "/Leo/image/壁球/PERFLY SR900 壁球拍.jpg", target: "#SR900壁球拍" },
+            //    { id: 2, name: "PERFLY SR560 壁球拍", price: 1700, count: 0, img: "/Leo/image/壁球/PERFLY SR560 壁球拍.jpg", target: "#SR560壁球拍" },
+            //    { id: 3, name: "中階控制型壁球拍", price: 1700, count: 0, img: "/Leo/image/壁球/中階控制型壁球拍.jpg", target: "#中階控制型壁球拍" },
+            //    { id: 4, name: "PERFLY Speed 壁球拍", price: 2100, count: 0, img: "/Leo/image/壁球/PERFLY Speed 壁球拍.jpg", target: "#Speed壁球拍" },
+            //    { id: 5, name: "球拍運動背包", price: 1200, count: 0, img: "/Leo/image/壁球/球拍運動背包25L.jpg", target: "#球拍運動背包" },
+            //    { id: 6, name: "ARTENGO 護腕", price: 130, count: 0, img: "/Leo/image/壁球/ARTENGO護腕.jpg", target: "#ARTENGO護腕" },
+            //    { id: 7, name: "ARTENGO 壁球護目鏡", price: 350, count: 0, img: "/Leo/image/壁球/ARTENGO 壁球護目鏡.jpg", target: "#ARTENGO壁球護目鏡" },
+            //    { id: 8, name: "ARTENGO 低筒運動襪", price: 150, count: 0, img: "/Leo/image/壁球/ARTENGO低筒運動襪.jpg", target: "#ARTENGO低筒運動襪" },
+            //]
+            Squash: [],
+        },
+        methods: {
+            addCart: function (products) {
+                console.log(products)
+                let data = {
+                    ProductId: product.products_Id,
+                    Count: products.qty
+                }
+                fetch("/api/Cart", {
+                    body: JSON.stringify(data),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'POST',
+                })
+            }
+        },
+        mounted: function () {
+            let self = this;
+            fetch("/Product/SquashView")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.Squash = result.map(function (x) {
+                        x.qty = 0;
+                        return x
+                    })
+                })
+        }
+    })
+</script>
+
+<!-- 商品詳細資料 -->
+<div class="detail">
+    <div class="modal fade" id="SR900壁球拍" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/PERFLY SR900 壁球拍.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>PERFLY SR900 壁球拍</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$2100</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>重量 105 g</h6>
+                                    <h6>拍面大小:470cm²</h6>
+                                    <h6>拍框: 55% 碳纖維, 45% </h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>採用日本製碳纖維，是市面上最堅硬的材質之一，擁有絕佳的重量硬度比。</h6>
+                                    <h6>採用彈性聚氨酯(polyurethane)材質，能完美平衡握拍時的抓握力和吸付力。</h6>
+                                    <h6>這款 Perfly SR 900 Power 105 球拍的內縮加固拍桿能提供比傳統球拍更大的出力。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SR560壁球拍" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/PERFLY SR560 壁球拍.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>PERFLY SR560 壁球拍</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$1700</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>重量 165g</h6>
+                                    <h6>拍面大小:499cm²</h6>
+                                    <h6>拍框: 55% 碳纖維, 45% </h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>採用日本製碳纖維，是市面上最堅硬的材質之一，擁有絕佳的重量硬度比。</h6>
+                                    <h6>採用彈性聚氨酯(polyurethane)材質，能完美平衡握拍時的抓握力和吸付力。</h6>
+                                    <h6>壁球球拍 SR 560 Opfeel 是 Opfeel 系列中價格最高的碳纖維球拍。適合想要增加擊球威力和減少失誤的普通壁球球員使用。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="中階控制型壁球拍" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        style="color:brown"
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/中階控制型壁球拍.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>中階控制型壁球拍</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$1700</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>重量 135g</h6>
+                                    <h6>拍面大小:499cm²</h6>
+                                    <h6>拍框: 55% 碳纖維, 45% </h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>採用日本製碳纖維，是市面上最堅硬的材質之一，擁有絕佳的重量硬度比。</h6>
+                                    <h6>中管採用空氣動力學設計，這款SR 590 Opfeel Control能提昇擊球的速度和威力。</h6>
+                                    <h6>這種人稱「圓型球拍」的傳統拍框廣受粉絲喜愛。499 cm²大拍面，更容易擊中最佳擊球點。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Speed壁球拍" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/PERFLY Speed 壁球拍.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>PERFLY Speed 壁球拍</h2>
+                                </div>
+                                <div class="modal_price">
+                                    <span class="new_price" style="color:red; font-size: large;">$2100</span>
+                                </div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>重量 115g</h6>
+                                    <h6>拍面大小:470cm²</h6>
+                                    <h6>拍框: 55% 碳纖維, 45% </h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>採用日本製碳纖維，是市面上最堅硬的材質之一，擁有絕佳的重量硬度比。</h6>
+                                    <h6>獨立雙扣眼設計和穿孔護框，讓拍面更輕巧，並減少球拍的慣性，控球更佳。</h6>
+                                    <h6>這款球拍的混合形狀（較長的水滴型和閉喉式的組合）提供了額外的穩定性，可提高擊球效果。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="球拍運動背包" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/球拍運動背包25L.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>球拍運動背包</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$1200</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>主要布料:100% 聚酯纖維</h6>
+                                    <h6>容量:25L</h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>提把設計便於攜帶所有裝備。</h6>
+                                    <h6>攜帶背包騎乘自行車或機車時，背帶可確保背包固定不滑動。</h6>
+                                    <h6>這款背包有三大獨立的主要隔層，可以存放衣服、鞋子、一把球拍和配件。用於收納衣服的收納區還有內袋，可收納筆電或平板電腦。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ARTENGO護腕" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/ARTENGO護腕.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>ARTENGO護腕</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$130</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>主要布料: 79% 棉, 15% 聚醯纖維, 5% 烯類彈性纖維, 1% 彈性纖維</h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>濕氣控制 : 這款大型護腕所採用的科技布料能夠吸汗。</h6>
+                                    <h6>合身 : 這款護腕使用彈性布料製成，適合所有人穿戴。</h6>
+                                    <h6>柔軟性 : 這款護腕穿戴起來非常輕巧、舒適。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ARTENGO壁球護目鏡" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/ARTENGO 壁球護目鏡.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>ARTENGO 壁球護目鏡</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$350</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>框架 : 80% 聚碳酸酯(PC), 20% 苯乙烯乙烯丁二烯苯乙烯 （SEBS）</h6>
+                                    <h6>鏡片 : 100% 聚碳酸酯(PC)</h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>防震保護 : 這款護目鏡能在運動時保護你的雙眼不受撞擊。</h6>
+                                    <h6>耐用度 : 這款護目鏡十分耐用，鏡框堅固但輕盈。</h6>
+                                    <h6>易保養 : 非常容易清潔及保養。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ARTENGO低筒運動襪" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <img src="/Leo/image/壁球/ARTENGO低筒運動襪.jpg" class="card-img-top" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="modal_title ">
+                                    <h2>ARTENGO低筒運動襪</h2>
+                                </div>
+                                <div class="modal_price"><span class="new_price" style="color:red; font-size: large;">$150</span></div>
+                                <div style="margin:10px;">
+                                    <h6 style="color:brown">-規格-</h6>
+                                    <h6>材質 : 襪子: 82% 棉, 15% 聚酯纖維, 2% 彈性纖維, 1% 聚醯纖維</h6>
+                                    <h6 style="color:brown">-簡介-</h6>
+                                    <h6>耐磨損 : 採用高密度編織法。強化腳後跟及腳趾。此區採用毛圈布材質。</h6>
+                                    <h6>減少摩擦 : 採用舒適的毛絨和柔軟的精梳棉。透氣設計。</h6>
+                                    <h6>穩定性 : 邊緣支撐結構及中足處採用合腳設計，支撐力更加提升。</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
