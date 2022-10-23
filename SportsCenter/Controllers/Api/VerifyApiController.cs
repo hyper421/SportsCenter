@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.Models.Hashing;
 using System.Security.Claims;
+using SportsCenter.DataAccess;
 using SportsCenter.Models.DavidModel;
-using System.Diagnostics.Metrics;
-using SportsCenter.Models.Entity;
+
 
 namespace SportsCenter.Controllers.Api
 {
@@ -16,8 +16,8 @@ namespace SportsCenter.Controllers.Api
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly db_a8ea3c_sportscenterContext _context;
-        public VerifyApiController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
+        private readonly SportsCenterDbContext _context;
+        public VerifyApiController(SportsCenterDbContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }
@@ -42,7 +42,7 @@ namespace SportsCenter.Controllers.Api
             }
             else
             {
-                var claims = new List<Claim>()
+                var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),

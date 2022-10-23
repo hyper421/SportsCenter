@@ -22,4 +22,8 @@
     <PackageReference Include="Razor.Templating.Core" Version="1.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SportsCenter.DataAccess\SportsCenter.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

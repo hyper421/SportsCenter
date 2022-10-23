@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using Microsoft.AspNetCore.Authorization;
-using SportsCenter.Models.Entity;
+using SportsCenter.DataAccess;
 
 namespace SportsCenter.Controllers
 {
@@ -18,8 +18,8 @@ namespace SportsCenter.Controllers
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly db_a8ea3c_sportscenterContext _context;
-        public MemberEditController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
+        private readonly SportsCenterDbContext _context;
+        public MemberEditController(SportsCenterDbContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }

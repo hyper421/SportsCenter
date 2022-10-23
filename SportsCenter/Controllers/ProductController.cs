@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SportsCenter.Models.Entity;
 using System.Security.Claims;
+using SportsCenter.DataAccess;
+using SportsCenter.DataAccess.Entity;
 
 namespace SportsCenter.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly db_a8ea3c_sportscenterContext _dbContext;
-        public ProductController(db_a8ea3c_sportscenterContext ProductDbContext)
+        private readonly SportsCenterDbContext _dbContext;
+        public ProductController(SportsCenterDbContext ProductDbContext)
         {
             this._dbContext = ProductDbContext;
         }

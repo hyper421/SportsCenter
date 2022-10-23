@@ -3,20 +3,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Razor.Templating.Core;
+using SportsCenter.DataAccess;
+using SportsCenter.DataAccess.Entity;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Service;
-using SportsCenter.Models.Entity;
-
 namespace SportsCenter.Controllers
 {
     public class RegisterController : Controller
     {
         #region 建構涵式
         HashingPassword hashingPassword = new HashingPassword();
-        private readonly db_a8ea3c_sportscenterContext _context;
+        private readonly SportsCenterDbContext _context;
 
-        public RegisterController(db_a8ea3c_sportscenterContext SportsCenterDbContext)
+        public RegisterController(SportsCenterDbContext SportsCenterDbContext)
         {
             this._context = SportsCenterDbContext;
         }
@@ -42,7 +42,7 @@ namespace SportsCenter.Controllers
                 signin.Member_Salt = random.Next(0, 100).ToString();
                 signin.Member_Password = hashingPassword.HashPassword($"{signin.Member_Password}{signin.Member_Salt}");                //Hash
                                                                                                                                        //等待連結資料庫
-                _context.Member.Add(new Models.Entity.Member
+                _context.Member.Add(new Member
                 {
                     Name = signin.Member_Name,
                     Account = signin.Member_Account,

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Models.Entity;
+using SportsCenter.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +24,7 @@ builder.Services.AddControllersWithViews();
 //    option.ClientSecret = builder.Configuration.GetSection("Auth:Google:ClientSecret").Value;
 //});
 
-builder.Services.AddDbContext<db_a8ea3c_sportscenterContext>(options =>
+builder.Services.AddDbContext<SportsCenterDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>

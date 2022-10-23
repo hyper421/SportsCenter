@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SportsCenter.Models.Entity;
 using SportsCenter.Models.LeoModel;
 using System.Security.Claims;
+using SportsCenter.DataAccess;
+using SportsCenter.DataAccess.Entity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,8 +13,8 @@ namespace SportsCenter.Controllers.Api
     [ApiController]
     public class CartApiController : ControllerBase
     {
-        private readonly db_a8ea3c_sportscenterContext dbContext;
-        public CartApiController(db_a8ea3c_sportscenterContext dbContext)
+        private readonly SportsCenterDbContext dbContext;
+        public CartApiController(SportsCenterDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -135,7 +136,7 @@ namespace SportsCenter.Controllers.Api
             var userCart = user.ProductsCart.FirstOrDefault(x => x.ProductsId == model.ProductId);
             if (userCart == null)
             {
-                dbContext.ProductsCart.Add(new Models.Entity.ProductsCart
+                dbContext.ProductsCart.Add(new ProductsCart()
                 {
                     MemberId = 2,
                     ProductsId = model.ProductId,
@@ -169,7 +170,7 @@ namespace SportsCenter.Controllers.Api
                             where a.MemberId == int.Parse(id) && a.ProductsId == Products_Id
                             select a).FirstOrDefault();
 
-            if (findItem == default(Models.Entity.ProductsCart))
+            if (findItem == default(ProductsCart))
             {
                 return false;
             }
