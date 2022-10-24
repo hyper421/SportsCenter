@@ -5,6 +5,9 @@ using SportsCenter.DataAccess.Entity;
 
 namespace SportsCenter.Controllers
 {
+    /// <summary>
+    /// 商城
+    /// </summary>
     public class ProductController : Controller
     {
         private readonly SportsCenterDbContext _dbContext;
@@ -12,6 +15,12 @@ namespace SportsCenter.Controllers
         {
             this._dbContext = ProductDbContext;
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Basketball()
         {
