@@ -1,33 +1,18 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.DataAccess;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 //Google登入
-//builder.Services.AddAuthentication(option =>
-//{
-//    option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//}).AddCookie(option =>
-//{
-//    //未登入時會自動導到這個網址
-//    option.LoginPath = new PathString("/Register/NoLogin");
-//    //沒權限
-//    option.AccessDeniedPath = new PathString("/Register/NoAccess");
-//    //登入時間設置
-//    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
-//}).AddGoogle(option =>
-//{
-//    option.ClientId = builder.Configuration.GetSection("Auth:Google:ClientId").Value;
-//    option.ClientSecret = builder.Configuration.GetSection("Auth:Google:ClientSecret").Value;
-//});
-
-builder.Services.AddDbContext<SportsCenterDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(option =>
 {
     //未登入時會自動導到這個網址
     option.LoginPath = new PathString("/Register/NoLogin");
@@ -35,7 +20,30 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     option.AccessDeniedPath = new PathString("/Register/NoAccess");
     //登入時間設置
     option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
-});
+}).AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration.GetSection("OAuth:Google:id").Value;
+    options.ClientSecret = builder.Configuration.GetSection("OAuth:Google:Secret").Value;
+    options.Events.OnCreatingTicket = ctx =>
+    {
+        ctx.Identity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.Role, "1"));
+        return Task.CompletedTask;
+    };
+});//驗證
+
+
+builder.Services.AddDbContext<SportsCenterDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+//{
+//    //未登入時會自動導到這個網址
+//    option.LoginPath = new PathString("/Register/NoLogin");
+//    //沒權限
+//    option.AccessDeniedPath = new PathString("/Register/NoAccess");
+//    //登入時間設置
+//    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
+//});
 
 
 var app = builder.Build();

@@ -12,7 +12,7 @@ using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using SportsCenter.DataAccess;
 
-namespace SportsCenter.Controllers
+namespace SportsCenter.Controllers.Members
 {
     public class MemberEditController : Controller
     {
