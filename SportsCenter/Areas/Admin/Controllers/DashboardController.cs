@@ -9,5 +9,9 @@ namespace SportsCenter.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult UserManagement()
+        {
+            return View();
+        }
     }
 }

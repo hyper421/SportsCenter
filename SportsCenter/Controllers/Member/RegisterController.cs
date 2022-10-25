@@ -51,7 +51,9 @@ namespace SportsCenter.Controllers
                     Phone = signin.Member_Phone,
                     Email = signin.Member_Email,
                     Address = signin.Member_Address,
-                    CreateTime = DateTime.Now
+                    CreateTime = DateTime.Now,
+                    IsActive = 0,
+                    ImagePath = ""
                 });
                 HttpContext.Response.Cookies.Append("UserEmail", signin.Member_Email);
                 var msg = await RazorTemplateEngine.RenderAsync<SigninModel>("Views/Register/Authorize.cshtml", signin);
