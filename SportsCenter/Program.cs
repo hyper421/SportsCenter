@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddDbContext<SportsCenterDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 
 
