@@ -103,29 +103,29 @@
         color: #545d7a;
     }
 
-    .DaoLanWeiZhi {
+    .ToolNavbar {
         margin: auto;
         border-radius: 100px;
         font-size: 20px;
     }
-
+    
    /* body {
         background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
     }*/
 
-    .DaoLanWeiZhi:hover {
+    .ToolNavbar:hover {
         transform: translate(-0.05em, -0.05em);
         box-shadow: 0.15em 0.15em;
         color: #212121;
     }
 
-    .DaoLanWeiZhi:active {
+    .ToolNavbar:active {
         transform: translate(0.05em, 0.05em);
         box-shadow: 0.05em 0.05em;
     }
 
 
-    .FaWen {
+    .PostArticle {
         position: relative;
         padding: 5px 20px;
         margin: 0px 10px 10px 0px;
@@ -142,14 +142,14 @@
         transition: all 0.1s;
     }
 
-        .FaWen:hover, .FaWen:active {
+        .PostArticle:hover, .PostArticle:active {
             -webkit-transform: translate(0px,5px);
             -ms-transform: translate(0px,5px);
             transform: translate(0px,5px);
             border-bottom: 1px solid #2ecc71;
         }
 
-    .GuanBi {
+    .CancelArticle {
         position: relative;
         padding: 5px 20px;
         margin: 0px 10px 10px 0px;
@@ -166,7 +166,7 @@
         transition: all 0.1s;
     }
 
-        .GuanBi:hover, .GuanBi:active {
+        .CancelArticle:hover, .CancelArticle:active {
             -webkit-transform: translate(0px,5px);
             -ms-transform: translate(0px,5px);
             transform: translate(0px,5px);
@@ -174,7 +174,7 @@
         }
 
 
-    .WoYao {
+    .LinkPostArticle {
         padding: 15px 25px;
         border: unset;
         border-radius: 15px;
@@ -190,7 +190,7 @@
         overflow: hidden;
     }
 
-        .WoYao::before {
+        .LinkPostArticle::before {
             content: "";
             position: absolute;
             top: 0;
@@ -205,11 +205,11 @@
             transition: all 250ms
         }
 
-        .WoYao:hover {
+        .LinkPostArticle:hover {
             color: #e8e8e8;
         }
 
-            .WoYao:hover::before {
+            .LinkPostArticle:hover::before {
                 width: 100%;
             }
 </style>
@@ -227,46 +227,49 @@
 </div>
 
 <div class="container-fluid p-5">
-  
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+   
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-        <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="MessageBoard" asp-action="FawenYanzheng" style="text-decoration:none;" class="WoYao">我要發文</a></a>
+        <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="InviteTogether" asp-action="PostArticle" style="text-decoration:none;" class="LinkPostArticle">我要發文</a></a>
     </div>
 
   
+ <div class="container justify-content-center">
+    <div class="btn-group " role="group" aria-label="Basic radio toggle button group" id="222333">
 
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="222333">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" onchange="Comprehensive()" style="display:none;">
+        <label class="ToolNavbar tag tag-red" for="btnradio0">綜合</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" onchange="Zonghe()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-red" for="btnradio0">綜合</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onchange="Badminton()" style="display:none;">
+        <label class="ToolNavbar tag tag-teal" for="btnradio1">羽球</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onchange="YuQiu()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-teal" for="btnradio1">羽球</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="Basketball()" style="display:none;">
+        <label class="ToolNavbar tag tag-purple" for="btnradio2">籃球</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="LanQiu()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-purple" for="btnradio2">籃球</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="TableTennis()" style="display:none;">
+        <label class="ToolNavbar tag tag-pink" for="btnradio3">桌球</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="ZhuoQiu()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-pink" for="btnradio3">桌球</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onchange="PoolBall()" style="display:none;">
+        <label class="ToolNavbar tag tag-orange" for="btnradio4">撞球</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onchange="ZhuangQiu()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-orange" for="btnradio4">撞球</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" onchange="BiQiu()" style="display:none;">
-        <label class="DaoLanWeiZhi tag tag-green" for="btnradio5">壁球</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" onchange="SquashBall()" style="display:none;">
+        <label class="ToolNavbar tag tag-green" for="btnradio5">壁球</label>
 
     </div>
-
+    </div>
     <div id="indexArticle">
-        <span id="Zongti">
-            <div class="container justify-content-center">
-                <a href="https://localhost:7187/Home/AurtherArticle" style="text-decoration:none; color:black;">
-                    <span id="Yu">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                
+      
+            
+                <a href="/InviteTogether/AurtherArticle" style="text-decoration:none; color:black;">
+                
                         <div class="card">
 
                             <div class="card-header">
-                                <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover" />
+                            <img src="https://d3nb97lilvchvx.cloudfront.net/category_page/badminton.jpg" alt="rover" />
                             </div>
                             <div class="card-body">
                                 <span class="tag tag-teal">羽球</span>
@@ -285,9 +288,9 @@
                                 </div>
                             </div>
                         </div>
-                    </span>
+               
                 </a>
-                <span id="Lan">
+             
                     <div class="card">
                         <div class="card-header">
                             <img src="https://www.newsbtc.com/wp-content/uploads/2020/06/mesut-kaya-LcCdl__-kO0-unsplash-scaled.jpg" alt="ballons" />
@@ -309,8 +312,7 @@
                             </div>
                         </div>
                     </div>
-                </span>
-                <span id="Zhuo">
+             
                     <div class="card">
                         <div class="card-header">
                             <img src="https://images6.alphacoders.com/312/thumb-1920-312773.jpg" alt="city" />
@@ -332,8 +334,7 @@
                             </div>
                         </div>
                     </div>
-                </span>
-                <span id="Zhuang">
+           
                     <div class="card">
                         <div class="card-header">
                             <img src="https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000276/img/basic/a0000276_main.jpg?20170427165412&q=80" alt="city" />
@@ -355,8 +356,7 @@
                             </div>
                         </div>
                     </div>
-                </span>
-                <span id="Bi">
+           
                     <div class="card">
                         <div class="card-header">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/G209%E5%9C%8B%E9%81%93%E9%99%84%E8%BF%91%E9%A2%A8%E6%99%AF.jpg" alt="city" />
@@ -378,7 +378,7 @@
                             </div>
                         </div>
                     </div>
-                </span>
+                
                 <div class="card">
                     <div class="card-header">
                         <img src="https://cdn1-digiphoto.techbang.com/system/images/124901/original/7d4012268131717149af4e7369d07187.jpg?1548392388" alt="city" />
@@ -401,7 +401,7 @@
                     </div>
 
                 </div>
-
+               
                 <span id="conta">
                     <my-span v-for="n in range"></my-span>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -432,14 +432,14 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="GuanBi" data-bs-dismiss="modal">關閉</button>
-                                    <button type="button" class="FaWen" v-on:click="addForm()" data-bs-dismiss="modal">發文</button>
+                                    <button type="button" class="CancelArticle" data-bs-dismiss="modal">關閉</button>
+                                    <button type="button" class="PostArticle" v-on:click="addForm()" data-bs-dismiss="modal">發文</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </span>
-        </span>
+   
 
     </div>
 
@@ -477,7 +477,7 @@
     });
 
     new Vue({
-        el: '#Zongti',
+        el: '#Total',
         data: {
             range: 0
         },
@@ -491,42 +491,42 @@
 
 
 
-    var Zongti = document.getElementById("Zongti").innerHTML;
-    var Yu = document.getElementById("Yu").innerHTML;
-    var Lan = document.getElementById("Lan").innerHTML;
-    var Zhuo = document.getElementById("Zhuo").innerHTML;
-    var Zhuang = document.getElementById("Zhuang").innerHTML;
-    var Bi = document.getElementById("Bi").innerHTML;
+            var Total = document.getElementById("Total").innerHTML;
+            var Badminton = document.getElementById("Badminton").innerHTML;
+            var Basketball = document.getElementById("Basketball").innerHTML;
+            var TableTennis = document.getElementById("TableTennis").innerHTML;
+            var PoolBall = document.getElementById("PoolBall").innerHTML;
+            var SquashBall = document.getElementById("SquashBall").innerHTML;
 
-    function Zonghe() {
+    function Comprehensive() {
 
-        document.getElementById("Zongti").innerHTML = Zongti;
-
-    }
-    function YuQiu() {
-
-        document.getElementById("Zongti").innerHTML = Yu;
-
+                document.getElementById("Total").innerHTML = Total;
 
     }
-    function LanQiu() {
+    function Badminton() {
 
-        document.getElementById("Zongti").innerHTML = Lan;
+                document.getElementById("Total").innerHTML = Badminton;
 
-    }
-    function ZhuoQiu() {
-
-        document.getElementById("Zongti").innerHTML = Zhuo;
 
     }
-    function ZhuangQiu() {
+            function Basketball() {
 
-        document.getElementById("Zongti").innerHTML = Zhuang;
+                document.getElementById("Total").innerHTML = Basketball;
 
     }
-    function BiQiu() {
+            function TableTennis() {
 
-        document.getElementById("Zongti").innerHTML = Bi;
+                document.getElementById("Total").innerHTML = TableTennis;
+
+    }
+            function PoolBall() {
+
+                document.getElementById("Total").innerHTML = PoolBall;
+
+    }
+            function SquashBall() {
+
+                document.getElementById("Total").innerHTML = SquashBall;
 
     }
 
