@@ -29,9 +29,9 @@ namespace SportsCenter.Controllers.Api
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public Products Get(int Item_Id)
+        public Products Get(int id)
         {
-            return dbContext.Products.Find(Item_Id);
+            return dbContext.Products.Find(id);
         }
 
         // POST api/<ProductController>

@@ -1,4 +1,5 @@
-﻿<div class="back_re">
+﻿<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<div class="back_re">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -26,7 +27,7 @@
                         <!-- nav -->
                         <ul class="accordion mb-4" id="categoryCollapseMenu">
                             <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse" data-target="#category1" aria-expanded="false" aria-controls="category1">
-                                <a class="nav-link d-flex justify-content-between align-items-center">羽球<i class="fa fa-chevron-right"></i></a>
+                                <a class="nav-link d-flex justify-content-between align-items-center">籃球<i class="fa fa-chevron-right"></i></a>
                                 <div id="category1" class="collapse show" data-parent="#categoryCollapseMenu" style="">
                                     <div>
                                         <ul class="nav flex-column ms-3">
@@ -41,8 +42,53 @@
                                 </div>
                             </li>
                             <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse" data-target="#category2" aria-expanded="false" aria-controls="categoryFlushOne">
-                                <a class="nav-link d-flex justify-content-between align-items-center">籃球<i class="fa fa-chevron-right"></i></a>
+                                <a class="nav-link d-flex justify-content-between align-items-center">羽球<i class="fa fa-chevron-right"></i></a>
                                 <div id="category2" class="collapse" data-parent="#categoryCollapseMenu" style="">
+                                    <div>
+                                        <ul class="nav flex-column ms-3">
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk Drinks</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Paneer &amp; Tofu</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Cream &amp; Whitener</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Condensed Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Vegan Drinks</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse" data-target="#category3" aria-expanded="false" aria-controls="categoryFlushOne">
+                                <a class="nav-link d-flex justify-content-between align-items-center">桌球<i class="fa fa-chevron-right"></i></a>
+                                <div id="category3" class="collapse" data-parent="#categoryCollapseMenu" style="">
+                                    <div>
+                                        <ul class="nav flex-column ms-3">
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk Drinks</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Paneer &amp; Tofu</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Cream &amp; Whitener</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Condensed Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Vegan Drinks</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse" data-target="#category4" aria-expanded="false" aria-controls="categoryFlushOne">
+                                <a class="nav-link d-flex justify-content-between align-items-center">撞球<i class="fa fa-chevron-right"></i></a>
+                                <div id="category4" class="collapse" data-parent="#categoryCollapseMenu" style="">
+                                    <div>
+                                        <ul class="nav flex-column ms-3">
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Milk Drinks</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Paneer &amp; Tofu</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Cream &amp; Whitener</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Condensed Milk</a></li>
+                                            <li class="nav-item"><a href="#!" class="nav-link">Vegan Drinks</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse" data-target="#category5" aria-expanded="false" aria-controls="categoryFlushOne">
+                                <a class="nav-link d-flex justify-content-between align-items-center">壁球<i class="fa fa-chevron-right"></i></a>
+                                <div id="category5" class="collapse" data-parent="#categoryCollapseMenu" style="">
                                     <div>
                                         <ul class="nav flex-column ms-3">
                                             <li class="nav-item"><a href="#!" class="nav-link">Milk</a></li>
@@ -201,9 +247,23 @@
                 </div>
             </div>
             <!-- row -->
+            <div id="product">
             <div class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-                <div class="col-3">
-                    <div class="card">
+                    <div class="col-3" v-for="item in products">
+                        <div class="card p-3 my-1 " style="border:none">
+                            <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="card-img-top" alt="" data-bs-toggle="modal">
+                            <div class="card-body">
+                                <div style="height:40px">
+                                    <h5 class="card-title">{{item.name}}</h5>
+                                </div>
+                                <p class="card-text">${{item.price}}</p>
+                                <div class="my-2" style="display:block">
+                                    <vue-number-input v-model="item.qty" :min="0" :max="1000" inline controls></vue-number-input>
+                                </div>
+                                <button @@click="addCart(item)" class="btn btn-danger col-12">加入購物車</button>
+                            </div>
+                        </div>
+                    @*<div class="card" >
                         <div class="card-body">
                             <div class="text-center position-relative ">
                                 <div class=" position-absolute top-0 start-0">
@@ -212,19 +272,25 @@
                                 <a href="">
                                     <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
                                 </a>
-                            </div>
-                            <div class="mb-1">
+                            </div>*@
+                            @*<div class="mb-1">
                                 <a href="" class="text-decoration-none text-muted">
                                     <small>Snack &amp;Munchies</small>
                                 </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
+                            </div>*@
+                            @*<h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">商品名稱</a></h2>
                                 <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
+                                    <span class="text-dark" style="font-size:large">$18</span>
                                 </div>
-                                <!-- btn -->
-                                <div>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <span class="text-dark">$18</span> 
+                                    </div>*@
+                                @*<div>
+                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
+                                </div>*@
+                                <!-- btn --> 
+                                @*<div>
                                     <a href="#!" class="btn btn-primary btn-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -234,180 +300,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>
-                            <div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>
-                                <!-- btn -->
-                                <div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>
-                            <div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>
-                                <!-- btn -->
-                                <div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>
-                            <div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>
-                                <!-- btn -->
-                                <div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>
-                            <div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>
-                                <!-- btn -->
-                                <div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>
-                            <div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>
-                            <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">Haldiram's Sev Bhujia</a></h2>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>
-                                <!-- btn -->
-                                <div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
-
+            </div>
             <div class="row mt-5">
                 <div class="col">
                     <nav aria-label="Page navigation example">
@@ -428,3 +324,48 @@
         </section>
     </div>
 </div>
+
+<script src="~/js/vue-number-input.js"></script>
+<script>
+    Vue.use(VueNumberInput);
+    Vue.component('vue-number-input', VueNumberInput);
+    let product = new Vue({
+        el: "#product",
+        data: {
+                products: [
+                { name: "Lebron James球衣", price: "2000", count: 0 },
+                { name: "Lebron James球衣", price: "2000", count: 0 },
+                { name: "Lebron James球衣", price: "2000", count: 0 },
+                { name: "Lebron James球衣", price: "2000", count: 0 },
+                { name: "Lebron James球衣", price: "2000", count: 0 },
+                ],
+        },
+        //methods: {
+        //    addCart: function (product) {
+        //        console.log(product)
+        //        let data = {
+        //            ProductId: product.Id,
+        //            Count: product.qty
+        //        }
+        //        fetch("/api/Cart", {
+        //            body: JSON.stringify(data),
+        //            headers: {
+        //                'content-type': 'application/json'
+        //            },
+        //            method: 'POST',
+        //        })
+        //    }
+        //},
+        mounted: function () {
+            let self = this;
+            fetch("/api/Product")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.products = result.map(function (x) {
+                        x.qty = 0;
+                        return x
+                    })
+                })
+        }
+    })
+</script>                           
