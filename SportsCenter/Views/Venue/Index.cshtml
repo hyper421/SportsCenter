@@ -1,4 +1,4 @@
-﻿<div class="back_re">
+﻿
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="container-fluid p-5">
+<div id="app" class="container-fluid p-5">
     <div>
         <div class="card">
             <div class="card-header">
@@ -19,11 +19,9 @@
             <div class="card-body">
                 <form class="row g-3">
                     <div class="col-md-auto">
-                        <label for="Area" class="form-label">地區</label>
-                        <select class="form-control" id="Area">
-                            <option>1</option>
-                            <option>1</option>
-                            <option>1</option>
+                        <label class="form-label">地區</label>
+                        <select v-model="areaModel"class="form-control">
+                            <option v-for="item in venue" :value="item.Name" :accesskey="item.Name">{{item.Area}}</option>
                         </select>
                     </div>
                     <div class="col-md-auto">
@@ -36,100 +34,67 @@
                     </div>
                     <div class="col-md-auto">
                         <label for="keywords" class="form-label">關鍵字</label>
-                        <input type="text" class="form-control" id="keywords">
+                        <input type="text" class="form-control" v-model="keywords">
                     </div>
                     <div class="col-md-auto d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">搜尋</button>
+                        <button type="submit" class="btn btn-primary" @@click="search">搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="p-3">
+    <div id="location" class="row">
+         <div v-for="item in venue":key="item.id" class="col-md-4">
+            <div  class="p-3">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">Design</strong>
-                        <h3 class="mb-0">Post title</h3>
-                        <div class="mb-1 text-muted">Nov 11</div>
-                        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="stretched-link">Continue reading</a>
+                    <div  class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">{{item.Area}}</strong>
+                        <h3 class="mb-0">{{item.Name}}</h3>
+                        <div class="mb-1 text-muted">{{item.EnglishName}}</div>
+                        <p class="mb-auto">{{item.Description}}</p>
+                        <a href="/venue/details" class="stretched-link">更多資訊</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                        <img src="~/images/{item.ImagePath}}.jpg" class="bd-placeholder-img" width="200" height="250">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">Design</strong>
-                        <h3 class="mb-0">Post title</h3>
-                        <div class="mb-1 text-muted">Nov 11</div>
-                        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="stretched-link">Continue reading</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">Design</strong>
-                        <h3 class="mb-0">Post title</h3>
-                        <div class="mb-1 text-muted">Nov 11</div>
-                        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="stretched-link">Continue reading</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">Design</strong>
-                        <h3 class="mb-0">Post title</h3>
-                        <div class="mb-1 text-muted">Nov 11</div>
-                        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="stretched-link">Continue reading</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">Design</strong>
-                        <h3 class="mb-0">Post title</h3>
-                        <div class="mb-1 text-muted">Nov 11</div>
-                        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="stretched-link">Continue reading</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+   
     </div>
 </div>
+
+<script>
+let app = new Vue({
+    el: "#location",
+    data: {
+        //venue: [{ Name: '111',Area:'215'}, { Name: '222' }, {Name:'333'}],測試資料
+        venue: [],
+        keywords: '',
+        areaModel:''
+    },
+    mounted: function() {
+        let self = this;
+        fetch("/api/Venue")
+            .then(function(response) { return response.json() })
+            .then(function(result) {
+                self.venue = result.map (function(x) {
+                    return x
+                })
+            })
+
+    },
+    //computed: {
+    //    search() {
+    //        {
+
+    //            return this.venue.filter(search => search.this.match(this.keywords));
+    //  return this.venue.filter(search => {
+    //    return venue.title().includes(this.search())
+    //        }
+    //    }
+    //}
+})
+
+</script>
+
