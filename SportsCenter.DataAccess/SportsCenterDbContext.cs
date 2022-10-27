@@ -21,6 +21,7 @@ namespace SportsCenter.DataAccess
         public virtual DbSet<ProductsCart> ProductsCart { get; set; }
         public virtual DbSet<ProductsOrder> ProductsOrder { get; set; }
         public virtual DbSet<ProductsOrderDetail> ProductsOrderDetail { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -231,6 +232,28 @@ namespace SportsCenter.DataAccess
                     .WithMany(p => p.ProductsOrderDetail)
                     .HasForeignKey(d => d.ProductOrderId);
             });
+            modelBuilder.Entity<InviteCategory>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.Posts).WithOne(e => e.InviteCategory).HasForeignKey(e => e.InviteCategory_Id);
+                
+            });
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasMany(e => e.Message).WithOne(x => x.Post);
+                entity.HasOne(e => e.Member).WithMany(e => e.Post).HasForeignKey(e => e.Member_Id);
+                entity.HasOne(e => e.InviteCategory).WithMany(e => e.Posts).HasForeignKey(e => e.InviteCategory_Id);
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne(e => e.Member).WithMany(e => e.Messages).HasForeignKey(e => e.Member_Id);
+                entity.HasOne(e => e.Post).WithMany(e => e.Message).HasForeignKey(e => e.Post_Id);
+            });
+
+            
         }
     }
 }
