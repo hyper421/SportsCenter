@@ -33,17 +33,8 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddDbContext<SportsCenterDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection")));
 
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
-//{
-//    //未登入時會自動導到這個網址
-//    option.LoginPath = new PathString("/Register/NoLogin");
-//    //沒權限
-//    option.AccessDeniedPath = new PathString("/Register/NoAccess");
-//    //登入時間設置
-//    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
-//});
 
 
 var app = builder.Build();
