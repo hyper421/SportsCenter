@@ -251,56 +251,18 @@
             <div class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
                     <div class="col-3" v-for="item in products">
                         <div class="card p-3 my-1 " style="border:none">
-                            <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="card-img-top" alt="" data-bs-toggle="modal">
+                            <img :src="item.productsImagePath" class="card-img-top" alt="" data-bs-toggle="modal">
                             <div class="card-body">
                                 <div style="height:40px">
-                                    <h5 class="card-title">{{item.name}}</h5>
+                                    <h5 class="card-title">{{item.productsName}}</h5>
                                 </div>
-                                <p class="card-text">${{item.price}}</p>
+                                <p class="card-text">${{item.productsPrice}}</p>
                                 <div class="my-2" style="display:block">
                                     <vue-number-input v-model="item.qty" :min="0" :max="1000" inline controls></vue-number-input>
                                 </div>
                                 <button @@click="addCart(item)" class="btn btn-danger col-12">加入購物車</button>
                             </div>
                         </div>
-                    @*<div class="card" >
-                        <div class="card-body">
-                            <div class="text-center position-relative ">
-                                <div class=" position-absolute top-0 start-0">
-                                    <span class="badge bg-danger">Sale</span>
-                                </div>
-                                <a href="">
-                                    <img src="~/Leo/image/壁球/ARTENGO護腕.jpg" class="mb-3 img-fluid">
-                                </a>
-                            </div>*@
-                            @*<div class="mb-1">
-                                <a href="" class="text-decoration-none text-muted">
-                                    <small>Snack &amp;Munchies</small>
-                                </a>
-                            </div>*@
-                            @*<h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">商品名稱</a></h2>
-                                <div>
-                                    <span class="text-dark" style="font-size:large">$18</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div>
-                                        <span class="text-dark">$18</span> 
-                                    </div>*@
-                                @*<div>
-                                    <span class="text-dark">$18</span> <span class="text-decoration-line-through text-muted">$24</span>
-                                </div>*@
-                                <!-- btn --> 
-                                @*<div>
-                                    <a href="#!" class="btn btn-primary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
-                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        </svg> Add
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
                 </div>
             </div>
             </div>
@@ -332,13 +294,7 @@
     let product = new Vue({
         el: "#product",
         data: {
-                products: [
-                { name: "Lebron James球衣", price: "2000", count: 0 },
-                { name: "Lebron James球衣", price: "2000", count: 0 },
-                { name: "Lebron James球衣", price: "2000", count: 0 },
-                { name: "Lebron James球衣", price: "2000", count: 0 },
-                { name: "Lebron James球衣", price: "2000", count: 0 },
-                ],
+                products: [],
         },
         //methods: {
         //    addCart: function (product) {
