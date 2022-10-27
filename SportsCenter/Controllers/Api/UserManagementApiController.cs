@@ -67,7 +67,5 @@ namespace SportsCenter.Controllers.Api
             context.SaveChanges();
             return true;
         }
-
-
     }
 }
