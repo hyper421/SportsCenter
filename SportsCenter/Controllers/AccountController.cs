@@ -7,7 +7,7 @@ namespace SportsCenter.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
