@@ -1,4 +1,7 @@
-﻿<style>
+﻿<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
 
 
     .signup_v4 .social-area {
@@ -79,11 +82,11 @@
             }
 
     .signup_v4 .nav-tabs .nav-link.active {
-        background: #007bff;
+        background: #001935;
     }
 
     .signup_v4 .nav-tabs .nav-link {
-        background: #143250;
+        background: #6f6174;
     }
 
     .signup_v4 .nav-tabs .nav-link {
@@ -101,151 +104,257 @@
 
     .signup_v4 .card-body {
         padding: 0px;
+        width:50%;
+        margin: auto;
+        border-style:solid;
+        border-radius: 5px;
+        margin-top: 45px;
+        margin-bottom: 45px;
+
     }
 
         .signup_v4 .card-body .tab-content {
-            padding: 0 1.25rem 1.75em;
+            padding: 0 1.25rem 1.75em;            
         }
+
+        label{
+            font-size:30px
+        }
+        button{
+            width:100px;
+            height:50px;
+            font-size:40px
+        }
+
 </style>
 
 
 
 
-<body>
-   
-        <div class="card signup_v4 mb-30">
-            <div class="card-body">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                        <h4 class="text-center mt-4 mb-4" style="text-transform: uppercase;">Login</h4>
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Username</label>
-                                    <input type="text" class="form-control" id="inputEmail4" placeholder="Enter your username" required="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Enter your password" required="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="custom-checkbox d-block">
-                                            <label class="custom-control custom-checkbox checkbox-lg">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <div class="custom-control-label" for="customCheck1">Remember Password</div>
-                                            </label>
-                                        </div>
-                                        <a href="#" target="_blank">Forgot Password?</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 mb-3">
-                                <button class="btn btn-primary full-width" type="submit">Login</button>
-                            </div>
-                        </form>
-                        <div class="social-area">
-                            <h3 class="title">Or</h3>
-                            <p class="text">Sign In with social media</p>
-                            <ul class="social-links">
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fab fa-google-plus-g"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <h4 class="text-center mt-4 mb-4" style="text-transform: uppercase;">Register</h4>
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Name</label>
-                                    <input type="text" class="form-control" id="inputEmail4" placeholder="Enter your name" required="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Username</label>
-                                    <input type="text" class="form-control" id="inputPassword4" placeholder="Enter your username" required="">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Email Address</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Enter your email address" required="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Enter your password" required="">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Confirm Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Enter your confirm password" required="">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputName">Your Country</label>
-                                    <select id="inputState" class="form-control" required="">
-                                        <option selected="">Choose Country</option>
-                                        <option>India</option>
-                                        <option>United States</option>
-                                        <option>Canda</option>
-                                        <option>Germany</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group form-row mt-2">
-                                <label class="col-md-2 col-form-label user_group">I am a</label>
-                                <div class="col-md-10 pt-1">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">Customer</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">Vendor</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">Both</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group form-row">
-                                <div class="col-md-12">
-                                    <label class="custom-control custom-checkbox checkbox-lg">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <div class="custom-control-label" for="customCheck1">I agree with <a href="#" target="_blank">terms and conditions</a></div>
-                                    </label>
-                                </div>
-                            </div>
-                            <hr class="mt-3 mb-4">
-                            <div class="col-12">
-                                <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                    <div class="custom-checkbox d-block">
-                                        <a href="https://demochecks.com/demo/fickrr/login" class="nav-link-inline font-size-sm">Already have an account? Login</a>
-                                    </div>
-                                    <button class="btn btn-primary mt-3 mt-sm-0" type="submit">Register</button>
-                                </div>
-                            </div>
-                        </form>
+    @*<div style="padding:20px; padding-left: 500px; padding-right: 500px">*@
+    <div class="back_re">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <h2>登入/註冊</h2>
                     </div>
                 </div>
             </div>
         </div>
- 
-</body>
+    </div>
+
+
+
+
+    @*登入/註冊*@
+<div id="app">
+    <div class="card signup_v4 mb-80" >
+        <div class="card-body center">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">登入</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">註冊</a>
+                </li>
+                </ul>
+            <div class="tab-content" id="myTabContent" >
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    @*登入頁面*@
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">帳號</label>
+                                <input type="text" class="form-control" id="inputEmail4" placeholder="Enter your username" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">密碼</label>
+                                <input type="password" class="form-control" id="inputPassword4" placeholder="Enter your password" required="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="custom-checkbox d-block">
+                                        <label class="custom-control custom-checkbox checkbox-lg">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <div class="custom-control-label" for="customCheck1">記住密碼</div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-3" style="text-align:center">
+                            <button @@click="LoginMethods(LoginList)" class="btn btn-primary" type="submit">登入</button>
+                        </div>
+                    </form>
+                    <div class="social-area">
+                        <h3 class="title">Or</h3>
+                        <p class="text">其他登入</p>
+                        <ul class="social-links">
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-github-plus-g"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                    @*註冊頁面*@
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">姓名</label>
+                                <input v-model="SigninList.Member_Name" type="text" class="form-control" id="inputEmail4" placeholder="Enter your name" required="">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">Email</label>
+                                <input v-model="SigninList.Member_Email" type="email" class="form-control" id="inputEmail4" placeholder="Enter your email address" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">電話</label>
+                                <input v-model="SigninList.Member_Phone" type="text" class="form-control" id="inputEmail4" placeholder="Enter your phone number" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">地址</label>
+                                <input v-model="SigninList.Member_Address" type="text" class="form-control" id="inputEmail4" placeholder="Enter your address" required="">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">帳號</label>
+                                <input v-model="SigninList.Member_Account" type="text" class="form-control" id="inputEmail4" placeholder="Enter your account number" required="">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="inputName">密碼</label>
+                                <input v-model="SigninList.Member_Password" type="password" class="form-control" id="inputPassword4" placeholder="Enter your password" required="">
+                            </div>
+                        </div>
+
+
+                        
+                        <hr class="mt-3 mb-4">
+                        <div class="col-12">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="custom-checkbox d-block">
+                                    <a href="~/account/login" class="nav-link-inline font-size-sm">Already have an account? Login</a>
+                                </div>
+                                <button @@click="AddToMember(SigninList)" class="btn btn-primary mt-3 mt-sm-0" type="submit">立即註冊</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            LoginList: {
+                Member_Account: "",
+                Member_Password: ""
+            },
+            SigninList: {
+                Member_Name: "",
+                Member_Account: "",
+                Member_Password: "",
+                Member_Address: "",
+                Member_Email: "",
+                Member_Phone: ""
+            }
+        },
+        methods: {
+            //註冊
+            AddToMember: function (SigninList) {
+                let data = {
+                    Member_Name: SigninList.Member_Name,
+                    Member_Account: SigninList.Member_Account,
+                    Member_Password: SigninList.Member_Password,
+                    Member_Address: SigninList.Member_Address,
+                    Member_Email: SigninList.Member_Email,
+                    Member_Phone: SigninList.Member_Account,
+                }
+
+                fetch("/Account/Login", {
+
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                })
+                    .then(function (response) { return response.text() })
+                    .then(function (result) {
+                        console.log("rsl:" + result)
+                        if (result == "true") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '水拉',
+                                text: '註冊成功!',
+                            }).then(function () { window.location.href = '/Register/Signin' })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '挖靠',
+                                text: '註冊失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+            },
+            //登入
+            LoginMethods: function (LoginList) {
+                console.log(LoginList);
+                let data = {
+                    Member_Account: LoginList.Member_Account,
+                    Member_Password: LoginList.Member_Password,
+                }
+                fetch("/api/Login/", {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                }).then(function (response) { return response.text() })
+                    .then(function (result) {
+                        if (result == "true") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '水拉',
+                                text: '登入成功!',
+                            }).then(function () { window.location.href = '/home/index'})
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '挖靠',
+                                text: '登入失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+            }
+        },
+    })
+</script>
+
+
+
