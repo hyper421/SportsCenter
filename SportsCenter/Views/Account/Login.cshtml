@@ -1,0 +1,362 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+
+<style>
+
+
+    .signup_v4 .social-area {
+        text-align: center;
+        padding-top: 14px;
+    }
+
+        .signup_v4 .social-area .title {
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: inline-block;
+            color: #007bff;
+            position: relative;
+        }
+
+        .signup_v4 .social-area .text {
+            font-size: 17px;
+            font-weight: 400;
+            color: #143250;
+        }
+
+        .signup_v4 .social-area .title::before {
+            position: absolute;
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(0, 0, 0, .2);
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            left: 100%;
+            margin-left: 7px;
+        }
+
+        .signup_v4 .social-area .title::after {
+            position: absolute;
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(0, 0, 0, .2);
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            right: 100%;
+            margin-right: 7px;
+        }
+
+    .signup_v4 ul.social-links {
+        padding: 0;
+        margin: 0;
+    }
+
+    .signup_v4 .social-area .social-links li {
+        display: inline-block;
+    }
+
+        .signup_v4 .social-area .social-links li a i {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            line-height: 50px;
+            display: inline-block;
+            color: #fff;
+            margin: 0 5px;
+            -webkit-box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+            box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+        }
+
+            .signup_v4 .social-area .social-links li a i.fa-facebook-f {
+                background: #0069f7;
+            }
+
+            .signup_v4 .social-area .social-links li a i.fa-google-plus-g {
+                background: #d1062c;
+            }
+
+    .signup_v4 .nav-tabs .nav-link.active {
+        background: #001935;
+    }
+
+    .signup_v4 .nav-tabs .nav-link {
+        background: #6f6174;
+    }
+
+    .signup_v4 .nav-tabs .nav-link {
+        border: 0;
+        margin: 0;
+        padding: 10px 0;
+        text-align: center;
+        border-radius: 0;
+        color: #fff;
+    }
+
+    .signup_v4 .nav-tabs li.nav-item {
+        width: 50%;
+    }
+
+    .signup_v4 .card-body {
+        padding: 0px;
+        width:50%;
+        margin: auto;
+        border-style:solid;
+        border-radius: 5px;
+        margin-top: 45px;
+        margin-bottom: 45px;
+
+    }
+
+        .signup_v4 .card-body .tab-content {
+            padding: 0 1.25rem 1.75em;            
+        }
+
+        label{
+            font-size:30px
+        }
+        button{
+            width:100px;
+            height:50px;
+            font-size:40px
+        }
+</style>
+
+
+
+
+    @*<div style="padding:20px; padding-left: 500px; padding-right: 500px">*@
+    <div class="back_re">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <h2>登入/註冊</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*登入/註冊*@
+<div id="app">
+    <div class="card signup_v4 mb-80" >
+        <div class="card-body center">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">登入</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">註冊</a>
+                </li>
+                </ul>
+            <div class="tab-content" id="myTabContent" >
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    @*登入頁面*@
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">帳號</label>
+                                <input type="text" class="form-control" id="LoginAccount" placeholder="Enter your username" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">密碼</label>
+                                <input type="password" class="form-control" id="LoginPassword" placeholder="Enter your password" required="">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="custom-checkbox d-block">
+                                        <label class="custom-control custom-checkbox checkbox-lg">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <p>記住密碼</p>
+                                            <div class="custom-control-label" for="customCheck1"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-3" style="text-align:center">
+                            <button @@click="LoginMethods(LoginList)" class="btn btn-primary" type="button">登入</button>
+                        </div>
+                    </form>
+                    <div class="social-area">
+                        <h3 class="title">Or</h3>
+                        <p class="text">其他登入</p>
+                        <ul class="social-links">
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                    @*註冊頁面*@
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">姓名</label>
+                                <input v-model="SigninList.Member_Name" type="text" class="form-control" id="inputName" placeholder="Enter your name" required="">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">Email</label>
+                                <input v-model="SigninList.Member_Email" type="email" class="form-control" id="inputEmail" placeholder="Enter your email address" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">電話</label>
+                                <input v-model="SigninList.Member_Phone" type="text" class="form-control" id="inputPhone" placeholder="Enter your phone number" required="">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputName">地址</label>
+                                <input v-model="SigninList.Member_Address" type="text" class="form-control" id="inputAddress" placeholder="Enter your address" required="">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputName">帳號</label>
+                                <input v-model="SigninList.Member_Account" type="text" class="form-control" id="inputAccount" placeholder="Enter your account number" required="">
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="inputName">密碼</label>
+                                <input v-model="SigninList.Member_Password" type="password" class="form-control" id="inputPassword" placeholder="Enter your password" required="">
+                            </div>
+                        </div>
+
+
+                        
+                        <hr class="mt-3 mb-4">
+                        <div class="col-12">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="custom-checkbox d-block">
+                                    <a href="~/account/login" class="nav-link-inline font-size-sm">Already have an account? Login</a>
+                                </div>
+                                <button @@click="AddToMember(SigninList)" class="btn btn-primary mt-3 mt-sm-0" type="button">立即註冊</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            LoginList: {
+                Member_Account: "",
+                Member_Password: ""
+            },
+            SigninList: {
+                Member_Name: "",
+                Member_Account: "",
+                Member_Password: "",
+                Member_Address: "",
+                Member_Email: "",
+                Member_Phone: ""
+            }
+        },
+        methods: {
+
+            //註冊
+            AddToMember: function (SigninList) {
+                let data = {
+                    Member_Name: SigninList.Member_Name,
+                    Member_Account: SigninList.Member_Account,
+                    Member_Password: SigninList.Member_Password,
+                    Member_Address: SigninList.Member_Address,
+                    Member_Email: SigninList.Member_Email,
+                    Member_Phone: SigninList.Member_Phone,
+                }
+
+                fetch("/Account/Login", {
+
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                })
+                    .then(function (response) { return response.text() })
+                    .then(function (result) {
+                        console.log("rsl:" + result)
+                        if (result == "true") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '水拉',
+                                text: '註冊成功!',
+                            }).then(function () { window.location.href = '/Account/Login' })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '挖靠',
+                                text: '註冊失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+            },
+            //登入
+            LoginMethods: function (LoginList) {
+                console.log(LoginList);
+                let data = {
+                    Member_Account: LoginList.Member_Account,
+                    Member_Password: LoginList.Member_Password,
+                }
+                fetch("/api/Login/", {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                }).then(function (response) { return response.text() })
+                    .then(function (result) {
+                        if (result == "true") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '水拉',
+                                text: '登入成功!',
+                            }).then(function () { window.location.href = '/Account/Login' })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '挖靠',
+                                text: '登入失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+            }
+        },
+    })
+</script>
+
+
+

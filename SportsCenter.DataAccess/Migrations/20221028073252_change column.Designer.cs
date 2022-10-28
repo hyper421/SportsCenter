@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCenter.DataAccess;
 
@@ -11,9 +12,10 @@ using SportsCenter.DataAccess;
 namespace SportsCenter.DataAccess.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    partial class SportsCenterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028073252_change column")]
+    partial class changecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
