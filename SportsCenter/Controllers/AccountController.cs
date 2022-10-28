@@ -8,7 +8,8 @@ using SportsCenter.DataAccess.Entity;
 using SportsCenter.Models.DavidModel;
 using SportsCenter.Models.Hashing;
 using SportsCenter.Models.Service;
-namespace SportsCenter.Controllers.Members
+
+namespace SportsCenter.Controllers
 {
     public class AccountController : Controller
     {
