@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/area/dist/css/adminlte.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- jQuery -->
+<script src="~/js/jquery.min.js"></script>
 </head>
 <!--
 `body` tag options:
@@ -304,15 +308,29 @@
                                 </li>
                             </ul>
                         </li>
-
+                        <!-- Category -->
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-solid fa-city"></i>
                                 <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
+                                    類別管理
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/category/create" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>類別新增</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/category/index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>場館編輯</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -804,8 +822,6 @@
 
 
 </body>
-<!-- jQuery -->
-<script src="~/js/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE -->
