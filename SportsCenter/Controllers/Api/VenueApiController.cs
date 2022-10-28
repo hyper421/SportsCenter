@@ -18,9 +18,17 @@ namespace SportsCenter.Controllers.Api
 
             [HttpGet]
 
-            public IEnumerable<Location> Get()
+            public object Get()
             {
-                return _context.Location;
+                return _context.Location.Select(x=> new {
+                    x.Area,
+                    x.LocationImage,
+                    x.Id,
+                    x.Name,
+                    x.EnglishName,
+                    x.Description,
+                    categoryIds = x.LocationBranch.Select(x=>x.CategoryId).ToList()
+                });
 
             }
 
