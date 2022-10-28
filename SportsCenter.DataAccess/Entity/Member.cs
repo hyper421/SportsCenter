@@ -18,5 +18,8 @@
         public virtual ICollection<LocationOrder> LocationOrder { get; set; }
         public virtual ICollection<ProductsCart> ProductsCart { get; set; }
         public virtual ICollection<ProductsOrder> ProductsOrder { get; set; }
+        public virtual ICollection<Post> Post { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿<div class="back_re">
+﻿<script src="https://cdn.jsdelivr.net/npm/vue-good-wizard/dist/vue-good-wizard.js"></script>
+<script src="https://unpkg.com/vuejs-datepicker"></script>
+<div class="back_re">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -9,7 +11,72 @@
         </div>
     </div>
 </div>
+<style>
+    .vdp-datepicker__calendar {
+        width: 100%
+    }
 
+        .vdp-datepicker__calendar .cell.day-header {
+            text-transform: uppercase;
+            font-size: 17px;
+            white-space: nowrap;
+            cursor: inherit;
+            border-bottom: 1px solid #a2a2a2;
+            margin: 0px 0px;
+            font-weight: 700;
+        }
+</style>
 <div class="container-fluid p-5">
+    <div id="app">
+        <vue-good-wizard :steps="steps"
+                         :onNext="nextClicked"
+                         :onBack="backClicked"
+                         :previous-Step-Label="'上一步'"
+                         :next-Step-Label="'下一步'"
+                         :final-Step-Label="'完成預約'">
+            <div slot="page1">
+                <h4>Step 1</h4>
+                <p>This is step 1</p>
+            </div>
+            <div slot="page2">
+                <h4>Step 2</h4>
+                <p>This is step 2</p>
+            </div>
+            <div slot="page3">
+                <h4>Step 3</h4>
+                <p>This is step 3</p>
+                <vuejs-datepicker :inline="true"></vuejs-datepicker>
 
+            </div>
+            <div slot="page4">
+                <h4>Step 4</h4>
+                <p>This is step 4</p>
+            </div>
+        </vue-good-wizard>
+    </div>
 </div>
+
+<script>
+    let app = new Vue({
+            el: '#app',
+            components: {vuejsDatepicker},
+            data: {
+                steps: [
+                    {label: '選擇運動項目',slot: 'page1'},
+                    {label: '選擇場館',slot: 'page2',},
+                    {label: '選擇預約時間',slot: 'page3',options: {}},
+                    {label: '預約資訊',slot: 'page4',options: {nextDisabled: true}},
+                ],
+            },
+            methods: {
+                nextClicked(currentPage) {
+                    console.log('next clicked', currentPage)
+                    return true; //return false if you want to prevent moving to next page
+                },
+                backClicked(currentPage) {
+                    console.log('back clicked', currentPage);
+                    return true; //return false if you want to prevent moving to previous page
+                }
+            }
+    })
+</script>
