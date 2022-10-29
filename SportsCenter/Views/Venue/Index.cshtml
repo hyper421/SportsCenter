@@ -1,14 +1,14 @@
 ﻿
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title">
-                    <h2>場館介紹</h2>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title">
+                <h2>場館介紹</h2>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="location" class="container-fluid p-5">
     <div>
@@ -20,84 +20,110 @@
                 <form class="row g-3">
                     <div class="col-md-auto">
                         <label class="form-label">地區</label>
-                        <select v-model="selected"class="form-control">
-                            <option :value="items.id" v-for="items in venue":key="items.id"> {{items.area}} </option>
+                        <select v-model="areas" class="form-control">
+                            <option :value="items" v-for="items in areaOptionList" :key="items"> {{items}} </option>
                         </select>
                     </div>
                     <div class="col-md-auto">
                         <label for="category" class="form-label">種類</label>
-                        <select class="form-control" id="category">
-                            <option>1</option>
-                            <option>1</option>
-                            <option>1</option>
+                        <select class="form-control" id="category" v-model="category">
+                            <option value="1">籃球</option>
+                            <option value="2">壘球</option>
+                            <option value="3">壁球</option>
                         </select>
                     </div>
                     <div class="col-md-auto">
                         <label for="keywords" class="form-label">關鍵字</label>
-                        <input type="text" class="form-control" v-model="keywords">
+                        <input type="text" class="form-control" v-model="keywords" placeholder="輸入搜尋">
                     </div>
                     <div class="col-md-auto d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">搜尋</button>
+                        <button type="button" class="btn btn-primary" @@click="search"> 搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="row">
-         <div v-for="item in venue" class="col-md-4">
-            <div  class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div  class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 badge rounded-pill bg-warning">{{item.area}}</strong>
-                        <h3 class="fw-bolder mb-0">{{item.name}}</h3>
-                        <div class="mb-1 text-muted">{{item.englishName}}</div>
+        <div v-for="item in temp" key="item.name" class="col-md-4">
+            <div class="p-3">
+                <div class="row g-0 border rounded flex-md-row mb-4 shadow-sm">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <stron class=" mb-4 badge rounded-pill bg-dark text-light">{{item.area}}</stron>
+                        <h1 class="fw-bolder mb-1 justify-content-center">{{item.name}}</h1>
+                        <div class="mb-auto text-muted">{{item.englishName}}</div>
+                        <p class="mb-auto">{{item.name}}</p> <!--tag預留-->
                         <p class="mb-auto">{{item.description}}</p>
                         <a href="/venue/details" class="stretched-link">更多資訊</a>
+
                     </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <img v-bind:src="`/images/${item.imagePath}`"width="200" >
+                    <div class="d-none d-lg-block">
+                        <img v-bind:src="`/images/${item.path}`" height="200" />
                     </div>
                 </div>
             </div>
         </div>
-   
+
     </div>
 </div>
 
 <script>
 let app = new Vue({
     el: "#location",
-    data: {        
-       // venue: [{ Name: '111',Area:'215'}, { Name: '222' }, {Name:'333'}],
+    data: {
+        keywords: "",
+        areas: "",
+        category: "1",
         venue: [],
-        keywords:'',
-        selected:'',
+        temp: []
+    },
+    methods: {
+        hasKeyWords: function(str) {
+            if (this.keywords.trim() == "") {
+                return true;
+            }
+            if (this.keywords.trim() == str) {
+                return true;
+            }
+            return false;
+        },
+        hasArea: function(str) {
+            if (this.areas.trim() == "") {
+                return true;
+            }
+            if (this.areas.trim() == str) {
+                return true;
+            }
+            return false;
+        },
+        hasCategory: function(str) {
+            return true;
+        },
+        search: function() {
+            let self = this;
+            self.temp = self.venue.map(function(item) {
+                if (self.hasKeyWords(item.description)
+                    && self.hasArea(item.area)
+                    && self.hasCategory(item.categoryIds)) {
+                    return item;
+
+                }
+            })
+        }
+    },
+        computed: {
+        areaOptionList: function() {
+            let self = this;
+            return Array.from(new Set(self.venue.map(x => x.area)));
+        }
     },
     mounted: function() {
         let self = this;
         fetch("/api/Venue")
-           .then(function(response) { return response.json() })
-           .then(function(result) {
-              self.venue = result.map (function(x) {
-                    return x
-               })
-            })
-
-    },
-    getImage(imagepath) {
-     return require('../images'+imagepath +'.jpg')
+            .then(function(response) { return response.json() })
+            .then(function(result) { self.venue = result; self.temp = result })
     }
-    //computed: {
-    //    search() {\
-    //        {
-
-    //            return this.venue.filter(search => search.this.match(this.keywords));
-    //  return this.venue.filter(search => {
-    //    return venue.title().includes(this.search())
-    //        }
-    //    }
-    //}
 })
+
 
 </script>
 
