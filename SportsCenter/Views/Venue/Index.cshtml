@@ -27,9 +27,8 @@
                     <div class="col-md-auto">
                         <label for="category" class="form-label">種類</label>
                         <select class="form-control" id="category" v-model="category">
-                            <option value="1">籃球</option>
-                            <option value="2">壘球</option>
-                            <option value="3">壁球</option>
+                             <option :value="i" v-for="i in categoryOptionList" :key="i"> {{i}} </option>
+
                         </select>
                     </div>
                     <div class="col-md-auto">
@@ -44,7 +43,7 @@
         </div>
     </div>
     <div class="row">
-        <div v-for="item in temp" key="item.name" class="col-md-4">
+        <div v-for="item in temp" :key="item.id" class="col-md-4">
             <div class="p-3">
                 <div class="row g-0 border rounded flex-md-row mb-4 shadow-sm">
                     <div class="col p-4 d-flex flex-column position-static">
@@ -52,29 +51,54 @@
                         <h1 class="fw-bolder mb-1 justify-content-center">{{item.name}}</h1>
                         <div class="mb-auto text-muted">{{item.englishName}}</div>
                         <p class="mb-auto">{{item.name}}</p> <!--tag預留-->
-                        <p class="mb-auto">{{item.description}}</p>
-                        <a href="/venue/details" class="stretched-link">更多資訊</a>
-
-                    </div>
-                    <div class="d-none d-lg-block">
+                        <p class="mb-auto">{{item.description}}</p> 
+                        <button class="btn btn-dark" @@click="detailClick(item)">詳細資訊</button>
+                         <example-modal></example-modal>
+                         <div class="d-none d-lg-block">
                         <img v-bind:src="`/images/${item.path}`" height="200" />
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-</div>
-
+    <!--Modal-->
+      <div id="venue-modal" class="modal fade" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title-bold">場館詳細資訊</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>場館姓名:{{name}}</p>
+             <p>場館:{{address}}</p>
+             
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 <script>
 let app = new Vue({
     el: "#location",
     data: {
+        name:"",
+        englishname:"",
+        address:"",
         keywords: "",
         areas: "",
-        category: "1",
+        category: "",
         venue: [],
         temp: []
+
     },
     methods: {
         hasKeyWords: function(str) {
@@ -98,6 +122,14 @@ let app = new Vue({
         hasCategory: function(str) {
             return true;
         },
+         detailClick: function(item) {
+          this.name = item.name;
+          this.description = item.description;
+          this.englishtname = item.englishtname;
+          this.address = item.address;
+          this.area = item.area;
+            $("#venue-modal").modal('show');
+        },
         search: function() {
             let self = this;
             self.temp = self.venue.map(function(item) {
@@ -105,25 +137,33 @@ let app = new Vue({
                     && self.hasArea(item.area)
                     && self.hasCategory(item.categoryIds)) {
                     return item;
-
-                }
+                } 
             })
-        }
+        },
+
     },
-        computed: {
+    computed: {
         areaOptionList: function() {
             let self = this;
             return Array.from(new Set(self.venue.map(x => x.area)));
+        },
+        categoryOptionList: function() {
+            let self = this;
+            return Array.from(new Set(self.venue.map(x => x.name)));
         }
     },
     mounted: function() {
         let self = this;
         fetch("/api/Venue")
             .then(function(response) { return response.json() })
-            .then(function(result) { self.venue = result; self.temp = result })
+            .then(function(result) { self.venue = result; self.temp = result; })
     }
-})
+});
 
 
 </script>
+
+
+
+
 
