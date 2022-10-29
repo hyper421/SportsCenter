@@ -1,16 +1,16 @@
-﻿
-<html>
+﻿@model SportsCenter.Models.Dto.PostArticleCreateModel
 
-<head>
 
-    <title>How to Install And Use CKEditor In Laravel? - ItSolutionStuff.com</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+  
 
    @* <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">*@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</head>
+
 <style>
     .PostArticle {
         position: relative;
@@ -72,7 +72,7 @@
             </div>
     </div>
     </div>
-    <div class="container">
+    <div class="container" id="NewPostArticle">
 
         <div class="row">
 
@@ -98,8 +98,8 @@
                                     <path fill-rule="evenodd" d="M8 0C3.584 0 0 3.584 0 8s3.584 8 8 8c4.408 0 8-3.584 8-8s-3.592-8-8-8zm5.284 3.688a6.802 6.802 0 0 1 1.545 4.251c-.226-.043-2.482-.503-4.755-.217-.052-.112-.096-.234-.148-.355-.139-.33-.295-.668-.451-.99 2.516-1.023 3.662-2.498 3.81-2.69zM8 1.18c1.735 0 3.323.65 4.53 1.718-.122.174-1.155 1.553-3.584 2.464-1.12-2.056-2.36-3.74-2.551-4A6.95 6.95 0 0 1 8 1.18zm-2.907.642A43.123 43.123 0 0 1 7.627 5.77c-3.193.85-6.013.833-6.317.833a6.865 6.865 0 0 1 3.783-4.78zM1.163 8.01V7.8c.295.01 3.61.053 7.02-.971.199.381.381.772.555 1.162l-.27.078c-3.522 1.137-5.396 4.243-5.553 4.504a6.817 6.817 0 0 1-1.752-4.564zM8 14.837a6.785 6.785 0 0 1-4.19-1.44c.12-.252 1.509-2.924 5.361-4.269.018-.009.026-.009.044-.017a28.246 28.246 0 0 1 1.457 5.18A6.722 6.722 0 0 1 8 14.837zm3.81-1.171c-.07-.417-.435-2.412-1.328-4.868 2.143-.338 4.017.217 4.251.295a6.774 6.774 0 0 1-2.924 4.573z" />
                                 </svg>
                                 <label><strong>類型</strong></label>
-                            <div>
-                            <select class="form-select" aria-label="Default select example">
+                            <div class="selectopt">
+                                    <select class="form-select" aria-label="Default select example" id="GetCategory">
 
                                 <option value="" selected disabled>請選擇...</option>
                                 <option value="">羽球</option>
@@ -118,7 +118,7 @@
                                 
                                 <label><strong>標題</strong></label>
 
-                                <input type="text" name="name" class="form-control" />
+                                <input type="text" id="TitleText" name="postArticleCreateModel.Title" class="form-control" />
 
                             </div>
 
@@ -130,8 +130,12 @@
                                 </svg>
                                 <label><strong>內容</strong></label>
 
-                                <textarea class="ckeditor form-control" name="description"></textarea>
+                                <textarea class="ckeditor form-control" id="" name="content"></textarea>
 
+                            </div>
+                            <div>
+                                <input type="file" accept=".png, .jpg, .jpeg" name="fileTrans" id="PostFile" />
+                                <input type="hidden" name="file" />
                             </div>
 
                             <div class="form-group text-center">
@@ -159,7 +163,7 @@
 
 <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -167,11 +171,83 @@
 
     });
 
+</script>*@
+<script type="text/javascript">
+    $(".PostArticle").on("click", function () {
+        let Type = $("#GetCategory").find(":selected").text();
+
+        let Title = $("#TitleText").val();
+
+        let Content = CKEDITOR.instances.content.getData()
+
+        //let ImagePath = $('input[name="fileTrans"]').prop('files');
+
+        let data = {
+            Type: Type,
+            Title: Title,
+            Content: Content,
+            //ImagePath: ImagePath,
+        }
+
+        fetch("/api/PostArticle/post", {
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            },
+            console.log(data);
+            method: 'POST'
+        }).then(function (response) { return response.text() })
+            .then(function (result) {
+                console.log("rsl:" + result)
+                if (result == "true") {
+                    console.log("good")
+                }
+                else {
+                    console.log("good")
+                }
+            })
+
+            }) // 結束標籤
+ 
+</script>
+
+<script type="text/javascript">
+
+
+    let qq = function (data) {
+        for (i = 1; i < 5; i++) {
+            $('#GetCategory').append($('<option></option>').val('').text(i));;
+        }
+    }
+
+
+    $.ajax({
+        url: '/api/PostArticle/get',
+        data: {
+            sportCategory: [],
+        },
+        type: 'get',
+        datatype: 'json',
+        success: function (data) {
+            if (data.length > 0) {
+                $('#GetCategory').empty();
+                $('#GetCategory').append($('<option selected disabled></option>').val('').text('--請選擇種類--'));
+        
+                for (i = 0; i < data.length; i++) {
+                    $('#GetCategory').append($('<option></option>').val('').text(data[i].name));
+                    console.log(data[i].name);
+                }
+      
+            }
+        }
+    })
+
 </script>
 
 
 
-</html>
+
+
 
 
 
