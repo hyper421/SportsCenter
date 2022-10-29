@@ -27,7 +27,6 @@ namespace SportsCenter.Controllers.Api
                 {
                     IsActive = model.IsActive ? 1 : 0,
                     Name = model.Name,
-
                 });
                 context.SaveChanges();
                 return true;
@@ -37,5 +36,42 @@ namespace SportsCenter.Controllers.Api
                 return false;
             }
         }
+        [HttpGet]
+        public object GetAll()
+        {
+            return context.Item.Select(x => new
+            {
+                x.Name,
+                IsActive = x.IsActive == 1,
+                x.Id,
+            }).ToList();
+        }
+        [Route("{id}")]
+        public object GetData(int id)
+        {
+            var data = context.Item.First(x => x.Id == id);
+            return new
+            {
+                data.Name,
+                IsActive = data.IsActive == 1,
+                data.Id,
+            };
+        }
+        [HttpDelete]
+        public bool Delete(int id)
+        {
+            try
+            {
+                context.Item.Remove(new DataAccess.Entity.Item() { Id = id });
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+        }
+
     }
 }

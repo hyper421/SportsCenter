@@ -1,16 +1,15 @@
 ﻿<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">類別新增</h1>
+                    <h1 class="m-0">類別修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Category</li>
-                        <li class="breadcrumb-item active">Create</li>
+                        <li class="breadcrumb-item">Item</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +22,7 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">新增</h3>
+                            <h3 class="card-title">修改</h3>
                         </div>
                         <form class="form-horizontal">
                             <div class="card-body">
@@ -41,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
                             </div>
                         </form>
                     </div>
@@ -55,38 +54,42 @@
     let app = new Vue({
         el: '#app',
         data: {
+            id: "",
             name: "",
             isActive: false,
         },
+        mounted: function() {
+            let self = this;
+            axios.get('/api/Item/getData/6').then(result => { //Todo 這裡是寫死?
+                self.name = result.data.name;
+                self.isActive = result.data.isActive;
+                self.id = result.data.id;
+            });
+        },
         methods: {
-            create: function() {
+            update: function() {
                 let self = this;
                 const formData = new FormData();
+                formData.append('id', self.id);
                 formData.append('isActive', self.isActive);
-                formData.append('Name', self.name);
-                fetch('/api/Item/CreateItem', {
+                formData.append('name', self.name);
+                fetch('/api/Item/Update', {
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify(formData),
-                    method: 'POST'
+                    body: JSON.stringify(formData), method: 'POST'
                 })
-                    .then(response => response.json())
-                    .then(result => {
+                    .then(response => response.json()).then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
                         } else {
-                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
                         }
-                        self.name = "",
-                            self.isActive = false
+                        self.name = "";
+                        self.isActive = false;
                     });
             }
-
-
-
         }
-
     });
 </script>
 

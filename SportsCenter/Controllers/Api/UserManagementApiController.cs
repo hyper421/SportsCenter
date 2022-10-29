@@ -3,69 +3,130 @@ using Microsoft.AspNetCore.Mvc;
 using SportsCenter.Areas.Admin.Models;
 using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
+using SportsCenter.Models.Hashing;
+using SportsCenter.Services;
 using Test.Models.DavidModel;
 
 namespace SportsCenter.Controllers.Api
 {
+    [Route("api/UserManagement/{action}")]
     [ApiController]
     public class UserManagementApiController : ControllerBase
     {
+        HashingPassword hashingPassword = new HashingPassword();
         private readonly SportsCenterDbContext context;
+        private readonly UploadService uploadService;
 
-        public UserManagementApiController(SportsCenterDbContext dbContext)
+
+        public UserManagementApiController(SportsCenterDbContext dbContext, UploadService uploadService)
         {
             this.context = dbContext;
+            this.uploadService = uploadService;
         }
-        [Route("api/ShowUsers")]
-        public IEnumerable<Member> ShowUsers()
-        {
-            return context.Member;
-        }
-        [Route("api/ChangeUser")]
         [HttpPost]
-        public bool ChangeUser([FromBody] ChangeUserModel model)
+        public async Task<bool> Create(CreateUserModel model)
         {
-            var user = (from a in context.Member
-                        where a.Id == model.Id
-                        select a).FirstOrDefault();
-            if (user == null)
+            try
+            {
+                Random random = new Random();//亂數
+
+                var Salt = random.Next(0, 100).ToString();
+                model.Password = hashingPassword.HashPassword($"{model.Password}{Salt}");
+
+                var result = await uploadService.Upload(model.Image, "Category");
+                if (result.Item1)
+                {
+                    context.Member.Add(new DataAccess.Entity.Member
+                    {
+                        IsActive = model.IsActive ? 1 : 0,
+                        Name = model.Name,
+                        ImagePath = result.Item2,
+                        Account = model.Account,
+                        Salt = Salt,
+                        Password = model.Password,
+                        Address = model.Address,
+                        Email = model.Email,
+                        Phone = model.Phone,
+                    });
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
             {
                 return false;
             }
-
-            else
-            {
-                user.IsActive = model.IsActive;
-                user.Account = model.Account;
-                user.Name = model.Name;
-                user.Phone = model.Phone;
-                user.Email = model.Email;
-                user.Address = model.Address;
-                user.Role = model.Role;
-                context.Update(user);
-            }
-            context.SaveChanges();
-            return true;
         }
-        [Route("api/DeleteUser")]
         [HttpPost]
-        public bool DeleteUser([FromBody] DeleteUserModel model)
+        public async Task<bool> Update(CategoryUpdateDto model)
         {
-            if (model.Id == null || context.Member == null)
+            try
             {
-                return false;
-            }
+                var needUpdate = model.Image != null;
+                var path = "";
+                var data = context.Category.FirstOrDefault(x => x.Id == model.Id);
+                if (data == null) return false;
 
-            var user = (from a in context.Member
-                        where a.Id == model.Id
-                        select a).FirstOrDefault();
-            if (user == null)
+                if (model.Image != null)
+                {
+                    var result = await uploadService.Upload(model.Image, "Category");
+                    if (!result.Item1) return false;
+                    path = result.Item2;
+                }
+                data.IsActive = model.IsActive ? 1 : 0;
+                data.Name = model.Name;
+
+                if (needUpdate) data.ImagePath = path;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
-            context.Member.Remove(user);
-            context.SaveChanges();
-            return true;
+        }
+
+        [HttpGet]
+        public object GetAll()
+        {
+            return context.Member.Select(x => new
+            {
+                x.Name,
+                IsActive = x.IsActive == 1,
+                x.Id,
+                x.Account,
+                x.Address,
+                x.Phone,
+                path = x.ImagePath
+            }).ToList();
+        }
+        [Route("{id}")]
+        public object GetData(int id)
+        {
+            var data = context.Category.First(x => x.Id == id);
+            return new
+            {
+                data.Name,
+                IsActive = data.IsActive == 1,
+                data.Id,
+                path = data.ImagePath
+            };
+        }
+        [HttpDelete]
+        public bool Delete(int id)
+        {
+            try
+            {
+                context.Category.Remove(new DataAccess.Entity.Category() { Id = id });
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
                         <li class="breadcrumb-item">
                             <a href="#">Home</a>
                         </li>
-                        <li class="breadcrumb-item">Category</li>
+                        <li class="breadcrumb-item">Item</li>
                         <li class="breadcrumb-item active">Index</li>
                     </ol>
                 </div>
@@ -34,11 +34,8 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>姓名 </th>
-                                            <th>帳號 </th>
-                                            <th>電話 </th>
+                                            <th>類別名稱</th>
                                             <th>是否啟用</th>
-                                            <th>圖片</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -60,57 +57,46 @@
     }
 </style>
 <script>
-    fetch('/api/UserManagement/getall').then(response => response.json()).then(result => {
-      initialDataTable(result)
+    fetch('/api/item/getall').then(response => response.json()).then(result => {
+        initialDataTable(result)
     });
-    function deleteUser(id){
+    function deleteItem(id) {
         console.log(id)
-        if(window.confirm("是否刪除該會員?")){
-            axios.delete(`/api/UserManagement/delete?id=${id}`)
-            .then(function (response) {
-                if(response.data){
-                      Swal.fire({icon: 'success',title: '成功',text: '刪除成功!'}).then((result)=> { window.location.reload()});
-                  }else{
-                      Swal.fire({icon: 'error',title: '錯誤',text: '刪除失敗!'});
-                  }
-            });
+        if (window.confirm("是否刪除該類別?")) {
+            axios.delete(`/api/Item/delete?id=${id}`)
+                .then(function(response) {
+                    if (response.data) {
+                        Swal.fire({ icon: 'success', title: '成功', text: '刪除成功!' }).then((result) => { window.location.reload() });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '錯誤', text: '刪除失敗!' });
+                    }
+                });
         }
 
     }
     function initialDataTable(sourceData) {
-      $(document).ready(function() {
-        $('#dataTable').DataTable({
-          dom: 'frtip',
-          data: sourceData,
-          columns: [{
-              data: "id"
-            }, {
-              data: "name"
-            },{
-              data: "account"
-            },{
-              data: "phone"
-            }, {
-              data: "isActive"
-            }, {
-              data: "path",
-              render: function(data, type, row) {
-                  console.log(data);
-                return `<img src="/system/${data}" class="pic">`
-              }
-            },
-            {
-              data: 'id',
-              width: "10%",
-              render: function(data, type, row) {
-                return `
-      <a href="/admin/UserManagement/Edit/${data}" class="btn btn-primary mx-3">修改</a>
-      <button onclick="deleteUser(${data})" class="btn btn-danger mx-3">刪除</button>`
-      <button onclick="deleteUser(${data})" class="btn btn-danger mx-3">刪除</button>`
-              }
-            }
-          ]
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                dom: 'frtip',
+                data: sourceData,
+                columns: [{
+                    data: "id"
+                }, {
+                    data: "name"
+                }, {
+                    data: "isActive"
+                },,
+                {
+                    data: 'id',
+                    width: "10%",
+                    render: function(data, type, row) {
+                        return `
+          <a href="/admin/Item/Edit/${data}" class="btn btn-primary mx-3">修改</a>
+          <button onclick="deleteItem(${data})" class="btn btn-danger mx-3">刪除</button>`
+                    }
+                }
+                ]
+            });
         });
-      });
     };
 </script>
