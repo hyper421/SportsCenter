@@ -53,7 +53,7 @@
                         <div class="mb-auto text-muted">{{item.englishName}}</div>
                         <p class="mb-auto">{{item.description}}</p> 
                           <p class="mb-auto">{{item.name}}</p> 
-                        <button class="btn btn-dark" @@click="detailClick(item)">詳細資訊</button>
+                        <button class="btn btn-dark" onclick="showDialog()">詳細資訊</button>
                          <div class="d-none d-lg-block">
                         <p class="mb-auto"></p> 
                          <img v-bind:src="`/images/${item.path}`" height="200" />
@@ -67,32 +67,32 @@
 
     </div>
     <!--Modal-->
-      <div id="venue-modal" class="modal fade" data-bs-keyboard="false">
+     @* <div id="venue-modal" class="modal fade" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header">*@
+            <dialog id="infoModal">
           <h5 class="modal-title-bold">場館詳細資訊</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"></span>
-          </button>
-        </div>
+          </button> 
         <div class="modal-body">
-          <p>場館姓名:{{item.name}}</p>
-             <p>場館:{{address}}</p>
-             
-          </p>
+          <template v-for="j in obj">
+          <p>場館姓名:{{j.name}}</p>
+             <p>場館:{{j.address}}</p>
+            </template>
+   
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
-      </div>
-    </div>
-  </div>
+        </dialog>
 
 <script>
 let app = new Vue({
     el: "#location",
     data: {
+
         name:"",
         englishname:"",
         address:"",
@@ -101,8 +101,8 @@ let app = new Vue({
         categories:"",
         venue: [],
         temp: [],
-        category:[]
-
+        category:[],
+        obj:[]
 
     },
     methods: {
@@ -133,21 +133,26 @@ let app = new Vue({
             }
             return false;
         },
-         detailClick: function(item) {
-          this.name = item.name;
-          this.description = item.description;
-          this.englishtname = item.englishtname;
-          this.address = item.address;
-          this.area = item.area;
-          $("#venue-modal").modal('show');
-        },
+         detailClick: function() {
+             },
+
+        
+             //let self = this;
+             //self.obj = {
+             //    name: .name,
+             //    description: item.description,
+             //    englishtname: item.englishtname,
+             //    address: item.address,
+             //    area: item.area
+             //$("#venue-modal").modal('show');
+        
         search: function() {
             let self = this;
             self.temp = self.venue.map(function(item) {
                 if (self.hasKeyWords(item.description)
                     && self.hasArea(item.area)
                     && self.hasCategory(item.categories)) {
-                    return item;
+                    return [...Set(new item)];
                 } 
             })
         },
@@ -178,7 +183,24 @@ let app = new Vue({
 
 </script>
 
+@*<script>
+let btn=document.querySelector("#show");
+let infoModal=document.querySelector("#infoModal");
+ btn.addEventListener("click", function(){
+ infoModal.showModal();
+            })
 
+</script>*@
+<script>
+var x = document.getElementById("infoMoadl"); 
+function showDialog() { 
+  x.show(); 
+} 
+
+function closeDialog() { 
+  x.close(); 
+} 
+</script>
 
 
 
