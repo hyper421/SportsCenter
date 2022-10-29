@@ -61,14 +61,15 @@
         methods: {
             create: function() {
                 let self = this;
-                const formData = new FormData();
-                formData.append('isActive', self.isActive);
-                formData.append('Name', self.name);
+                let data = {
+                    Name: self.name,
+                    isActive: self.isActive
+                }
                 fetch('/api/Item/CreateItem', {
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify(data),
                     method: 'POST'
                 })
                     .then(response => response.json())

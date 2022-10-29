@@ -23,7 +23,7 @@ namespace SportsCenter.Controllers.Api
         {
             try
             {
-                context.Category.Add(new DataAccess.Entity.Category
+                context.Item.Add(new DataAccess.Entity.Item
                 {
                     IsActive = model.IsActive ? 1 : 0,
                     Name = model.Name,
