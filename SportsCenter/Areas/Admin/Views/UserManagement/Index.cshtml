@@ -61,56 +61,55 @@
 </style>
 <script>
     fetch('/api/UserManagement/getall').then(response => response.json()).then(result => {
-      initialDataTable(result)
+        initialDataTable(result)
     });
-    function deleteUser(id){
+    function deleteUser(id) {
         console.log(id)
-        if(window.confirm("是否刪除該會員?")){
+        if (window.confirm("是否刪除該會員?")) {
             axios.delete(`/api/UserManagement/delete?id=${id}`)
-            .then(function (response) {
-                if(response.data){
-                      Swal.fire({icon: 'success',title: '成功',text: '刪除成功!'}).then((result)=> { window.location.reload()});
-                  }else{
-                      Swal.fire({icon: 'error',title: '錯誤',text: '刪除失敗!'});
-                  }
-            });
+                .then(function(response) {
+                    if (response.data) {
+                        Swal.fire({ icon: 'success', title: '成功', text: '刪除成功!' }).then((result) => { window.location.reload() });
+                    } else {
+                        Swal.fire({ icon: 'error', title: '錯誤', text: '刪除失敗!' });
+                    }
+                });
         }
 
     }
     function initialDataTable(sourceData) {
-      $(document).ready(function() {
-        $('#dataTable').DataTable({
-          dom: 'frtip',
-          data: sourceData,
-          columns: [{
-              data: "id"
-            }, {
-              data: "name"
-            },{
-              data: "account"
-            },{
-              data: "phone"
-            }, {
-              data: "isActive"
-            }, {
-              data: "path",
-              render: function(data, type, row) {
-                  console.log(data);
-                return `<img src="/system/${data}" class="pic">`
-              }
-            },
-            {
-              data: 'id',
-              width: "10%",
-              render: function(data, type, row) {
-                return `
-      <a href="/admin/UserManagement/Edit/${data}" class="btn btn-primary mx-3">修改</a>
-      <button onclick="deleteUser(${data})" class="btn btn-danger mx-3">刪除</button>`
-      <button onclick="deleteUser(${data})" class="btn btn-danger mx-3">刪除</button>`
-              }
-            }
-          ]
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                dom: 'frtip',
+                data: sourceData,
+                columns: [{
+                    data: "id"
+                }, {
+                    data: "name"
+                }, {
+                    data: "account"
+                }, {
+                    data: "phone"
+                }, {
+                    data: "isActive"
+                }, {
+                    data: "path",
+                    render: function(data, type, row) {
+                        console.log(data);
+                        return `<img src="/system/${data}" class="pic">`
+                    }
+                },
+                {
+                    data: 'id',
+                    width: "10%",
+                    render: function(data, type, row) {
+                        return `
+          <a href="/admin/UserManagement/Edit/${data}" class="btn btn-primary mx-3">修改</a>
+          <button onclick="deleteUser(${data})" class="btn btn-danger mx-3">刪除</button>`
+                    }
+                }
+                ]
+            });
         });
-      });
     };
 </script>
