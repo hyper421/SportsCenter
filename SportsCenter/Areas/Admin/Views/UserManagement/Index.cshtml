@@ -60,7 +60,7 @@
     }
 </style>
 <script>
-    fetch('/api/UserManagement/getall').then(response => response.json()).then(result => {
+    fetch('/api/Users/getall').then(response => response.json()).then(result => {
         initialDataTable(result)
     });
     function deleteUser(id) {

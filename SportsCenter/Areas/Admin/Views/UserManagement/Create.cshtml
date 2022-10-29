@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Category</li>
+                        <li class="breadcrumb-item">Users</li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -115,18 +115,30 @@
             },
             create: function() {
                 let self = this;
-                const formData = new FormData();
-                formData.append('image', self.images);
-                formData.append('isActive', self.isActive);
-                formData.append('name', self.name);
-                formData.append('account', self.account);
-                formData.append('password', self.password);
-                formData.append('email', self.email);
-                formData.append('phone', self.phone);
-                formData.append('role', self.role);
-                formData.append('address', self.address);
+                let body = {
+                    name:self.name,
+                    isActive:self.isActive,
+                    image:self.images,
+                    account:self.account,
+                    password:self.password,
+                    email:self.email,
+                    phone:self.phone,
+                    role:self.role,
+                    address:self.address,
+                }
+                console.log(body)
+                //const formData = new FormData();
+                //formData.append('image', self.images);
+                //formData.append('isActive', self.isActive);
+                //formData.append('name', self.name);
+                //formData.append('account', self.account);
+                //formData.append('password', self.password);
+                //formData.append('email', self.email);
+                //formData.append('phone', self.phone);
+                //formData.append('role', self.role);
+                //formData.append('address', self.address);
                 fetch('/api/Users/Create', {
-                    body: formData,
+                    body: body,
                     method: 'POST'
                 })
                     .then(response => response.json())
