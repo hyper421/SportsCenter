@@ -20,16 +20,24 @@ namespace SportsCenter.Controllers.Api
             this.uploadService = uploadService;
         }
         [HttpPost]
-        public async Task<bool> Create(CreateProductModel model)
+        public async Task<bool> Create([FromForm] CreateProductModel model)
         {
             try
             {
                 var result = await uploadService.Upload(model.Image, "Products");
+                var id = (from a in context.Item
+                          where a.Name == model.ItemName
+                          select a.Id).FirstOrDefault();
                 if (result.Item1)
                 {
                     context.Products.Add(new DataAccess.Entity.Products
                     {
-
+                        ProductsDateTime = DateTime.Now,
+                        ProductsImagePath = result.Item2,
+                        ProductsName = model.ProductsName,
+                        ProductsInventory = model.ProductsInventory,
+                        ProductsPrice = model.ProductsPrice,
+                        ItemId = id
                     });
                     context.SaveChanges();
                     return true;
@@ -42,7 +50,7 @@ namespace SportsCenter.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<bool> Update(UpdateProductModel model)
+        public async Task<bool> Update([FromForm] UpdateProductModel model)
         {
             try
             {
@@ -63,7 +71,6 @@ namespace SportsCenter.Controllers.Api
                 data.ProductsName = model.ProductsName;
                 data.ProductsPrice = model.ProductsPrice;
                 data.ProductsInventory = model.ProductsInventory;
-                data.ProductsName = model.ProductsName;
                 data.ItemId = itemId;
 
                 if (needUpdate) data.ProductsImagePath = path;

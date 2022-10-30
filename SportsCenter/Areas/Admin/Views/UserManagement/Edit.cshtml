@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">類別修改</h1>
+                    <h1 class="m-0">會員修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Category</li>
+                        <li class="breadcrumb-item">Users</li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">類別名稱</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">姓名</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inp1" v-model="name" required>
                                     </div>
@@ -36,12 +36,6 @@
                                     <label for="inp1" class="col-sm-2 col-form-label">帳號</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inp1" v-model="account" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">密碼</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="password" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -84,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
                             </div>
                         </form>
                     </div>
@@ -103,25 +97,24 @@
             isActive: false,
             path: "",
             images: null,
-            Account: "",
-            Phone: "",
-            Address: "",
-            Email: "",
-            Role: ""
+            account: "",
+            phone: "",
+            address: "",
+            email: "",
+            role: ""
 
         },
         mounted: function() {
             let self = this;
             axios.get('/api/users/getData/@ViewBag.UserId').then(result => {
                 self.name = result.data.name;
-                self.isActive = result.data.isActive;
                 self.id = result.data.id;
                 self.path = result.data.path;
-                self.Account = result.data.Account;
-                self.Address = result.data.Address;
-                self.Phone = result.data.Phone;
-                self.Email = result.data.Email;
-                self.Role = result.data.Role;
+                self.account = result.data.account;
+                self.address = result.data.address;
+                self.phone = result.data.phone;
+                self.email = result.data.email;
+                self.role = result.data.role;
             }).then();
         },
         methods: {
@@ -135,7 +128,12 @@
                 formData.append('image', self.images);
                 formData.append('isActive', self.isActive);
                 formData.append('name', self.name);
-                fetch('/api/Category/Update', { body: formData, method: 'POST' })
+                formData.append('account', self.account);
+                formData.append('address', self.address);
+                formData.append('phone', self.phone);
+                formData.append('email', self.email);
+                formData.append('role', self.role);
+                fetch('/api/Users/Update', { body: formData, method: 'POST' })
                     .then(response => response.json()).then(result => {
                         if (result) {
                             Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });

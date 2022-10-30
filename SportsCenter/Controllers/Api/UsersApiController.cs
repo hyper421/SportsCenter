@@ -24,7 +24,7 @@ namespace SportsCenter.Controllers.Api
             this.uploadService = uploadService;
         }
         [HttpPost]
-        public async Task<bool> Create(CreateUserModel model)
+        public async Task<bool> Create([FromForm]CreateUserModel model)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace SportsCenter.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<bool> Update(UpdateUserModel model)
+        public async Task<bool> Update([FromForm] UpdateUserModel model)
         {
             try
             {

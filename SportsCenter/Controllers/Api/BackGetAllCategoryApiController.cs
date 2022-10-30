@@ -24,5 +24,15 @@ namespace SportsCenter.Controllers.Api
                 x.Id,
             }).ToList();
         }
+        [HttpGet]
+        public object GetCategory()
+        {
+            return context.Category.Select(x => new
+            {
+                x.Name,
+                IsActive = x.IsActive == 1,
+                x.Id,
+            }).ToList();
+        }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SportsCenter.DataAccess;
 
 namespace SportsCenter.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductsController : Controller
+    public class LocationsController : Controller
     {
         public IActionResult Index()
         {
@@ -16,7 +15,7 @@ namespace SportsCenter.Areas.Admin.Controllers
         }
         public IActionResult Edit(int id)
         {
-            ViewBag.ProductsId = id;
+            ViewBag.LocationsId = id;
             return View();
         }
     }
