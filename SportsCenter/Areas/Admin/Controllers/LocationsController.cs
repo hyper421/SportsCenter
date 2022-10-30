@@ -3,7 +3,7 @@
 namespace SportsCenter.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UserManagementController : Controller
+    public class LocationsController : Controller
     {
         public IActionResult Index()
         {
@@ -15,7 +15,7 @@ namespace SportsCenter.Areas.Admin.Controllers
         }
         public IActionResult Edit(int id)
         {
-            ViewBag.UserId = id;
+            ViewBag.LocationsId = id;
             return View();
         }
     }

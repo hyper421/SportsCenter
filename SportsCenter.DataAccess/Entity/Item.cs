@@ -1,4 +1,6 @@
-﻿namespace SportsCenter.DataAccess.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SportsCenter.DataAccess.Entity
 {
     public class Item
     {
