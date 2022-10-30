@@ -60,7 +60,7 @@
         },
         mounted: function() {
             let self = this;
-            axios.get('/api/Item/getData/@ViewBag.ItemId').then(result => { //todo 這裡是寫死?
+            axios.get('/api/Item/getData/@ViewBag.ItemId').then(result => {
                 self.name = result.data.name;
                 self.isActive = result.data.isActive;
                 self.id = result.data.id;
