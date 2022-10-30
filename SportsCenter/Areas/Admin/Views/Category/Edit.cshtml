@@ -75,7 +75,7 @@ let app = new Vue({
     },
     mounted: function () {
         let self = this;
-        axios.get('/api/category/getData/6').then(result => {
+        axios.get('/api/category/getData/@ViewBag.CategoryId').then(result => {
             self.name = result.data.name;
             self.isActive = result.data.isActive;
             self.id = result.data.id;

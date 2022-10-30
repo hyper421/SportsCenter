@@ -19,7 +19,7 @@ namespace SportsCenter.Controllers.Api
             this.context = context;
         }
         [HttpPost]
-        public bool CreateItem(CreateItemModel model)
+        public bool Create(CreateItemModel model)
         {
             try
             {
@@ -28,6 +28,23 @@ namespace SportsCenter.Controllers.Api
                     IsActive = model.IsActive ? 1 : 0,
                     Name = model.Name,
                 });
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        [HttpPost]
+        public async Task<bool> Update(UpdateItemDto model)
+        {
+            try
+            {
+                var data = context.Category.FirstOrDefault(x => x.Id == model.Id);
+                if (data == null) return false;
+                data.IsActive = model.IsActive ? 1 : 0;
+                data.Name = model.Name;
                 context.SaveChanges();
                 return true;
             }

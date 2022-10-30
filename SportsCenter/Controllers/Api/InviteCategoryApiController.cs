@@ -32,6 +32,23 @@ namespace SportsCenter.Controllers.Api
                 return false;
             }
         }
+        [HttpPost]
+        public async Task<bool> Update(UpdateInviteCategoryDto model)
+        {
+            try
+            {
+                var data = context.Category.FirstOrDefault(x => x.Id == model.Id);
+                if (data == null) return false;
+                data.IsActive = model.IsActive ? 1 : 0;
+                data.Name = model.Name;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         [HttpGet]
         public object GetAll()
         {

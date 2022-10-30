@@ -60,7 +60,7 @@
         },
         mounted: function() {
             let self = this;
-            axios.get('/api/Item/getData/').then(result => { //todo 這裡是寫死?
+            axios.get('/api/InviteCategory/GetData/@ViewBag.InviteCategoryId').then(result => {
                 self.name = result.data.name;
                 self.isActive = result.data.isActive;
                 self.id = result.data.id;
@@ -73,7 +73,7 @@
                 formData.append('id', self.id);
                 formData.append('isActive', self.isActive);
                 formData.append('name', self.name);
-                fetch('/api/Item/Update', {
+                fetch('/api/InviteCategory/Update', {
                     headers: {
                         'content-type': 'application/json'
                     },

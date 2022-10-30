@@ -58,7 +58,7 @@ namespace SportsCenter.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<bool> Update(CategoryUpdateDto model)
+        public async Task<bool> Update(UpdateUserModel model)
         {
             try
             {
@@ -106,6 +106,11 @@ namespace SportsCenter.Controllers.Api
             return new
             {
                 data.Name,
+                data.Account,
+                data.Phone,
+                data.Address,
+                data.Email,
+                data.Role,
                 IsActive = data.IsActive == 1,
                 data.Id,
                 path = data.ImagePath

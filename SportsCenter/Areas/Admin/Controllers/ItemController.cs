@@ -6,11 +6,11 @@ namespace SportsCenter.Areas.Admin.Controllers
     [Area("Admin")]
     public class ItemController : Controller
     {
-        private readonly SportsCenterDbContext _db;
+        private readonly SportsCenterDbContext context;
 
-        public ItemController(SportsCenterDbContext db)
+        public ItemController(SportsCenterDbContext context)
         {
-            _db = db;
+            context = context;
         }
         public IActionResult Index()
         {
@@ -20,8 +20,10 @@ namespace SportsCenter.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
+            ViewBag.ItemId = id;
+
             return View();
         }
     }

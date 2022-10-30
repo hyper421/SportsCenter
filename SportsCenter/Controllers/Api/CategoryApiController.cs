@@ -84,7 +84,7 @@ namespace SportsCenter.Controllers.Api
         [Route("{id}")]
         public object GetData(int id)
         {
-            var data = _db.Member.First(x => x.Id == id);
+            var data = _db.Category.First(x => x.Id == id);
             return new
             {
                 data.Name,
