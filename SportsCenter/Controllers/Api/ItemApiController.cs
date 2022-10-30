@@ -37,7 +37,7 @@ namespace SportsCenter.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<bool> Update(UpdateItemDto model)
+        public bool Update(UpdateItemDto model)
         {
             try
             {

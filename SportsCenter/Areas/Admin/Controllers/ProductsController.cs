@@ -20,8 +20,9 @@ namespace SportsCenter.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
+            ViewBag.ProductsId = id;
             return View();
         }
     }

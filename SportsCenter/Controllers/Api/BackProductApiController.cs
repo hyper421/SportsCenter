@@ -16,7 +16,7 @@ namespace SportsCenter.Controllers.Api
 
         public BackProductApiController(SportsCenterDbContext context, UploadService uploadService)
         {
-            context = context;
+            this.context = context;
             this.uploadService = uploadService;
         }
         [HttpPost]
@@ -42,13 +42,13 @@ namespace SportsCenter.Controllers.Api
             }
         }
         [HttpPost]
-        public async Task<bool> Update(CategoryUpdateDto model)
+        public async Task<bool> Update(UpdateProductModel model)
         {
             try
             {
                 var needUpdate = model.Image != null;
                 var path = "";
-                var data = context.Products.FirstOrDefault(x => x.ProductsId == model.Id);
+                var data = context.Products.FirstOrDefault(x => x.ProductsId == model.ProductsId);
                 if (data == null) return false;
 
                 if (model.Image != null)
@@ -57,7 +57,14 @@ namespace SportsCenter.Controllers.Api
                     if (!result.Item1) return false;
                     path = result.Item2;
                 }
-                data.ProductsName = model.Name;
+                var itemId = (from a in context.Item
+                              where a.Name == model.ItemName
+                              select a.Id).FirstOrDefault();
+                data.ProductsName = model.ProductsName;
+                data.ProductsPrice = model.ProductsPrice;
+                data.ProductsInventory = model.ProductsInventory;
+                data.ProductsName = model.ProductsName;
+                data.ItemId = itemId;
 
                 if (needUpdate) data.ProductsImagePath = path;
                 context.SaveChanges();
@@ -75,6 +82,8 @@ namespace SportsCenter.Controllers.Api
             {
                 x.ProductsName,
                 x.ProductsId,
+                x.ProductsPrice,
+                x.ProductsInventory,
                 path = x.ProductsImagePath
             }).ToList();
         }
@@ -82,11 +91,20 @@ namespace SportsCenter.Controllers.Api
         public object GetData(int id)
         {
             var data = context.Products.First(x => x.ProductsId == id);
+            var type = (from a in context.Products
+                        join b in context.Item
+                        on a.ProductsId equals id
+                        where a.ItemId == b.Id
+                        select b.Name).FirstOrDefault();
+
             return new
             {
+                data.ProductsPrice,
+                data.ProductsInventory,
                 data.ProductsName,
                 data.ProductsId,
-                path = data.ProductsImagePath
+                path = data.ProductsImagePath,
+                itameName = type,
             };
         }
         [HttpDelete]
