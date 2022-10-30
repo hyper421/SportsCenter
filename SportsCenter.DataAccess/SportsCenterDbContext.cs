@@ -22,7 +22,7 @@ namespace SportsCenter.DataAccess
         public virtual DbSet<ProductsOrder> ProductsOrder { get; set; }
         public virtual DbSet<ProductsOrderDetail> ProductsOrderDetail { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
-
+        public virtual DbSet<InviteCategory> InviteCategory { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>(entity =>
