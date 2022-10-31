@@ -22,30 +22,37 @@ namespace SportsCenter.Controllers.Api
             {
                 return _context.Location.Select(x=> new {
                     x.Area,
-                    x.LocationImage,
+                    x.ImagePath,
                     x.Id,
                     x.Name,
                     x.EnglishName,
                     x.Description,
+                    x.Website,
+                    x.ContactPhone,
+                    x.Address,
                     categoryIds = x.LocationBranch.Select(x=>x.CategoryId).ToList()
                 });
 
             }
 
-            #endregion
-            #region 回傳詳細資料畫面viaId
+        #endregion
+        #region 回傳詳細資料畫面viaId
 
-            [HttpGet("{id}")]
+        [HttpGet("{id}")]
             public Location GetbyId(int id)
             {
 
                 return _context.Location.Find(id);
             }
-            #endregion
+        #endregion
 
-            #region  CreateLocation資料
 
-            [HttpPost]
+
+
+
+        #region  CreateLocation資料
+
+        [HttpPost]
             public IActionResult PostLocation([FromBody] Location location)
             {
                 var i = new Location
