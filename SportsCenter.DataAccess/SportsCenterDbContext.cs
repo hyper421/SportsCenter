@@ -23,7 +23,9 @@ namespace SportsCenter.DataAccess
         public virtual DbSet<ProductsOrderDetail> ProductsOrderDetail { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
 
+
         public virtual DbSet<InviteCategory> InviteCategory { get; set; }
+
 
 
 
