@@ -72,6 +72,7 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
 using SportsCenter.Models;
@@ -79,7 +80,7 @@ using System.Security.Claims;
 
 namespace SportsCenter.Controllers.Api
 {
-    [Route("/api/PostArticle/{action}")]
+    [Route("api/PostArticle/{action}")]
     [ApiController]
     public class PostArticleApiController : ControllerBase
     {
@@ -116,6 +117,7 @@ namespace SportsCenter.Controllers.Api
         {
             return dbContext.Posts.Select(x => new
             {
+                x.Id,
                 x.InviteCategory_Id,
                 x.Member_Id,
                 x.Title,
@@ -124,6 +126,25 @@ namespace SportsCenter.Controllers.Api
                 x.ImagePath,
 
             }).ToList();
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetDetail(int id)
+        {
+            var data = dbContext.Posts.Where(x => x.Id == id).Select(x => new DataAccess.Entity.Post
+            {
+                Id = x.Id,
+                InviteCategory_Id = x.InviteCategory_Id,
+                Member_Id = x.Member_Id,
+                Title = x.Title,
+                Content = x.Content,
+                CreatedDate = x.CreatedDate,
+                ImagePath = x.ImagePath,
+                Message = x.Message.ToList(),
+            }).FirstOrDefault();
+
+            return Ok(data);
         }
     }
 }

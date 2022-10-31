@@ -71,14 +71,14 @@
     </div>
 </div>
 
-<div class="container-fluid p-5">
+<div class="container-fluid p-5" id="app">
     <div class="row justify-content-center text-center">
      @*   <div class="col-2">
             
         </div>*@
         <div class="col-md-4 col-xs-auto">
-            <h2><strong>新手上路有人要不要一起打?</strong></h2>
-            <label class="tag tag-teal">羽球</label>
+            <h2><strong>@*新手上路有人要不要一起打?*@{{model.title}}</strong></h2>
+            <label class="tag tag-teal">@*羽球*@{{model.inviteCategory_Id}}</label>
 
             <hr class="Hidden" />
             <img src="https://d3nb97lilvchvx.cloudfront.net/category_page/badminton.jpg" />
@@ -88,7 +88,7 @@
             <div class="user">
                 <img src="https://file.qqtouxiang.com/dongwu/2020-04-10/11395a5d68df9aeaa37267012c8a2c34.jpeg" alt="user"  />
                 <div class="user-info">
-                    <h5 style="margin-top:0.5rem;"><strong>無雙</strong></h5>
+                    <h5 style="margin-top:0.5rem;"><strong>@*無雙*@{{model.member_Id}}</strong></h5>
                     <small>有點小心情</small>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
             </svg>
-            <label>建立日期：2022/10/10</label>
+            <label>建立日期：@*2022/10/10*@{{model.createdDate}}</label>
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
@@ -122,7 +122,7 @@
                 
             </svg>
             <label><h3 style="bottom:-0.5rem;"><strong>簡介</strong></h3></label>
-            <h5>新北有一家新開的感覺很不錯</h5>
+            <h5>@*新北有一家新開的感覺很不錯*@{{model.content}}</h5>
         </div>
   </div>
     <div class="row">
@@ -200,3 +200,24 @@
     </div>
 </div>
 
+<script>
+    var ABC= new Vue({
+        el:"#app",
+        data:{
+            model:{}
+        },
+        mounted: async function(){
+            var id = new URL(location.href).searchParams.get("id");
+            var url = "/api/PostArticle/GetDetail";
+            //fetch(url + "?Id=" + id).then(function (response) { return response.json() })
+            //    .then(function (result) {
+            //        this.model=result;
+
+            //    });
+            let response = await fetch(url + "?Id=" + id);
+            let data=await response.json();
+            this.model=data;
+        }
+    })
+
+</script>
