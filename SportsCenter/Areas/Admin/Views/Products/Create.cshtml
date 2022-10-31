@@ -36,6 +36,7 @@
                                 <div class="form-group row">
                                     <label for="inp1" class="col-sm-2 col-form-label">商品類別</label>
                                     <select v-model="itemName">
+                                        <option value="" selected disabled>請選擇...</option>
                                         <option v-for="type in getItemName">{{type.name}}</option>
                                     </select>
                                 </div>

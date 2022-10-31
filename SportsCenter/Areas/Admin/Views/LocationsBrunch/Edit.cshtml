@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">商品修改</h1>
+                    <h1 class="m-0">場地修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Products</li>
+                        <li class="breadcrumb-item">LocationBrunch</li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
@@ -27,31 +27,34 @@
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品名稱</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館名稱</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsName" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="locationName" required>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品類別</label>
-                                    <select v-model="itemName">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地名稱</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地類型</label>
+                                    <select v-model="type">
                                         <option value="" selected disabled>{{type}}</option>
-                                        <option v-for="type in getItemName">{{type.name}}</option>
+                                        <option v-for="type in getTypes">{{type.name}}</option>
                                     </select>
                                 </div>
-
-
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品價格</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">價格</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsPrice" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="price" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品庫存</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">簡介</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsInventory" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="memo" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -76,13 +79,15 @@
     let app = new Vue({
         el: '#app',
         data: {
-            productsId: "",
-            type:"",
-            productsName: "",
-            productsPrice: "",
-            productsInventory: "",
-            itemName: "",
-            getItemName: []
+            id: "",
+            images: null,
+            locationName: "",
+            name: "",
+            price: "",
+            memo: "",
+            type: "",
+            getTypes: []
+
         },
         mounted: function() {
             let self = this;
@@ -95,44 +100,45 @@
             },
             fetchData: function() {
                 let self = this;
-                axios.get('/api/BackProduct/GetData/@ViewBag.ProductsId').then(result => {
-                    self.productsId = result.data.productsId;
-                    self.productsName = result.data.productsName;
-                    self.productsPrice = result.data.productsPrice;
-                    self.productsInventory = result.data.productsInventory;
+                axios.get('/api/LocationsBrunch/getData/@ViewBag.LocationsBranchId').then(result => {
+                    self.locationName = result.data.locationName;
                     self.type = result.data.type;
+                    self.name = result.data.name;
+                    self.price = result.data.price;
+                    self.memo = result.data.memo;
+                    self.Image = result.data.Images;
+                    self.id = result.data.id;
                 });
             },
             getType: function() {
                 let self = this;
-                fetch("/api/BackGetAllCategory/GetItem")
+                fetch("/api/BackGetAllCategory/GetCategory")
                     .then(function(response) { return response.json() })
                     .then(function(result) {
-                        self.getItemName = result
+                        self.getTypes = result
                     })
             },
             update: function() {
                 let self = this;
                 const formData = new FormData();
-                formData.append('productsId', self.productsId);
+                formData.append('id', self.id);
+                formData.append('locationName', self.locationName);
+                formData.append('type', self.type);
+                formData.append('name', self.name);
+                formData.append('price', self.price);
+                formData.append('memo', self.memo);
                 formData.append('image', self.images);
-                formData.append('itemName', self.itemName);
-                formData.append('productsName', self.productsName);
-                formData.append('productsPrice', self.productsPrice);
-                formData.append('productsInventory', self.productsInventory);
-                fetch('/api/BackProduct/Update', {
+                fetch('/api/LocationsBrunch/Update', {
                     body: formData,
                     method: 'POST'
                 })
                     .then(response => response.json())
                     .then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
                         } else {
-                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
                         }
-                        self.name = "",
-                            self.isActive = false
                     });
             }
         }

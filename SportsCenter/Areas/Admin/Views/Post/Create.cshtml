@@ -1,15 +1,16 @@
 ﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">商品修改</h1>
+                    <h1 class="m-0">發文新增</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Products</li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item">Post</li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
             </div>
@@ -22,36 +23,40 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">修改</h3>
+                            <h3 class="card-title">新增</h3>
                         </div>
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品名稱</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">標題</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsName" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="title" required>
                                     </div>
                                 </div>
-
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品類別</label>
-                                    <select v-model="itemName">
-                                        <option value="" selected disabled>{{type}}</option>
-                                        <option v-for="type in getItemName">{{type.name}}</option>
+                                    <label for="inp1" class="col-sm-2 col-form-label">類別</label>
+                                    <select v-model="typeName">
+                                        <option value="" selected disabled>請選擇...</option>
+                                        <option v-for="type in types">{{type.name}}</option>
                                     </select>
                                 </div>
-
-
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品價格</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">發文者</label>
+                                    <select v-model="userName">
+                                        <option value="" selected disabled>請選擇...</option>
+                                        <option v-for="user in users">{{user.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">內容</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsPrice" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="content" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">商品庫存</label>
+                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="productsInventory" required>
+                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -62,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
+                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
                             </div>
                         </form>
                     </div>
@@ -76,51 +81,50 @@
     let app = new Vue({
         el: '#app',
         data: {
-            productsId: "",
-            type:"",
-            productsName: "",
-            productsPrice: "",
-            productsInventory: "",
-            itemName: "",
-            getItemName: []
+            title: "",
+            isActive: false,
+            images: null,
+            userName: "",
+            typeName: "",
+            content: "",
+            users: [],
+            types: []
         },
         mounted: function() {
             let self = this;
-            self.fetchData();
-            self.getType();
+            self.getUsers();
+            self.getTypes();
         },
         methods: {
             uploadFile(e) {
                 this.images = e.target.files[0]
             },
-            fetchData: function() {
+            getUsers: function() {
                 let self = this;
-                axios.get('/api/BackProduct/GetData/@ViewBag.ProductsId').then(result => {
-                    self.productsId = result.data.productsId;
-                    self.productsName = result.data.productsName;
-                    self.productsPrice = result.data.productsPrice;
-                    self.productsInventory = result.data.productsInventory;
-                    self.type = result.data.type;
-                });
-            },
-            getType: function() {
-                let self = this;
-                fetch("/api/BackGetAllCategory/GetItem")
+                fetch("/api/BackGetAllCategory/GetUsers")
                     .then(function(response) { return response.json() })
                     .then(function(result) {
-                        self.getItemName = result
+                        self.users = result
                     })
             },
-            update: function() {
+            getTypes: function() {
+                let self = this;
+                fetch("/api/BackGetAllCategory/GetInviteCategory")
+                    .then(function(response) { return response.json() })
+                    .then(function(result) {
+                        self.types = result
+                    })
+            },
+            create: function() {
                 let self = this;
                 const formData = new FormData();
-                formData.append('productsId', self.productsId);
                 formData.append('image', self.images);
-                formData.append('itemName', self.itemName);
-                formData.append('productsName', self.productsName);
-                formData.append('productsPrice', self.productsPrice);
-                formData.append('productsInventory', self.productsInventory);
-                fetch('/api/BackProduct/Update', {
+                formData.append('isActive', self.isActive);
+                formData.append('title', self.title);
+                formData.append('type', self.typeName);
+                formData.append('name', self.userName);
+                formData.append('content', self.content);
+                fetch('/api/Post/Create', {
                     body: formData,
                     method: 'POST'
                 })
@@ -131,10 +135,9 @@
                         } else {
                             Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
                         }
-                        self.name = "",
-                            self.isActive = false
                     });
             }
         }
     });
 </script>
+
