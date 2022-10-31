@@ -1,16 +1,15 @@
 ﻿<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">場館類別新增</h1>
+                    <h1 class="m-0">留言板類別修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Category</li>
-                        <li class="breadcrumb-item active">Create</li>
+                        <li class="breadcrumb-item">Item</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +22,7 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">新增</h3>
+                            <h3 class="card-title">修改</h3>
                         </div>
                         <form class="form-horizontal">
                             <div class="card-body">
@@ -39,15 +38,9 @@
                                         <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="inp3" class="col-sm-2 col-form-label">圖片</label>
-                                    <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="inp3" @@change="uploadFile">
-                                    </div>
-                                </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
                             </div>
                         </form>
                     </div>
@@ -61,33 +54,39 @@
     let app = new Vue({
         el: '#app',
         data: {
+            id: "",
             name: "",
             isActive: false,
-            images: null
+        },
+        mounted: function() {
+            let self = this;
+            axios.get('/api/InviteCategory/GetData/@ViewBag.InviteCategoryId').then(result => {
+                self.name = result.data.name;
+                self.isActive = result.data.isActive;
+                self.id = result.data.id;
+            });
         },
         methods: {
-            uploadFile(e) {
-                this.images = e.target.files[0]
-            },
-            create: function() {
+            update: function() {
                 let self = this;
                 const formData = new FormData();
-                formData.append('image', self.images);
+                formData.append('id', self.id);
                 formData.append('isActive', self.isActive);
                 formData.append('name', self.name);
-                fetch('/api/Category/Create', {
-                    body: formData,
-                    method: 'POST'
+                fetch('/api/InviteCategory/Update', {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(formData), method: 'POST'
                 })
-                    .then(response => response.json())
-                    .then(result => {
+                    .then(response => response.json()).then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
                         } else {
-                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
                         }
-                        self.name = "",
-                            self.isActive = false
+                        self.name = "";
+                        self.isActive = false;
                     });
             }
         }

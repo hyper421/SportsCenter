@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">場館類別查詢</h1>
+                    <h1 class="m-0">場館查詢</h1>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6">
@@ -12,7 +12,7 @@
                         <li class="breadcrumb-item">
                             <a href="#">Home</a>
                         </li>
-                        <li class="breadcrumb-item">Category</li>
+                        <li class="breadcrumb-item">Locations</li>
                         <li class="breadcrumb-item active">Index</li>
                     </ol>
                 </div>
@@ -34,8 +34,10 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>類別名稱</th>
-                                            <th>是否啟用</th>
+                                            <th>場館名稱</th>
+                                            <th>場館英文名</th>
+                                            <th>地區</th>
+                                            <th>連絡電話</th>
                                             <th>圖片</th>
                                             <th>操作</th>
                                         </tr>
@@ -58,13 +60,13 @@
     }
 </style>
 <script>
-    fetch('/api/category/getall').then(response => response.json()).then(result => {
+    fetch('/api/Locations/getall').then(response => response.json()).then(result => {
       initialDataTable(result)
     });
-    function deleteCategory(id){
+    function deleteLocations(id){
         console.log(id)
         if(window.confirm("是否刪除該類別?")){
-            axios.delete(`/api/category/delete?id=${id}`)
+            axios.delete(`/api/Locations/delete?id=${id}`)
             .then(function (response) {
                 if(response.data){
                       Swal.fire({icon: 'success',title: '成功',text: '刪除成功!'}).then((result)=> { window.location.reload()});
@@ -85,9 +87,13 @@
             }, {
               data: "name"
             }, {
-              data: "isActive"
+              data: "englishName"
+            },  {
+              data: "area"
             }, {
-              data: "path",
+              data: "contactPhone"
+            }, {
+              data: "imagePath",
               render: function(data, type, row) {
                   console.log(data);
                 return `<img src="/system/${data}" class="pic">`
@@ -98,8 +104,8 @@
               width: "10%",
               render: function(data, type, row) {
                 return `
-      <a href="/admin/Category/Edit/${data}" class="btn btn-primary mx-3">修改</a>
-      <button onclick="deleteCategory(${data})" class="btn btn-danger mx-3">刪除</button>`
+      <a href="/admin/Locations/Edit/${data}" class="btn btn-primary mx-3">修改</a>
+      <button onclick="deleteLocations(${data})" class="btn btn-danger mx-3">刪除</button>`
               }
             }
           ]

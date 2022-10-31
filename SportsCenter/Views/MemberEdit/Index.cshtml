@@ -5,15 +5,44 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link href="~/david/css//MemberCenter.css" rel="stylesheet" />
 
+<style>
+ /*   .card-header img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+    }*/
 
+    .user img {
+        border-radius: 50%;
+        width: 400px;
+        height: 400px;
+        border: 3px #212529 double;
+    }
+
+    .hidden {
+        color:aliceblue;
+    }
+
+    .userimg img {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        border: 3px #212529 double;
+    }
+
+  
+</style>
 
 
     <div id="d1">
         <!-- 你們的nav bar -->
         <div class="container memberinfo pt-5">
             <div class="row">
-                <div class="col-4 memberimg">
-                    會員照片在這
+                <div class="col-4 ">
+                    
+                <div class="userimg text-center">
+                    <img  src="https://www.ils.com.tw/zh/Up_files/webskin/RWD/include/images/type3album_blank.png" />
+                </div>
                 </div>
                 <div class="col-8">
                     <h3>會員級別:{{member.level}}</h3>
@@ -79,13 +108,39 @@
                     </div>
                 </div>
                 <!-- 2 -->
-                <div class="tab-pane" id="tabtwo" role="tabpanel" aria-labelledby="tabtwo-tab" tabindex="0">
-                    <div class="container tabtwo">
-                        <div class="container">
-                            第二頁資訊
-                        </div>
-                    </div>
-                </div>
+			<div class="tab-pane" id="tabtwo" role="tabpanel" aria-labelledby="tabtwo-tab" tabindex="0">
+                <hr class="hidden" />
+				<div class="container tabtwo">
+					<div class="container">
+						<div class="row">
+                            <div class="col-md-4"></div>
+							<div class="col-md-4">
+								<div id="picpreview" class="text-center">
+                                    <div class="user">
+                                        <img id="picpreview2" src="https://www.ils.com.tw/zh/Up_files/webskin/RWD/include/images/type3album_blank.png" />
+                                    </div>
+                                    <hr class="hidden" />
+									<form enctype="multipart/form-data" method="post" action="/api/MemberImageUpload/Upload">
+                                        <label class="btn btn-info" style="color:aliceblue">
+										@*<input type="text" name="name" id="name" />*@
+                                            <input type="file" name="files" id="files" style="display:none;" accept=".png, .jpg, .jpeg" multiple />
+                                        <i class="fa fa-photo"></i> 上傳圖片
+                                        </label>
+                                        <div>
+										<button type="submit" class="btn btn-outline-info">送出</button>
+                                        </div>
+									</form>
+								</div>
+							</div>
+						    <div class="col-md-4 text-center" >
+                              
+							</div>
+                            <hr class="hidden" />
+
+						</div>
+					</div>
+				</div>
+			</div>
                 <!-- 3 -->
                 <div class="tab-pane" id="tabthree" role="tabpanel" aria-labelledby="tabthree-tab" tabindex="0">
                     <div class="container tabthree">
@@ -159,4 +214,23 @@
                 })
         }
     })
+
+
+</script>
+
+<script>
+    var file = document.getElementById("files");
+    file.addEventListener("change", function (e) {
+        RenderPicPreview(e.target.files);
+    });
+
+	function RenderPicPreview(files) {
+		var target = document.getElementById("picpreview2");
+		for (var i = 0; i < files.length; i++) {
+			//var img = document.createElement("img");
+
+			target.src = URL.createObjectURL(files[i]);
+			//target.append(img);
+		}
+	}
 </script>

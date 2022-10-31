@@ -1,5 +1,5 @@
 ﻿
-<div class="container">
+<div class="back_re">
     <div class="row">
         <div class="col-md-12">
             <div class="title">
@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
                 <form class="row g-3">
-                    <div class="col-md-auto">
+                   <div class="col-md-auto">
                         <label class="form-label">地區</label>
                         <select v-model="areas" class="form-control">
                             <option :value="items" v-for="items in areaOptionList" :key="items"> {{items}} </option>
@@ -26,15 +26,14 @@
                     </div>
                     <div class="col-md-auto">
                         <label for="category" class="form-label">種類</label>
-                        <select class="form-control" id="category" v-model="category">
-                            <option value="1">籃球</option>
-                            <option value="2">壘球</option>
-                            <option value="3">壁球</option>
+                        <select class="form-control" v-model="categories">
+                        <option :value="i" v-for="i in category" :key="i"> {{i.name}} </option>
+
                         </select>
                     </div>
                     <div class="col-md-auto">
                         <label for="keywords" class="form-label">關鍵字</label>
-                        <input type="text" class="form-control" v-model="keywords" placeholder="輸入搜尋">
+                        <input type="text" class="form-control" v-model="keywords" placeholder="請輸入關鍵字搜尋...">
                     </div>
                     <div class="col-md-auto d-flex justify-content-end">
                         <button type="button" class="btn btn-primary" @@click="search"> 搜尋</button>
@@ -43,45 +42,56 @@
             </div>
         </div>
     </div>
+    <!--卡片-->
     <div class="row">
-        <div v-for="item in temp" key="item.name" class="col-md-4">
+        <div v-for="item in temp" :key="item" class="col-md-4">
             <div class="p-3">
                 <div class="row g-0 border rounded flex-md-row mb-4 shadow-sm">
                     <div class="col p-4 d-flex flex-column position-static">
                         <stron class=" mb-4 badge rounded-pill bg-dark text-light">{{item.area}}</stron>
                         <h1 class="fw-bolder mb-1 justify-content-center">{{item.name}}</h1>
                         <div class="mb-auto text-muted">{{item.englishName}}</div>
-                        <p class="mb-auto">{{item.name}}</p> <!--tag預留-->
-                        <p class="mb-auto">{{item.description}}</p>
-                        <a href="/venue/details" class="stretched-link">更多資訊</a>
+                        <p class="mb-auto">{{item.description}}</p> 
+                        <p class="mb-auto">{{item.name}}</p> 
+                        
+                        <a href="/venue/detail/${itemid}" class="btn btn-dark">詳細資訊</a> 
+                         <div class="d-none d-lg-block">
+                        <p class="mb-auto"></p> 
+                        @* <img v-bind:src="`/images/${item.LocationImage}`" height="200" />*@
+                        <img :src="item.imagePath" class="card-img-top" alt="" data-bs-toggle="modal">
 
+                        </div>
+                        </div>
                     </div>
-                    <div class="d-none d-lg-block">
-                        <img v-bind:src="`/images/${item.path}`" height="200" />
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-</div>
+
 
 <script>
 let app = new Vue({
     el: "#location",
     data: {
+
+        name: "",
+        englishname: "",
+        address: "",
         keywords: "",
         areas: "",
-        category: "1",
+        categories: "",
         venue: [],
-        temp: []
+        temp: [],
+        category: []
+
     },
     methods: {
         hasKeyWords: function(str) {
             if (this.keywords.trim() == "") {
                 return true;
             }
-            if (this.keywords.trim() == str) {
+            if (str.includes(this.keywords.trim())) {
                 return true;
             }
             return false;
@@ -90,40 +100,62 @@ let app = new Vue({
             if (this.areas.trim() == "") {
                 return true;
             }
-            if (this.areas.trim() == str) {
+            if (str.includes(this.areas.trim())) {
                 return true;
             }
             return false;
         },
         hasCategory: function(str) {
-            return true;
+            if (this.categories == "") {
+                return true;
+            }
+            if (str.includes(this.categories)) {
+                return true;
+            }
+            return false;
         },
+
         search: function() {
             let self = this;
-            self.temp = self.venue.map(function(item) {
-                if (self.hasKeyWords(item.description)
-                    && self.hasArea(item.area)
-                    && self.hasCategory(item.categoryIds)) {
-                    return item;
-
-                }
-            })
-        }
+            self.temp = self.venue.filter(function(item) {
+             return (self.hasKeyWords(item.description) && self.hasArea(item.area) && self.hasCategory(item.categoryIds))
+            });
+        },
     },
-        computed: {
+    computed: {
         areaOptionList: function() {
             let self = this;
             return Array.from(new Set(self.venue.map(x => x.area)));
-        }
+        },
+        categoryOptionList: function() {
+            let self = this;
+            return Array.from(new Set(self.category.map(x => x.name)));
+        },
+
+       
     },
+
+  
+
     mounted: function() {
         let self = this;
         fetch("/api/Venue")
             .then(function(response) { return response.json() })
-            .then(function(result) { self.venue = result; self.temp = result })
-    }
-})
+            .then(function(result) { self.venue = result; self.temp = result; })
+        fetch("/api/Category/GetAll")
+            .then(function(response) { return response.json() })
+            .then(function(result) { self.category = result;})
+        //fetch("/api/Venue/getbyId/@ViewBag.Itemid")
+        //    .then(function(response) { return response.json() })
+        //    .then(function(result) { self.detail = result; })
+
+    },
+
+});
 
 
 </script>
+
+
+
 
