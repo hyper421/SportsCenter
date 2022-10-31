@@ -110,8 +110,7 @@ namespace SportsCenter.Controllers.Api
                 data.ProductsInventory,
                 data.ProductsName,
                 data.ProductsId,
-                path = data.ProductsImagePath,
-                itameName = type,
+                type = type,
             };
         }
         [HttpDelete]
