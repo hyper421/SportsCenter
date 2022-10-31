@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">發文修改</h1>
+                    <h1 class="m-0">場地修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Post</li>
+                        <li class="breadcrumb-item">LocationBrunch</li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
@@ -27,35 +27,34 @@
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">標題</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館名稱</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="title" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="locationName" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">類別</label>
-                                    <select v-model="typeName">
-                                        <option value="" selected disabled>請選擇...</option>
-                                        <option v-for="type in types">{{type.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">發文者</label>
-                                    <select v-model="userName">
-                                        <option value="" selected disabled>請選擇...</option>
-                                        <option v-for="user in users">{{user.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">內容</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地名稱</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="content" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地類型</label>
+                                    <select v-model="type">
+                                        <option value="" selected disabled>{{type}}</option>
+                                        <option v-for="type in getTypes">{{type.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">價格</label>
                                     <div class="col-sm-10">
-                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                        <input type="text" class="form-control" id="inp1" v-model="price" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">簡介</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="memo" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -81,20 +80,19 @@
         el: '#app',
         data: {
             id: "",
-            title: "",
-            isActive: false,
             images: null,
-            userName: "",
-            typeName: "",
-            content: "",
-            users: [],
-            types: []
+            locationName: "",
+            name: "",
+            price: "",
+            memo: "",
+            type: "",
+            getTypes: []
+
         },
         mounted: function() {
             let self = this;
             self.fetchData();
-            self.getUsers();
-            self.getTypes();
+            self.getType();
         },
         methods: {
             uploadFile(e) {
@@ -102,43 +100,35 @@
             },
             fetchData: function() {
                 let self = this;
-                axios.get('/api/post/getData/@ViewBag.PostId').then(result => {
-                    self.title = result.data.title;
-                    self.isActive = result.data.isActive;
-                    self.images = result.data.images;
-                    self.userName = result.data.name;
-                    self.typeName = result.data.type;
-                    self.content = result.data.content;
+                axios.get('/api/LocationsBrunch/getData/@ViewBag.LocationsBranchId').then(result => {
+                    self.locationName = result.data.locationName;
+                    self.type = result.data.type;
+                    self.name = result.data.name;
+                    self.price = result.data.price;
+                    self.memo = result.data.memo;
+                    self.Image = result.data.Images;
                     self.id = result.data.id;
                 });
             },
-            getUsers: function() {
+            getType: function() {
                 let self = this;
-                fetch("/api/BackGetAllCategory/GetUsers")
+                fetch("/api/BackGetAllCategory/GetCategory")
                     .then(function(response) { return response.json() })
                     .then(function(result) {
-                        self.users = result
-                    })
-            },
-            getTypes: function() {
-                let self = this;
-                fetch("/api/BackGetAllCategory/GetInviteCategory")
-                    .then(function(response) { return response.json() })
-                    .then(function(result) {
-                        self.types = result
+                        self.getTypes = result
                     })
             },
             update: function() {
                 let self = this;
                 const formData = new FormData();
                 formData.append('id', self.id);
-                formData.append('title', self.title);
-                formData.append('isActive', self.isActive);
-                formData.append('name', self.userName);
-                formData.append('type', self.typeName);
-                formData.append('content', self.content);
+                formData.append('locationName', self.locationName);
+                formData.append('type', self.type);
+                formData.append('name', self.name);
+                formData.append('price', self.price);
+                formData.append('memo', self.memo);
                 formData.append('image', self.images);
-                fetch('/api/post/Update', {
+                fetch('/api/LocationsBrunch/Update', {
                     body: formData,
                     method: 'POST'
                 })

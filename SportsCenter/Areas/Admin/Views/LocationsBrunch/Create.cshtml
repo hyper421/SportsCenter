@@ -1,15 +1,16 @@
 ﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">發文修改</h1>
+                    <h1 class="m-0">場地新增</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Post</li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item">LocationBrunch</li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
             </div>
@@ -22,7 +23,7 @@
                 <div class="col-12">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">修改</h3>
+                            <h3 class="card-title">新增</h3>
                         </div>
                         <form class="form-horizontal">
                             <div class="card-body">
@@ -66,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
+                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
                             </div>
                         </form>
                     </div>
@@ -75,82 +76,6 @@
         </div>
     </div>
 </div>
-
 <script>
-    let app = new Vue({
-        el: '#app',
-        data: {
-            id: "",
-            title: "",
-            isActive: false,
-            images: null,
-            userName: "",
-            typeName: "",
-            content: "",
-            users: [],
-            types: []
-        },
-        mounted: function() {
-            let self = this;
-            self.fetchData();
-            self.getUsers();
-            self.getTypes();
-        },
-        methods: {
-            uploadFile(e) {
-                this.images = e.target.files[0]
-            },
-            fetchData: function() {
-                let self = this;
-                axios.get('/api/post/getData/@ViewBag.PostId').then(result => {
-                    self.title = result.data.title;
-                    self.isActive = result.data.isActive;
-                    self.images = result.data.images;
-                    self.userName = result.data.name;
-                    self.typeName = result.data.type;
-                    self.content = result.data.content;
-                    self.id = result.data.id;
-                });
-            },
-            getUsers: function() {
-                let self = this;
-                fetch("/api/BackGetAllCategory/GetUsers")
-                    .then(function(response) { return response.json() })
-                    .then(function(result) {
-                        self.users = result
-                    })
-            },
-            getTypes: function() {
-                let self = this;
-                fetch("/api/BackGetAllCategory/GetInviteCategory")
-                    .then(function(response) { return response.json() })
-                    .then(function(result) {
-                        self.types = result
-                    })
-            },
-            update: function() {
-                let self = this;
-                const formData = new FormData();
-                formData.append('id', self.id);
-                formData.append('title', self.title);
-                formData.append('isActive', self.isActive);
-                formData.append('name', self.userName);
-                formData.append('type', self.typeName);
-                formData.append('content', self.content);
-                formData.append('image', self.images);
-                fetch('/api/post/Update', {
-                    body: formData,
-                    method: 'POST'
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
-                        } else {
-                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
-                        }
-                    });
-            }
-        }
-    });
+
 </script>

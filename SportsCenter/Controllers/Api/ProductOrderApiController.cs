@@ -36,7 +36,8 @@ namespace SportsCenter.Controllers.Api
                 x.ProductName,
                 x.ProductsPrice,
                 x.Count,
-                x.Id
+                x.Id,
+                totle = x.Count*x.ProductsPrice
             });
         }
         [HttpDelete]
