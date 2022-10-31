@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">類別修改</h1>
+                    <h1 class="m-0">場館類別修改</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -75,7 +75,7 @@ let app = new Vue({
     },
     mounted: function () {
         let self = this;
-        axios.get('/api/category/getData/6').then(result => {
+        axios.get('/api/category/getData/@ViewBag.CategoryId').then(result => {
             self.name = result.data.name;
             self.isActive = result.data.isActive;
             self.id = result.data.id;

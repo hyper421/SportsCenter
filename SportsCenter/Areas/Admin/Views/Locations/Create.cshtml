@@ -4,12 +4,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">場館類別新增</h1>
+                    <h1 class="m-0">場館新增</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item">Category</li>
+                        <li class="breadcrumb-item">Locations</li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -28,15 +28,45 @@
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">類別名稱</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館名稱</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inp1" v-model="name" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館英文</label>
                                     <div class="col-sm-10">
-                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                        <input type="text" class="form-control" id="inp1" v-model="englishName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館地區</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="area" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="address" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館電話</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="contactPhone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館描述</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="description" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館網站</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="website" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -57,13 +87,19 @@
     </div>
 </div>
 
+
 <script>
     let app = new Vue({
         el: '#app',
         data: {
+            images: null,
             name: "",
-            isActive: false,
-            images: null
+            englishName: "",
+            address: "",
+            description: "",
+            contactPhone: "",
+            area: "",
+            website: "",
         },
         methods: {
             uploadFile(e) {
@@ -73,9 +109,14 @@
                 let self = this;
                 const formData = new FormData();
                 formData.append('image', self.images);
-                formData.append('isActive', self.isActive);
                 formData.append('name', self.name);
-                fetch('/api/Category/Create', {
+                formData.append('englishName', self.englishName);
+                formData.append('address', self.address);
+                formData.append('description', self.description);
+                formData.append('contactPhone', self.contactPhone);
+                formData.append('area', self.area);
+                formData.append('website', self.website);
+                fetch('/api/Locations/Create', {
                     body: formData,
                     method: 'POST'
                 })
@@ -90,7 +131,6 @@
                             self.isActive = false
                     });
             }
-        }
+        },
     });
 </script>
-
