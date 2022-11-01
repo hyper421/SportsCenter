@@ -93,37 +93,24 @@ namespace SportsCenter.Controllers.Api
         public bool Post([FromBody] PostArticleCreateModel post)
         {
             //var ID = (from a in dbContext.InviteCategory
-            //          where a.Name == post.Type
+            //          where a.Name == post.type
             //          select a.Id).FirstOrDefault();
 
             //var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
 
             dbContext.Posts.Add(new DataAccess.Entity.Post
             {
+                IsActive = true,
                 InviteCategory_Id = 1,
-                Member_Id = 9527,
+                Member_Id = 1,
                 Title = post.Title,
                 Content = post.Content,
                 CreatedDate = DateTime.Now,
                 ImagePath = "https://images.pexels.com/photos/1828525/pexels-photo-1828525.jpeg?auto=compress&cs=tinysrgb&w=1600",
             });
             dbContext.SaveChanges();
+
             return true;
-        }
-
-        [HttpGet]
-        public object GetAll()
-        {
-            return dbContext.Posts.Select(x => new
-            {
-                x.InviteCategory_Id,
-                x.Member_Id,
-                x.Title,
-                x.Content,
-                x.CreatedDate,
-                x.ImagePath,
-
-            }).ToList();
         }
     }
 }
