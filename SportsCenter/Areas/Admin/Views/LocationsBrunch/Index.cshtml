@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">商品細項查詢</h1>
+                    <h1 class="m-0">場地查詢</h1>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6">
@@ -12,7 +12,7 @@
                         <li class="breadcrumb-item">
                             <a href="#">Home</a>
                         </li>
-                        <li class="breadcrumb-item">ProductOrder</li>
+                        <li class="breadcrumb-item">LocationBrunch</li>
                         <li class="breadcrumb-item active">Index</li>
                     </ol>
                 </div>
@@ -34,10 +34,12 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>名稱</th>
-                                            <th>數量</th>
+                                            <th>場館名稱</th>
+                                            <th>場地名稱</th>
+                                            <th>類別</th>
                                             <th>價格</th>
-                                            <th>總價</th>
+                                            <th>簡介</th>
+                                            <th>圖片</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -59,13 +61,13 @@
     }
 </style>
 <script>
-    fetch('/api/ProductOrder/Detail/@ViewBag.ProductsOrderId').then(response => response.json()).then(result => {
+    fetch('/api/LocationsBrunch/getall').then(response => response.json()).then(result => {
         initialDataTable(result)
     });
-    function deleteProductOrder(id) {
+    function deleteLocationsBrunchi(id) {
         console.log(id)
-        if (window.confirm("是否刪除該明細?")) {
-            axios.delete(`/api/ProductOrder/DeleteDetail?id=${id}`)
+        if (window.confirm("是否刪除該類別?")) {
+            axios.delete(`/api/LocationsBrunch/delete?id=${id}`)
                 .then(function(response) {
                     if (response.data) {
                         Swal.fire({ icon: 'success', title: '成功', text: '刪除成功!' }).then((result) => { window.location.reload() });
@@ -84,21 +86,29 @@
                 columns: [{
                     data: "id"
                 }, {
-                    data: "productName"
+                    data: "locationName"
                 }, {
-                    data: "productsPrice"
+                    data: "name"
                 }, {
-                    data: "count"
-                },
-                {
-                    data: "totle"
+                    data: "type"
+                }, {
+                    data: "price"
+                },  {
+                    data: "memo"
+                },  {
+                    data: "path",
+                    render: function(data, type, row) {
+                        console.log(data);
+                        return `<img src="/system/${data}" class="pic">`
+                    }
                 },
                 {
                     data: 'id',
                     width: "10%",
                     render: function(data, type, row) {
                         return `
-          <button onclick="deleteProductOrder(${data})" class="btn btn-danger mx-3">刪除</button>`
+          <a href="/admin/LocationsBrunch/Edit/${data}" class="btn btn-primary mx-3">修改</a>
+          <button onclick="deleteLocationsBrunch(${data})" class="btn btn-danger mx-3">刪除</button>`
                     }
                 }
                 ]
