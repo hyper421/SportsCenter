@@ -53,7 +53,7 @@ namespace SportsCenter.Controllers.Api
         {
             try
             {
-                context.ProductsOrder.Remove(new DataAccess.Entity.LocationOrder() { Id = id });
+                context.LocationOrder.Remove(new DataAccess.Entity.LocationOrder() { Id = id });
                 context.SaveChanges();
                 return true;
             }
