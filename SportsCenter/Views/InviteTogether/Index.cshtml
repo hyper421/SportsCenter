@@ -259,19 +259,19 @@
 
 		</div>
 	</div>
-	<div id="indexArticle">
-		<div class="container-fluid" id="cardstyle">
-			<div class="row " v-for="style in cards">
+	<div id="indexArticle" >
+		<div class="container-fluid" id="cardstyle" >
+			<div class="row " >
 
 
 
 
-				<a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;">
+				<a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;" v-for="style in cards">
 
 					<div class="card">
 
 						<div class="card-header">
-							<img src="" alt="rover" />
+							<img :src=style.imagePath alt="rover" />
 						</div>
 						<div class="card-body">
 							<span class="tag tag-teal">{{style.inviteCategory_Id}}</span>
@@ -285,7 +285,7 @@
 								<img src="https://file.qqtouxiang.com/dongwu/2020-04-10/11395a5d68df9aeaa37267012c8a2c34.jpeg" alt="user" />
 								<div class="user-info">
 									<h5>{{style.member_Id}}</h5>
-									<small> {{style.createdDate}}</small>
+									<small>{{style.createdDate}}</small>
 								</div>
 							</div>
 						</div>

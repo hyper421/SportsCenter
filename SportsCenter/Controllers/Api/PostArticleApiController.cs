@@ -118,15 +118,15 @@ namespace SportsCenter.Controllers.Api
         [HttpGet]
         public object GetAll()
         {
-            return dbContext.Posts.Select(x => new
+            return dbContext.Posts.Select(x => new PostMessageViewModel
             {
-                x.Id,
-                x.InviteCategory_Id,
-                x.Member_Id,
-                x.Title,
-                x.Content,
-                x.CreatedDate,
-                x.ImagePath,
+                Id = x.Id,
+                InviteCategory_Id = x.InviteCategory_Id,
+                Member_Id = x.Member_Id,
+                Title = x.Title,
+                Content = x.Content,
+                CreatedDate = x.CreatedDate.ToString("yyyy/M/dd-HH:mm:ss"),
+                ImagePath = x.ImagePath,
 
             }).ToList();
         }
@@ -135,20 +135,35 @@ namespace SportsCenter.Controllers.Api
         [Produces("application/json")]
         public IActionResult GetDetail(int id)
         {
-            var data = dbContext.Posts.Where(x => x.Id == id).Select(x => new DataAccess.Entity.Post
+            var data = dbContext.Posts.Where(x => x.Id == id).Select(x => new PostMessageViewModel
             {
                 Id = x.Id,
                 InviteCategory_Id = x.InviteCategory_Id,
                 Member_Id = x.Member_Id,
                 Title = x.Title,
                 Content = x.Content,
-                CreatedDate = x.CreatedDate,
+                CreatedDate = x.CreatedDate.ToString("yyyy/M/dd-HH:mm:ss"),
                 ImagePath = x.ImagePath,
-                Message = x.Message.ToList(),
+                Message = x.Message.OrderBy(y => y.CreateDate).Select(y => new MessagesLoadingViewModel
+                {
+                    Id = y.Id,
+                    Member_Id = y.Member_Id,
+                    Body = y.Body,
+                    Post_Id = y.Post_Id,
+                    CreateDate = y.CreateDate.ToString("yyyy/M/dd-HH:mm:ss"),
+
+                }).ToList(),
+                //載入留言
             }).FirstOrDefault();
 
             return Ok(data);
         }
 
     }
+
+  
+
+
+
+
 }
