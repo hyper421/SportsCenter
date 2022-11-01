@@ -4,7 +4,7 @@ using SportsCenter.DataAccess.Entity;
 
 namespace SportsCenter.Controllers.Api
 {
-    [Route("api/Venue")]
+    [Route("api/Venue/{action}")]
     [ApiController]
         public class VenueApiController: ControllerBase
         {
@@ -37,13 +37,26 @@ namespace SportsCenter.Controllers.Api
 
         #endregion
         #region 回傳詳細資料畫面viaId
-
-        [HttpGet("{id}")]
-            public Location GetbyId(int id)
+        [HttpGet]
+        [Produces("application/json")]
+        public IActionResult GetDetail(int id)
+        {
+            var data = _context.Location.Where(x => x.Id == id).Select(x => new DataAccess.Entity.Location
             {
+                    Id= x.Id,
+                    Area= x.Area,
+                    ImagePath = x.ImagePath,
+                    Name=x.Name,
+                    EnglishName=x.EnglishName,
+                    Description = x.Description,
+                    Website=x.Website,
+                    ContactPhone=x.ContactPhone,
+                    Address=x.Address,
+            }).FirstOrDefault();
 
-                return _context.Location.Find(id);
-            }
+            return Ok(data);
+        }
+
         #endregion
 
 
@@ -66,7 +79,7 @@ namespace SportsCenter.Controllers.Api
                 };
                 _context.Location.Add(i);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(GetbyId), new { id = location.Id }, location);
+                return CreatedAtAction(nameof(GetDetail), new { id = location.Id }, location);
             }
 
             #endregion
