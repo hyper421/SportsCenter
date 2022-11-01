@@ -15,6 +15,15 @@ namespace SportsCenter.Controllers.Api
             this.context = context;
         }
         [HttpGet]
+        public object GetLocation()
+        {
+            return context.Location.Select(x => new
+            {
+                x.Id,
+                x.Name,
+            }).ToList();
+        }
+        [HttpGet]
         public object GetInviteCategory()
         {
             return context.InviteCategory.Select(x => new

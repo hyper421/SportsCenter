@@ -28,35 +28,35 @@
                         <form class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">標題</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="title" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">類別</label>
-                                    <select v-model="typeName">
-                                        <option value="" selected disabled>請選擇...</option>
-                                        <option v-for="type in types">{{type.name}}</option>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館名稱</label>
+                                    <select v-model="locationName">
+                                        <option selected disabled>請選擇</option>
+                                        <option v-for="item in getName">{{item.name}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">發文者</label>
-                                    <select v-model="userName">
-                                        <option value="" selected disabled>請選擇...</option>
-                                        <option v-for="user in users">{{user.name}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inp1" class="col-sm-2 col-form-label">內容</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地名稱</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inp1" v-model="content" required>
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <label for="inp1" class="col-sm-2 col-form-label">場地類型</label>
+                                    <select v-model="type">
+                                        <option selected disabled>請選擇</option>
+                                        <option v-for="type in getTypes">{{type.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">價格</label>
                                     <div class="col-sm-10">
-                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                        <input type="text" class="form-control" id="inp1" v-model="price" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">簡介</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="memo" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -77,5 +77,66 @@
     </div>
 </div>
 <script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            images: null,
+            locationName: "",
+            name: "",
+            price: "",
+            memo: "",
+            type: "",
+            getTypes: [],
+            getName:[]
 
+        },
+        mounted: function() {
+            let self = this;
+            self.getType();
+            self.getLocation();
+        },
+        methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
+            getType: function() {
+                let self = this;
+                fetch("/api/BackGetAllCategory/GetCategory")
+                    .then(function(response) { return response.json() })
+                    .then(function(result) {
+                        self.getTypes = result
+                    })
+            },
+            getLocation: function() {
+                let self = this;
+                fetch("/api/BackGetAllCategory/GetLocation")
+                    .then(function(response) { return response.json() })
+                    .then(function(result) {
+                        self.getName = result
+                    })
+            },
+            create: function() {
+                let self = this;
+                const formData = new FormData();
+                formData.append('locationName', self.locationName);
+                formData.append('type', self.type);
+                formData.append('name', self.name);
+                formData.append('price', self.price);
+                formData.append('memo', self.memo);
+                formData.append('image', self.images);
+                fetch('/api/LocationsBrunch/create', {
+                    body: formData,
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                        }
+                    });
+            }
+        }
+    });
 </script>

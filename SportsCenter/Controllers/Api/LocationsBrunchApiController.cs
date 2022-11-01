@@ -38,6 +38,7 @@ namespace SportsCenter.Controllers.Api
                         Name = model.Name,
                         Price = model.Price,
                         Memo = model.Memo,
+                        ImagePath = result.Item2,
                     });
                     context.SaveChanges();
                     return true;
