@@ -7,7 +7,7 @@ using SportsCenter.DataAccess.Entity;
 
 namespace SportsCenter.Controllers.Api
 {
-    [Route("api/Product")]
+    [Route("api/Product/{action}")]
     [ApiController]
     public class ProductApiController : ControllerBase
     {
@@ -17,39 +17,24 @@ namespace SportsCenter.Controllers.Api
         {
             this.dbContext = dbContext;
         }
-
-
-
-        //GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<Products> Get()
+        public object GetItem()
+        {
+            return dbContext.Item.Select(x => new
+            {
+                x.Name,
+                IsActive = x.IsActive == 1,
+                x.Id,
+            }).ToList();
+        }
+        [HttpGet]
+        public IEnumerable<Products> GetProduct()
         {
             return dbContext.Products;
         }
 
-        // GET api/<ProductController>/5
-        [HttpGet("{id}")]
-        public Products Get(int id)
-        {
-            return dbContext.Products.Find(id);
-        }
-
-        // POST api/<ProductController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
+        
+        
     }
 }

@@ -4,12 +4,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
 <style>
     body {
-        background-color: rgb(83, 82, 82);
-        color: white;
+        color: black;
     }
 
     .ordertitle {
-        color: aliceblue;
+        color: black;
     }
 
     body td {
@@ -17,7 +16,7 @@
     }
 
     .table {
-        border: 3px solid;
+        border: 1px solid;
         border-color: rgb(75, 53, 53);
     }
 
@@ -44,16 +43,44 @@
 
     .finish {
         float: right;
-        padding-right: 80px;
+        /*padding-right: 80px;*/
+    }
+
+    .finishbtn {
+        width: 100px;
+        font-size: x-large;
+        background-color: cadetblue;
+        border-radius: 4px;
+        color: white;
+    }
+
+        .finishbtn:hover {
+            color: white;
+            background-color: #001935;
+            border: 2px #003C9D solid;
+        }
+
+    #cart {
+        padding: 15px 50px;
     }
 </style>
-
+<div class="back_re">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    <h2>購物車</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 訂單資料表 -->
 <div id="cart">
     <form action="">
         <div>
-            <div class="container-fluid" >
+            <div class="container-fluid mt-2">
                 <div class="row">
                     <div class="col-12 ">
                         <table class="table">
@@ -67,34 +94,34 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <div>
+
                             <tr v-for="(order,index) in product" :key="order.productId">
                                 <td scope="row">{{order.productId}}</td>
                                 <td class="product_name">{{order.productName}}</td>
                                 <td class="product_price">${{order.productPrice}}</td>
                                 <td class="product_count">
-@*                                    <input type="button" value="-" v-on:click="decrease(order)" class="decreasebtn">
-*@                                    <span>{{order.productCount}}</span>
-@*                                    <input type="button" value="+" v-on:click="increase(order)" class="increasebtn">
-*@                                </td>
+                                    @*                                    <input type="button" value="-" v-on:click="decrease(order)" class="decreasebtn">
+                                    *@                                    <span>{{order.productCount}}</span>
+                                    @*                                    <input type="button" value="+" v-on:click="increase(order)" class="increasebtn">
+                                    *@
+                                </td>
                                 <td class="product_total">${{order.productPrice*order.productCount}}</td>
                                 <td class="move">
                                     <button v-on:click="move(index)" class="movebtn">刪除</button>
                                 </td>
                             </tr>
+                        </table>
+                        <div class="row finish">
+                            <div class="col-12">
+                                <span style="font-size:x-large">總金額 :{{totalPrice}}</span>
+                                <button class="finishbtn">結帳</button>
                             </div>
-                    </table>
-                    <div class="row finish">
-                        <div class="col-12">
-                            <span style="font-size:x-large">總金額 :{{totalPrice}}</span>
-                            <button style="font-size:x-large; background-color: cadetblue;">結帳</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div >
+        <div>
             <div>
                 <label style="font-size:x-large;">收件人名稱 :</label>
                 <input type="text" style="width:400px">
@@ -168,27 +195,27 @@
             //        count: '1'
             //    },
             //],
-            product: [ 
-                {name : "aaa" }
+            product: [
+                { name: "aaa" }
             ],
         },
         methods: {
             getData: function () {
                 let self = this;
-                fetch("/api/Cart")
+                fetch("/api/Cart/Get")
                     .then(function (response) { return response.json() })
                     .then(function (result) {
                         self.product = result.data
                     })
             },
-            //Delete: function () {
-            //    let self = this;
-            //    fetch("/api/Cart")
-            //        .then(function (response) { return response.json() })
-            //        .then(function (result) {
-            //            self.product = result.data
-            //        })
-            //},
+            Delete: function () {
+                let self = this;
+                fetch("/api/Cart/Delete")
+                    .then(function (response) { return response.json() })
+                    .then(function (result) {
+                        self.product = result.data
+                    })
+            },
             //decrease: function (order) {
             //    if (order.ProductCount > 0) {
             //        order.ProductCount--;
