@@ -1,0 +1,152 @@
+﻿<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">會員修改</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item">Users</li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row" id="app">
+                @*這裡開始*@
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">修改</h3>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">姓名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">帳號</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="account" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">信箱</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="email" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">電話</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="address" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">等級</label>
+                                    <select v-model="role">
+                                        <option value="" selected disabled>請選擇</option>
+
+                                        <option value="1">一般會員</option>
+                                        <option value="2">商業會員</option>
+                                        <option value="3">管理者</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp3" class="col-sm-2 col-form-label">圖片</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="inp3" @@change="uploadFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            id: "",
+            name: "",
+            isActive: false,
+            path: "",
+            images: null,
+            account: "",
+            phone: "",
+            address: "",
+            email: "",
+            role: ""
+
+        },
+        mounted: function() {
+            let self = this;
+            axios.get('/api/users/getData/@ViewBag.UserId').then(result => {
+                self.name = result.data.name;
+                self.id = result.data.id;
+                self.path = result.data.path;
+                self.account = result.data.account;
+                self.address = result.data.address;
+                self.phone = result.data.phone;
+                self.email = result.data.email;
+                self.role = result.data.role;
+            }).then();
+        },
+        methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
+            update: function() {
+                let self = this;
+                const formData = new FormData();
+                formData.append('id', self.id);
+                formData.append('image', self.images);
+                formData.append('isActive', self.isActive);
+                formData.append('name', self.name);
+                formData.append('account', self.account);
+                formData.append('address', self.address);
+                formData.append('phone', self.phone);
+                formData.append('email', self.email);
+                formData.append('role', self.role);
+                fetch('/api/Users/Update', { body: formData, method: 'POST' })
+                    .then(response => response.json()).then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
+                        }
+                        self.name = "";
+                        self.isActive = false;
+                    });
+            }
+        }
+    });
+</script>
+

@@ -1,0 +1,156 @@
+﻿<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">發文修改</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item">Post</li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row" id="app">
+                @*這裡開始*@
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">修改</h3>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">標題</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="title" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">類別</label>
+                                    <select v-model="typeName">
+                                        <option value="" selected disabled>請選擇...</option>
+                                        <option v-for="type in types">{{type.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">發文者</label>
+                                    <select v-model="userName">
+                                        <option value="" selected disabled>請選擇...</option>
+                                        <option v-for="user in users">{{user.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">內容</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="content" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp3" class="col-sm-2 col-form-label">圖片</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="inp3" @@change="uploadFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            id: "",
+            title: "",
+            isActive: false,
+            images: null,
+            userName: "",
+            typeName: "",
+            content: "",
+            users: [],
+            types: []
+        },
+        mounted: function() {
+            let self = this;
+            self.fetchData();
+            self.getUsers();
+            self.getTypes();
+        },
+        methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
+            fetchData: function() {
+                let self = this;
+                axios.get('/api/post/getData/@ViewBag.PostId').then(result => {
+                    self.title = result.data.title;
+                    self.isActive = result.data.isActive;
+                    self.images = result.data.images;
+                    self.userName = result.data.name;
+                    self.typeName = result.data.type;
+                    self.content = result.data.content;
+                    self.id = result.data.id;
+                });
+            },
+            getUsers: function() {
+                let self = this;
+                fetch("/api/BackGetAllCategory/GetUsers")
+                    .then(function(response) { return response.json() })
+                    .then(function(result) {
+                        self.users = result
+                    })
+            },
+            getTypes: function() {
+                let self = this;
+                fetch("/api/BackGetAllCategory/GetInviteCategory")
+                    .then(function(response) { return response.json() })
+                    .then(function(result) {
+                        self.types = result
+                    })
+            },
+            update: function() {
+                let self = this;
+                const formData = new FormData();
+                formData.append('id', self.id);
+                formData.append('title', self.title);
+                formData.append('isActive', self.isActive);
+                formData.append('name', self.userName);
+                formData.append('type', self.typeName);
+                formData.append('content', self.content);
+                formData.append('image', self.images);
+                fetch('/api/post/Update', {
+                    body: formData,
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
+                        }
+                    });
+            }
+        }
+    });
+</script>

@@ -1,0 +1,93 @@
+﻿<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">留言板類別新增</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item">InviteCategory</li>
+                        <li class="breadcrumb-item active">Create</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row" id="app">
+                @*這裡開始*@
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">新增</h3>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">類別名稱</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp2" class="col-sm-2 col-form-label">是否啟用</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" class="form-control" id="inp2" v-model="isActive">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-info float-right" @@click="create">新增</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: "",
+            isActive: false,
+        },
+        methods: {
+            create: function() {
+                let self = this;
+                let data = {
+                    Name: self.name,
+                    isActive: self.isActive
+                }
+                fetch('/api/InviteCategory/Create', {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                        }
+                        self.name = "",
+                            self.isActive = false
+                    });
+            }
+
+
+
+        }
+
+    });
+</script>
+

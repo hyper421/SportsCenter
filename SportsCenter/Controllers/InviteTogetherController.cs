@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SportsCenter.Controllers
 {
@@ -17,7 +18,7 @@ namespace SportsCenter.Controllers
             return View();
         }
 
-        public IActionResult AurtherArticle()
+        public IActionResult AurtherArticle(int id)
         {
             return View();
         }

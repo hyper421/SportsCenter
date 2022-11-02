@@ -9,5 +9,14 @@ namespace SportsCenter.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public IActionResult Edit(int id)
+        {
+            ViewBag.UserId = id;
+            return View();
+        }
     }
 }

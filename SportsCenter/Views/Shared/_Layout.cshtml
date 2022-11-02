@@ -58,7 +58,7 @@
                             </button>
                             <div class="collapse navbar-collapse" id="navbarsExample04">
                                 <ul class="navbar-nav mr-auto">
-                                    <li class="nav-item active">
+                                    <li class="nav-item ">
                                         <a class="nav-link" href="~/home/index">首頁</a>
                                     </li>
                                     <li class="nav-item">
@@ -73,12 +73,22 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="~/invitetogether/index">揪團去</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="~/account/login">註冊/登入</a>
-                                    </li>
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="~/admin/dashboard/index">後台(快速連結)</a>
                                     </li>
+                                    @{
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="~/memberedit/index">歡迎 @User.Identity.Name</a>
+                                            </li>
+                                        }else {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/account/login">註冊/登入</a>
+                                        </li>
+                                        }
+                                    }
                                 </ul>
                             </div>
                         </nav>

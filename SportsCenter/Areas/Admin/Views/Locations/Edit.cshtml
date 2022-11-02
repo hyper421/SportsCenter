@@ -1,0 +1,153 @@
+﻿<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">場館修改</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item">Locations</li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row" id="app">
+                @*這裡開始*@
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">修改</h3>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館名稱</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館英文</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="englishName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館地區</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="area" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="address" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館電話</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="contactPhone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館描述</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="description" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp1" class="col-sm-2 col-form-label">場館網站</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inp1" v-model="website" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inp3" class="col-sm-2 col-form-label">圖片</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="inp3" @@change="uploadFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-info float-right" @@click="update">修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            id:"",
+            images: null,
+            name: "",
+            englishName: "",
+            address: "",
+            description: "",
+            contactPhone: "",
+            area: "",
+            website: "",
+        },
+        mounted: function() {
+            let self = this;
+            self.fetchData();
+        },
+        methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
+            fetchData: function() {
+                let self = this;
+                axios.get('/api/Locations/getData/@ViewBag.LocationsId').then(result => {
+                    self.name = result.data.name;
+                    self.englishName = result.data.englishName;
+                    self.address = result.data.address;
+                    self.description = result.data.description;
+                    self.contactPhone = result.data.contactPhone;
+                    self.area = result.data.area;
+                    self.website = result.data.website;
+                    self.id = result.data.id;
+                });
+            },
+            update: function() {
+                let self = this;
+                const formData = new FormData();
+                formData.append('id', self.id);
+                formData.append('name', self.name);
+                formData.append('englishName', self.englishName);
+                formData.append('address', self.address);
+                formData.append('description', self.description);
+                formData.append('contactPhone', self.contactPhone);
+                formData.append('area', self.area);
+                formData.append('website', self.website);
+                formData.append('image', self.images);
+                fetch('/api/Locations/Update', {
+                    body: formData,
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
+                        }
+                        self.name = "",
+                            self.isActive = false
+                    });
+            }
+        }
+    });
+</script>

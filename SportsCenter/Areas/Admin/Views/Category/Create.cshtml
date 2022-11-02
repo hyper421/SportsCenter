@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">類別新增</h1>
+                    <h1 class="m-0">場館類別新增</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -58,42 +58,39 @@
 </div>
 
 <script>
-      let app = new Vue({
-          el:'#app',
-          data:{
-              name:"",
-              isActive:false,
-              images:null          
-          },
-          methods:{
-              uploadFile(e) {
-                  this.images = e.target.files[0]
-              },
-              create:function(){
-                  let self = this;
-                  const formData = new FormData();
-                  formData.append('image', self.images);
-                  formData.append('isActive', self.isActive);
-                  formData.append('name', self.name);
-                  fetch('/api/Category/Create', {
-                      body: formData,
-                      method: 'POST'})
-              .then(response => response.json())
-              .then(result=> {
-                  if(result){
-                      Swal.fire({icon: 'success',title: '成功',text: '新增成功!'});
-                  }else{
-                      Swal.fire({icon: 'error',title: '錯誤',text: '新增失敗!'});
-                  }
-                  self.name="",
-                  self.isActive = false
-              });
-          }
-
-
-
-          }
-
-      });
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: "",
+            isActive: false,
+            images: null
+        },
+        methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
+            create: function() {
+                let self = this;
+                const formData = new FormData();
+                formData.append('image', self.images);
+                formData.append('isActive', self.isActive);
+                formData.append('name', self.name);
+                fetch('/api/Category/Create', {
+                    body: formData,
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                        }
+                        self.name = "",
+                            self.isActive = false
+                    });
+            }
+        }
+    });
 </script>
 
