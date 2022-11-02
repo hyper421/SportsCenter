@@ -9,7 +9,7 @@ using SportsCenter.DataAccess.Entity;
 
 namespace SportsCenter.Controllers.Api
 {
-    [Route("api/Cart")]
+    [Route("api/Cart/{action}")]
     [ApiController]
     public class CartApiController : ControllerBase
     {
@@ -40,11 +40,10 @@ namespace SportsCenter.Controllers.Api
             //var tempdata = user.ProductsCart.Select(x => new TempCartModel
             //{
             //    //塞要的資料
-            //    ProductId = x.ProductsCart_ID,
-            //    ProductName = x.Products_Name,
-            //    ProductPrice = x.Products_Price,
-            //    ProductCount = x.ProductsCart_Count,
-            //    ProductTotal = x.ProductsCart_Total,
+            //    ProductId = x.Id,
+            //    ProductName = x.Products.ProductsName,
+            //    ProductPrice = x.Products.ProductsPrice,
+            //    ProductCount = x.Count,
             //});
             //result.Data.AddRange(tempdata);
             //result.Status = true;
@@ -56,7 +55,7 @@ namespace SportsCenter.Controllers.Api
                 Status = false,
                 Data = new List<TempCartModel>()
             };
-            var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.Id == 2);
+            var user = dbContext.Member.Include(x => x.ProductsCart).ThenInclude(y => y.Products).FirstOrDefault(x => x.Id == 1);
             if (user == null)
             {
                 return result;
@@ -64,20 +63,14 @@ namespace SportsCenter.Controllers.Api
             var tempdata = user.ProductsCart.Select(x => new TempCartModel
             {
                 //塞要的資料
-                ProductId = x.ProductsId,
+                ProductId = x.Id,
                 ProductName = x.Products.ProductsName,
-                ProductPrice = x.Products.ProductsPrice,                
+                ProductPrice = x.Products.ProductsPrice,
+                ProductCount = x.Count,
             });
             result.Data.AddRange(tempdata);
             result.Status = true;
             return result;
-        }
-
-        // GET api/<CartApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/<CartApiController>
@@ -128,7 +121,7 @@ namespace SportsCenter.Controllers.Api
                                  where a.ProductsId == model.ProductId
                                  select a.ProductsPrice).FirstOrDefault();
 
-            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.Id == 2);
+            var user = dbContext.Member.Include("ProductsCart").FirstOrDefault(x => x.Id == 1);
             if (user == null)
             {
                 return false;
@@ -138,7 +131,7 @@ namespace SportsCenter.Controllers.Api
             {
                 dbContext.ProductsCart.Add(new ProductsCart()
                 {
-                    MemberId = 2,
+                    MemberId = 1,
                     ProductsId = model.ProductId,
                     Count = model.Count,
                     //Products_Name = ProductsName,
