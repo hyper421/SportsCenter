@@ -17,7 +17,7 @@
                 搜尋
             </div>
             <div class="card-body">
-                <form class="row g-3">
+                <form class="row g-3" v-on:submit.prevent>
                    <div class="col-md-auto">
                         <label class="form-label">地區</label>
                         <select v-model="areas" class="form-control">
@@ -33,10 +33,10 @@
                     </div>
                     <div class="col-md-auto">
                         <label for="keywords" class="form-label">關鍵字</label>
-                        <input type="text" class="form-control" v-model="keywords" placeholder="請輸入關鍵字搜尋...">
+                        <input type="text" class="form-control" v-model="keywords" @@keyup.enter.prevent.stop ="search" placeholder="請輸入關鍵字搜尋...">
                     </div>
                     <div class="col-md-auto d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary" @@click="search"> 搜尋</button>
+                        <button type="button" class="btn btn-primary" @@click.prevent="search"> 搜尋</button>
                     </div>
                 </form>
             </div>
