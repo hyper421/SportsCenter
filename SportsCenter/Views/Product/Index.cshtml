@@ -139,6 +139,11 @@
         },
         mounted: function () {
             let self = this;
+            fetch("/api/Product/GetMember")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.products = result.map(function (x) {x.qty = 0;return x})
+                }
             self.GetItem();
             self.GetProduct();
         },
