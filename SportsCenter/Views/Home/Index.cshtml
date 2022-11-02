@@ -1,276 +1,344 @@
-﻿      <!-- our classes -->
-      <div class="classes">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-12">
-                  <div class="titlepage">
-                     <h2>Our Classes</h2>
-                     <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                     </span>
-                  </div>
-               </div>
+﻿<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+<style>
+ .timeline {
+        position: relative;
+        padding: 0;
+        list-style: none;
+    }
+
+ .timeline:before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 40px;
+            width: 2px;
+            margin-left: -1.5px;
+            content: "";
+            background-color: #e9ecef;
+ }
+
+.timeline > li {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 50px;
+}
+
+.timeline > li:after, .timeline > li:before {
+                display: table;
+                content: " ";
+}
+
+.timeline > li:after {
+                clear: both;
+}
+
+.timeline > li .timeline-panel {
+                position: relative;
+                float: right;
+                width: 100%;
+                padding: 0 20px 0 100px;
+                text-align: left;
+}
+
+ .timeline > li .timeline-panel:before {
+                    right: auto;
+                    left: -15px;
+                    border-right-width: 15px;
+                    border-left-width: 0;
+}
+
+.timeline > li .timeline-panel:after {
+                    right: auto;
+                    left: -14px;
+                    border-right-width: 14px;
+                    border-left-width: 0;
+}
+
+.timeline > li .timeline-image {
+                position: absolute;
+                z-index: 100;
+                left: 0;
+                width: 80px;
+                height: 80px;
+                margin-left: 0;
+                text-align: center;
+                color: white;
+                border: 7px solid #e9ecef;
+                border-radius: 100%;
+                background-color: #ffc800;
+}
+
+.timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
+                    font-size: 10px;
+                    line-height: 14px;
+                    margin-top: 12px;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel {
+                float: right;
+                padding: 0 20px 0 100px;
+                text-align: left;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel:before {
+                    right: auto;
+                    left: -15px;
+                    border-right-width: 15px;
+                    border-left-width: 0;
+}
+.timeline > li.timeline-inverted > .timeline-panel:after {
+                    right: auto;
+                    left: -14px;
+                    border-right-width: 14px;
+                    border-left-width: 0;
+}
+
+.timeline > li:last-child {
+                margin-bottom: 0;
+}
+
+.timeline .timeline-heading h4, .timeline .timeline-heading .h4 {
+            margin-top: 0;
+            color: inherit;
+}
+
+.timeline .timeline-heading h4.subheading, .timeline .timeline-heading .subheading.h4 {
+                text-transform: none;
+}
+
+.timeline .timeline-body > ul, .timeline .timeline-body > p {
+            margin-bottom: 0;
+}
+
+ @@media (min-width: 768px) {
+        .timeline:before {
+            left: 50%;
+        }
+ }
+
+.timeline > li {
+        min-height: 100px;
+        margin-bottom: 100px;
+}
+
+.timeline > li .timeline-panel {
+            float: left;
+            width: 41%;
+            padding: 0 20px 20px 30px;
+            text-align: right;
+}
+
+.timeline > li .timeline-image {
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+}
+
+.timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
+                font-size: 13px;
+                line-height: 18px;
+                margin-top: 16px;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel {
+            float: right;
+            padding: 0 30px 20px 20px;
+            text-align: left;
+}
+
+
+@@media (min-width: 992px) {
+        .timeline > li {
+            min-height: 150px;
+}
+
+.timeline > li .timeline-panel {
+                padding: 0 20px 20px;
+}
+
+.timeline > li .timeline-image {
+                width: 150px;
+                height: 150px;
+                margin-left: -75px;
+ }
+
+.timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
+                    font-size: 18px;
+                    line-height: 26px;
+                    margin-top: 30px;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel {
+                padding: 0 20px 20px;
+            }
+}
+
+ @@media (min-width: 1200px) {
+        .timeline > li {
+            min-height: 170px;
+}
+
+.timeline > li .timeline-panel {
+                padding: 0 20px 20px 100px;
+}
+
+.timeline > li .timeline-image {
+                width: 170px;
+                height: 170px;
+                margin-left: -85px;
+}
+
+.timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
+                    margin-top: 40px;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel {
+                padding: 0 100px 20px 20px;
+            }
+}
+/*場館項目*/
+ #portfolio .portfolio-item {
+        max-width: 26rem;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+#portfolio .portfolio-item .portfolio-link {
+            position: relative;
+            display: block;
+            margin: 0 auto;
+ }
+
+#portfolio .portfolio-item .portfolio-link:hover .portfolio-hover {
+                opacity: 1;
+}
+
+#portfolio .portfolio-item .portfolio-caption {
+            padding: 1.5rem;
+            text-align: center;
+            background-color: #fff;
+}
+
+#portfolio .portfolio-item .portfolio-caption .portfolio-caption-heading {
+                font-size: 1.5rem;
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                font-weight: 700;
+                margin-bottom: 0;
+}
+
+/*.img-fluid1 {
+        height: 450px
+ }*/
+</style>
+
+<!-- our classes -->
+<div class="classes" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="titlepage">
+                    <h2>場館項目</h2>
+                </div>
             </div>
-            <div class="row">
-               <div class="col-md-4 col-sm-6 d_none">
-               </div>
-               <div class="col-md-4 col-sm-6 margin_bott">
-                  <div class="our_yoga">
-                     <figure><img src="~/images/our_yoga1.png" alt="#"/></figure>
-                     <h3>HATHA YOGA</h3>
-                     <span>Lorem ipsum dolor sit amet</span>
-                  </div>
-               </div>
-               <div class="col-md-4 col-sm-6 d_none">
-               </div>
-               <div class="col-md-4 col-sm-6">
-                  <div class="our_yoga">
-                     <figure><img src="~/images/our_yoga2.png" alt="#"/></figure>
-                     <h3>HATHA YOGA</h3>
-                     <span>Lorem ipsum dolor sit amet</span>
-                  </div>
-               </div>
-               <div class="col-md-4 col-sm-6 d_none">
-               </div>
-               <div class="col-md-4 col-sm-6">
-                  <div class="our_yoga">
-                     <figure><img src="~/images/our_yoga3.png" alt="#"/></figure>
-                     <h3>HATHA YOGA</h3>
-                     <span>Lorem ipsum dolor sit amet</span>
-                  </div>
-               </div>
-               <div class="col-md-4 offset-md-4 col-sm-6  margin_top">
-                  <div class="our_yoga">
-                     <figure><img src="~/images/our_yoga4.png" alt="#"/></figure>
-                     <h3>HATHA YOGA</h3>
-                     <span>Lorem ipsum dolor sit amet</span>
-                     <a class="read_more yoga_btn" href="Javascript:void(0)"> Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end our classes -->
-      <!-- middle -->
-      <div class="middle">
-         <div class="container-fluid">
-            <div class="row d_flex">
-               <div class="col-md-6">
-                  <div class="titlepage">
-                     <h2 >The Inner Middle.</h2>
-                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptu</p>
-                     <a class="read_more ye_b5n " href="Javascript:void(0)"> Read More</a>
-                  </div>
-               </div>
-               <div class="col-md-5 offset-md-1 padding_right0">
-                  <div class="yoga_img">
-                     <figure><img src="~/images/yoga_mo.png" alt="#"/></figure>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end middle -->
-      <!-- about -->
-      <div class="about">
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-md-6 offset-md-3">
-                  <div class="titlepage">
-                     <h2>About Us</h2>
-                     <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptu</span>
-                  </div>
-               </div>
-               <div class="col-md-12">
-                  <div class="about_img">
-                     <figure><img src="~/images/about.png" alt="#"/></figure>
-                     <a class="read_more yoga_btn" href="Javascript:void(0)"> Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end about -->
-      <!-- balance -->
-      <div class="balance">
-         <div class="container-fluid">
-            <div class="row d_flex">
-               <div class="col-md-5 padding_left0">
-                  <div class="yoga_img">
-                     <figure><img src="~/images/yoga_mo1.png" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-6 offset-md-1">
-                  <div class="titlepage">
-                     <h2 class="padd_top30">Mind in Balance</h2>
-                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptu</p>
-                     <a class="read_more ye_b5n " href="Javascript:void(0)"> Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end balance -->
-      <!-- end middle -->
-      <!-- pricing -->
-      <div class="pricing_main">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Pricing</h2>
-                     <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy </span>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="pricing">
-                     <h4>STARTER PLAN</h4>
-                     <h3><span>$</span>60</h3>
-                     <p>Unlimited access to content Fully Secure online backup One Year round the clock support FREE complimentary lanyard</p>
-                     <a class="read_more dark_bg" href="Javascript:void(0)"> Starte Now</a>
-                  </div>
-               </div>
-               <div class="col-md-4 ho_bor">
-                  <div class="pricing ">
-                     <h4>STARTER PLAN</h4>
-                     <h3><span>$</span>60</h3>
-                     <p>Unlimited access to content Fully Secure online backup One Year round the clock support FREE complimentary lanyard</p>
-                     <a class="read_more dark_bg" href="Javascript:void(0)"> Starte Now</a>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="pricing">
-                     <h4>STARTER PLAN</h4>
-                     <h3><span>$</span>60</h3>
-                     <p>Unlimited access to content Fully Secure online backup One Year round the clock support FREE complimentary lanyard</p>
-                     <a class="read_more dark_bg" href="Javascript:void(0)"> Starte Now</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end pricing -->
-      <!-- pepole -->
-      <div class="pepole">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>What Says Pepole</h2>
-                     <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy </span>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-8 offset-md-2">
-                  <div class="testimo_ban_bg">
-                     <div id="testimo" class="carousel slide testimo_ban" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                           <li data-target="#testimo" data-slide-to="0" class="active"></li>
-                           <li data-target="#testimo" data-slide-to="1"></li>
-                           <li data-target="#testimo" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                           <div class="carousel-item active">
-                              <div class="container parile0">
-                                 <div class="carousel-caption relative2">
-                                    <div class="row d_flex">
-                                       <div class="col-md-12">
-                                          <i><img class="qusright" src="~/images/t.png" alt="#"/><img src="~/images/tes.png" alt="#"/><img class="qusleft" src="~/images/t.png" alt="#"/></i>
-                                          <div class="aliq">
-                                             <span>Aliqua</span>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="carousel-item">
-                              <div class="container parile0">
-                                 <div class="carousel-caption relative2">
-                                    <div class="row d_flex">
-                                       <div class="col-md-12">
-                                          <i><img class="qusright" src="~/images/t.png" alt="#"/><img src="~/images/tes.png" alt="#"/><img class="qusleft" src="~/images/t.png" alt="#"/></i>
-                                          <div class="aliq">
-                                             <span>Aliqua</span>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="carousel-item">
-                              <div class="container parile0">
-                                 <div class="carousel-caption relative2">
-                                    <div class="row d_flex">
-                                       <div class="col-md-12">
-                                          <i><img class="qusright" src="~/images/t.png" alt="#"/><img src="~/images/tes.png" alt="#"/><img class="qusleft" src="~/images/t.png" alt="#"/></i>
-                                          <div class="aliq">
-                                             <span>Aliqua</span>
-                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <a class="carousel-control-prev" href="#testimo" role="button" data-slide="prev">
-                           <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                           <span class="sr-only">Previous</span>
-                           </a>
-                           <a class="carousel-control-next" href="#testimo" role="button" data-slide="next">
-                           <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                           <span class="sr-only">Next</span>
-                           </a>
+        </div>
+        <!-- Portfolio item 1-->
+        <div class="row justify-content-center" id="home">
+            <div class="col-3 " v-for="info in category">
+                <!-- Portfolio item 1-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal">
+                        <div>
+                            <img :src="'/system/'+ info.imagePath" class="img-fluid1" alt="..." />
                         </div>
-                     </div>
-                  </div>
-               </div>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">{{info.name}}</div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- end pepole -->
-      <!--  contact -->
-      <div class="contact">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Contact Us</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 padding_right0">
-                  <form id="request" class="main_form">
-                     <div class="row">
-                        <div class="col-md-12 ">
-                           <input class="contactus" placeholder="Name" type="type" name="Name"> 
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contactus" placeholder="Email" type="type" name="Email"> 
-                        </div>
-                        <div class="col-md-12">
-                           <input class="contactus" placeholder="Phone Number" type="type" name="Phone Number">                          
-                        </div>
-                        <div class="col-md-12">
-                           <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message</textarea>
-                        </div>
-                        <div class="col-md-12">
-                           <button class="send_btn">Send</button>
-                        </div>
-                     </div>
-                  </form>
-               </div>
-               <div class="col-md-6 padding_left0">
-                  <div class="map_main">
-                     <div class="map-responsive">
-                        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=Eiffel+Tower+Paris+France" width="600" height="463" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end contact -->
+        </div>
+    </div>
+</div>
+
+
+
+<!-- About-->
+
+
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">流程簡介</h2>
+            <h3 class="section-subheading text-muted">租借流程說明</h3>
+        </div>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/images/場館.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>第一步</h4>
+                        <h4 class="subheading">選擇運動項目</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">點選欲租借之場館</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/images/日歷.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>第二步</h4>
+                        <h4 class="subheading">選擇租借時間</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">點選欲運動之日期</p></div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/images/付款.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>第三步</h4>
+                        <h4 class="subheading">確認付款</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">確認選擇日期無誤後前往購物車付款</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/images/信件.jpg" alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>第四步</h4>
+                        <h4 class="subheading">付款完成確認租借成功</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">請至EMAIL確認是否成功租借</p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/images/訂單完成.jpg" alt="..." /></div>
+        </ul>
+    </div>
+</section>
+
+
+<script>
+    let home = new Vue({
+        el: "#home",
+        data: {
+            category: [],
+        },
+        mounted: function () {
+            let self = this;
+            fetch("/api/Home")
+                .then(function (response) { return response.json() })
+                .then(function (result) {
+                    self.category = result.map(function (x) {
+                        return x
+                    })
+                })
+        }
+    })
+
+
+</script>

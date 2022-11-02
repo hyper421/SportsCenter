@@ -6,11 +6,11 @@
 <link href="~/david/css//MemberCenter.css" rel="stylesheet" />
 
 <style>
- /*   .card-header img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-    }*/
+    /*   .card-header img {
+                width: 100%;
+                height: 500px;
+                object-fit: cover;
+            }*/
 
     .user img {
         border-radius: 50%;
@@ -20,7 +20,7 @@
     }
 
     .hidden {
-        color:aliceblue;
+        color: aliceblue;
     }
 
     .userimg img {
@@ -30,152 +30,254 @@
         border: 3px #212529 double;
     }
 
-  
+    .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .far{
+            padding: 10px;
+            color: green;
+            min-width: 50px;
+            text-align: center;
+        }
+        .fas{
+            padding: 10px;
+            color: green;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            size:"40";
+        }
+        .finbtn{
+            text-align:right;
+        }
+        .btn:hover{
+      color:white;
+      background-color:#001935;
+      border:2px #003C9D solid;
+    }
+
 </style>
 
 
-    <div id="d1">
-        <!-- 你們的nav bar -->
-        <div class="container memberinfo pt-5">
-            <div class="row">
-                <div class="col-4 ">
-                    
+<div id="Medit">
+    <!-- 你們的nav bar -->
+    <div class="container memberinfo pt-5">
+        <div class="row">
+            <div class="col-4 ">
+
                 <div class="userimg text-center">
-                    <img  src="https://www.ils.com.tw/zh/Up_files/webskin/RWD/include/images/type3album_blank.png" />
-                </div>
-                </div>
-                <div class="col-8">
-                    <h3>會員級別:{{member.level}}</h3>
-                    <p>姓名:{{member.name}}</p>
-                    <p>基本資料:???</p>
+                    <img :src="'/system/'+path" />
                 </div>
             </div>
+            <div class="col-8">
+                <h3>姓名:{{name}}</h3>
+            </div>
         </div>
-        <!-- 導覽列(sticky) -->
-        <div class="collection container p-0">
-            <ul class="nav nav-justified mt-3 nav-pills" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="tab-tab" data-bs-toggle="tab" data-bs-target="#tabone"
-                        type="button" role="tab" aria-controls="tabone" aria-selected="true">修改會員資料</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabtwo-tab" data-bs-toggle="tab" data-bs-target="#tabtwo" type="button"
-                        role="tab" aria-controls="tabtwo" aria-selected="false">上傳照片</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabthree-tab" data-bs-toggle="tab" data-bs-target="#tabthree"
-                        type="button" role="tab" aria-controls="tabthree" aria-selected="false">過往商品訂單紀錄</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tabtFour-tab" data-bs-toggle="tab" data-bs-target="#tabtFour"
-                        type="button" role="tab" aria-controls="tabtFour" aria-selected="false">過往場館訂單紀錄</button>
-                </li>
-            </ul>
-        </div>
-        <!-- 菜單 -->
-        <div class="menu">
-            <div class="tab-content">
-                <!-- 1 -->
-                <div class="tab-pane active" id="tabone" role="tabpanel" aria-labelledby="tabone-tab" tabindex="0">
-                    <div class="container tabone">
-                        <div class="container" >
-                            <form>
-                                <div v-for="item in Member" class="wrapper">
-                                    <div class="form-group d-flex align-items-center">
-                                        <div class="icon"><span class="far fa-user"></span></div>
-                                        <input v-model="item.Name" autocomplete="off" type="text" class="form-control" placeholder="Name">
+    </div>
+    <!-- 導覽列(sticky) -->
+    <div class="collection container p-0">
+        <ul class="nav nav-justified mt-3 nav-pills" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-tab" data-bs-toggle="tab" data-bs-target="#tabone"
+                        type="button" role="tab" aria-controls="tabone" aria-selected="true">
+                    修改會員資料
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tabtwo-tab" data-bs-toggle="tab" data-bs-target="#tabtwo" type="button"
+                        role="tab" aria-controls="tabtwo" aria-selected="false">
+                    上傳照片
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tabthree-tab" data-bs-toggle="tab" data-bs-target="#tabthree"
+                        type="button" role="tab" aria-controls="tabthree" aria-selected="false">
+                    過往商品訂單紀錄
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tabtFour-tab" data-bs-toggle="tab" data-bs-target="#tabtFour"
+                        type="button" role="tab" aria-controls="tabtFour" aria-selected="false">
+                    過往場館訂單紀錄
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!-- 菜單 -->
+    <div class="menu">
+        <div class="tab-content">
+            <!-- 1 -->
+            <div class="tab-pane active" id="tabone" role="tabpanel" aria-labelledby="tabone-tab" tabindex="0">
+                <div class="container tabone">
+                    <div class="container mt-2">
+                        <form>
+                            <div v-for="item in users" class="wrapper">
+                                <div class="form-group d-flex align-items-center">
+                                    <div class="input-icons">
+                                        <i class="far fa-user "></i>
+                                        <input v-model="item.name" autocomplete="off" type="text" class="form-control" placeholder="Name">
                                     </div>
-                                    <div class="form-group d-flex align-items-center">
-                                        <div class="icon"><span class="far fa-user-circle"></span></div>
-                                        <input v-model="item.Account" autocomplete="off" type="text" class="form-control" placeholder="Account">
+                                </div>
+                                <div class="form-group d-flex align-items-center">
+                                    <div class="input-icons">
+                                        <i class="far fa-user-circle"></i>
+                                        <input v-model="item.account" autocomplete="off" type="text" class="form-control" placeholder="Account">
                                     </div>
-                                    <div class="form-group d-flex align-items-center">
-                                        <div class="icon"><span class="far fa-envelope"></span></div>
-                                        <input v-model="item.Email" autocomplete="off" type="email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="form-group d-flex align-items-center">
+                                    <div class="input-icons">
+                                        <i class="far fa-envelope"></i>
+                                        <input v-model="item.email" autocomplete="off" type="email" class="form-control" placeholder="Email">
                                     </div>
-                                    <div class="form-group d-flex align-items-center">
-                                        <div class="icon"><span class="fas fa-map-marker-alt"></span></div>
-                                        <input v-model="item.Address" autocomplete="off" type="tel" class="form-control" placeholder="Address">
+                                </div>
+                                <div class="form-group d-flex align-items-center">
+                                    <div class="input-icons">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <input v-model="item.address" autocomplete="off" type="tel" class="form-control" placeholder="Address">
                                     </div>
-                                    <div class="form-group d-flex align-items-center">
-                                        <div class="icon"><span class="fas fa-phone"></span></div>
-                                        <input v-model="item.Phone" autocomplete="off" type="tel" class="form-control" placeholder="Phone">
+                                </div>
+                                <div class="form-group d-flex align-items-center">
+                                    <div class="input-icons">
+                                        <i class="fas fa-phone"></i>
+                                        <input v-model="item.phone" autocomplete="off" type="tel" class="form-control" placeholder="Phone">
                                     </div>
+                                </div>
+                                <div class="finbtn">
                                     <button type="button" @@click="ReviseMember(item)" class="btn btn-primary mb-3">完成</button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <!-- 2 -->
-			<div class="tab-pane" id="tabtwo" role="tabpanel" aria-labelledby="tabtwo-tab" tabindex="0">
+            </div>
+            <!-- 2 -->
+            <div class="tab-pane" id="tabtwo" role="tabpanel" aria-labelledby="tabtwo-tab" tabindex="0">
                 <hr class="hidden" />
-				<div class="container tabtwo">
-					<div class="container">
-						<div class="row">
+                <div class="container tabtwo">
+                    <div class="container">
+                        <div class="row">
                             <div class="col-md-4"></div>
-							<div class="col-md-4">
-								<div id="picpreview" class="text-center">
+                            <div class="col-md-4">
+                                <div id="picpreview" class="text-center">
                                     <div class="user">
-                                        <img id="picpreview2" src="https://www.ils.com.tw/zh/Up_files/webskin/RWD/include/images/type3album_blank.png" />
+                                        <img id="picpreview2" :src="'/system/'+path" />
                                     </div>
                                     <hr class="hidden" />
-									<form enctype="multipart/form-data" method="post" action="/api/MemberImageUpload/Upload">
+                                    <form enctype="multipart/form-data" method="post" action="/api/MemberImageUpload/Upload">
                                         <label class="btn btn-info" style="color:aliceblue">
-										@*<input type="text" name="name" id="name" />*@
-                                            <input type="file" name="files" id="files" style="display:none;" accept=".png, .jpg, .jpeg" multiple />
-                                        <i class="fa fa-photo"></i> 上傳圖片
+                                            @*<input type="text" name="name" id="name" />*@
+                                            <input type="file" name="files" id="files" style="display:none;"
+                                                   accept=".png, .jpg, .jpeg" @@change="uploadFile" />
+                                            <i class="fa fa-photo"></i> 上傳圖片
                                         </label>
                                         <div>
-										<button type="submit" class="btn btn-outline-info">送出</button>
+                                            <button type="button" @@click="update" class="btn btn-outline-info">送出</button>
                                         </div>
-									</form>
-								</div>
-							</div>
-						    <div class="col-md-4 text-center" >
-                              
-							</div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                            </div>
                             <hr class="hidden" />
 
-						</div>
-					</div>
-				</div>
-			</div>
-                <!-- 3 -->
-                <div class="tab-pane" id="tabthree" role="tabpanel" aria-labelledby="tabthree-tab" tabindex="0">
-                    <div class="container tabthree">
-                        <div class="container">
-                            第三頁資訊
                         </div>
                     </div>
                 </div>
-                <!-- 4 -->
-                <div class="tab-pane" id="tabtFour" role="tabpanel" aria-labelledby="tabFour-tab" tabindex="0">
-                    <div class="container tabtFour">
-                        <div class="container">
-                            第四頁資訊
-                        </div>
+            </div>
+            <!-- 3 -->
+            <div class="tab-pane" id="tabthree" role="tabpanel" aria-labelledby="tabthree-tab" tabindex="0">
+                <div class="container tabthree">
+                    <div class="container">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">名稱</th>
+                                    <th scope="col">數量</th>
+                                    <th scope="col">價格</th>
+                                    <th scope="col">總價</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="d1 in details">
+                                    <th scope="row">{{d1.id}}</th>
+                                    <td>{{d1.productName}}</td>
+                                    <td>{{d1.count}}</td>
+                                    <td>{{d1.productsPrice}}</td>
+                                    <td>{{d1.count*d1.productsPrice}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 4 -->
+            <div class="tab-pane" id="tabtFour" role="tabpanel" aria-labelledby="tabFour-tab" tabindex="0">
+                <div class="container tabtFour">
+                    <div class="container">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">訂單編號</th>
+                                    <th scope="col">場館名稱</th>
+                                    <th scope="col">場地名稱</th>
+                                    <th scope="col">場地類別</th>
+                                    <th scope="col">場地價格</th>
+                                    <th scope="col">下單時間</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="d1 in LocationDetail">
+                                    <th scope="row">{{d1.id}}</th>
+                                    <td>{{d1.locationName}}</td>
+                                    <td>{{d1.brunchName}}</td>
+                                    <td>{{d1.category}}</td>
+                                    <td>{{d1.price}}</td>
+                                    <td>{{d1.time}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <script>
     let app = new Vue({
         el: "#Medit",
         data: {
-            Member: []
+            users: [],
+            details: [],
+            LocationDetail: [],
+            name:"",
+            path:"",
+            images:null,
         },
         methods: {
+            uploadFile(e) {
+                this.images = e.target.files[0]
+            },
             ReviseMember: function (Member) {
                 console.log(Member);
                 let data = {
-                    Member_Name: Member.member_Name,
-                    Member_Account: Member.member_Account,
-                    Member_Address: Member.member_Address,
-                    Member_Email: Member.member_Email,
-                    Member_Phone: Member.member_Phone
+                    Member_Name: Member.name,
+                    Member_Account: Member.account,
+                    Member_Address: Member.address,
+                    Member_Email: Member.email,
+                    Member_Phone: Member.phone
                 }
                 fetch("/api/MemberEdit/", {
                     body: JSON.stringify(data),
@@ -183,7 +285,7 @@
                         'content-type': 'application/json'
                     },
                     method: 'POST',
-                }).then(function (response) { return response.text()})
+                }).then(function (response) { return response.text() })
                     .then(function (result) {
                         if (result) {
                             Swal.fire({
@@ -201,36 +303,67 @@
                         }
 
                     })
+            },
+            getusers: function () {
+                let self = this;
+                fetch("/api/MemberEdit/getmember")
+                    .then(function (response) { return response.json() })
+                    .then(function (result) {
+                        self.users = result.map(function (x) {
+                            return x
+                        })
+                    })
+            },
+            getdetail: function () {
+                let self = this;
+                fetch("/api/MemberEdit/detail")
+                    .then(function (response) { return response.json() })
+                    .then(function (result) {
+                        self.details = result.map(function (x) {
+                            return x
+                        })
+                    })
+            },
+            getlocation: function () {
+                let self = this;
+                fetch("/api/MemberEdit/GetAll")
+                    .then(function (response) { return response.json() })
+                    .then(function (result) {
+                        self.LocationDetail = result.map(function (x) {
+                            return x
+                        })
+                    })
+            },
+            getmember: function () {
+                let self = this;
+                axios.get('/api/MemberEdit/getpath').then(result => {
+                    self.name = result.data.name;
+                    self.path = result.data.path;
+                });
+            },
+            update: function () {
+                let self = this;
+                const formData = new FormData();
+                formData.append('image', self.images);
+                fetch('/api/MemberEdit/Update', { body: formData, method: 'POST' })
+                    .then(response => response.json()).then(result => {
+                        if (result) {
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
+                        }
+                    });
             }
         },
         mounted: function () {
             let self = this;
-            fetch("/api/MemberEdit")
-                .then(function (response) { return response.json() })
-                .then(function (result) {
-                    self.Member = result.map(function (x) {
-                        return x
-                    })
-                })
-        }
+            self.getusers();
+            self.getdetail();
+            self.getlocation();
+            self.getmember();
+        },
     })
 
 
 </script>
 
-<script>
-    var file = document.getElementById("files");
-    file.addEventListener("change", function (e) {
-        RenderPicPreview(e.target.files);
-    });
-
-	function RenderPicPreview(files) {
-		var target = document.getElementById("picpreview2");
-		for (var i = 0; i < files.length; i++) {
-			//var img = document.createElement("img");
-
-			target.src = URL.createObjectURL(files[i]);
-			//target.append(img);
-		}
-	}
-</script>

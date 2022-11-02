@@ -148,6 +148,15 @@
 
 
     @*登入/註冊*@
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        <div><h1><a class="nav-link" href="~/memberedit/index">歡迎 @User.Identity.Name</a></h1></div>;
+    }
+    else
+    {
+       
+ 
 <div id="app">
     <div class="card signup_v4 mb-80" >
         <div class="card-body center">
@@ -262,7 +271,8 @@
         </div>
     </div>
 </div>
-
+    }
+}
 
     <script>
     let app = new Vue({
@@ -342,7 +352,7 @@
                                 icon: 'success',
                                 title: '水拉',
                                 text: '登入成功!',
-                            }).then(function () { window.location.href = '/Account/Login' })
+                            }).then(function () { window.location.href = '/home/index' })
                         }
                         else {
                             Swal.fire({

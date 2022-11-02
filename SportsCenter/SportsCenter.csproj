@@ -30,8 +30,10 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Models\Dto\" />
+
     <Folder Include="wwwroot\PostArticle\" />
     <Folder Include="wwwroot\System\Category\" />
+
     <Folder Include="wwwroot\System\Locations\" />
     <Folder Include="wwwroot\System\Post\" />
     <Folder Include="wwwroot\System\Products\" />
