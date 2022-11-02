@@ -18,7 +18,7 @@ namespace SportsCenter.Controllers
             return View();
         }
 
-        public IActionResult AurtherArticle()
+        public IActionResult AurtherArticle(int id)
         {
             return View();
         }
