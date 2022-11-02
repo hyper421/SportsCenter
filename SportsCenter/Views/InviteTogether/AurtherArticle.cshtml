@@ -121,7 +121,7 @@
 
 			</svg>
 			<label><h3 style="bottom:-0.5rem;"><strong>簡介</strong></h3></label>
-			<h5>@*新北有一家新開的感覺很不錯*@{{model.content}}</h5>
+			<h5 v-html="model.content">@*新北有一家新開的感覺很不錯*@{{model.content}}</h5>
 		</div>
 	</div>
 	<div class="row">
@@ -170,7 +170,7 @@
 				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
 			</svg>
 			<label><small class="UserTextS">留言日期：@*2022/10/10*@{{message.createDate}}</small></label>
-			<label><button class="btn btn-outline-info btn-sm">回覆</button></label>
+		@*	<label><button class="btn btn-outline-info btn-sm">回覆</button></label>*@
 		</div>
 		<div class="col-md-4">
 		</div>

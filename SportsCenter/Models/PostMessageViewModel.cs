@@ -1,4 +1,6 @@
 ﻿using SportsCenter.Controllers.Api;
+using SportsCenter.DataAccess.Entity;
+using System.Collections.Generic;
 
 namespace SportsCenter.Models
 {
@@ -14,5 +16,6 @@ namespace SportsCenter.Models
         public string CreatedDate { get; set; }
 
         public IEnumerable<MessagesLoadingViewModel> Message { get; set; }
+        //public IEnumerable<GetInviteCategoryModel> InviteCategory  {get; set; }//？？需要嗎
     }
 }

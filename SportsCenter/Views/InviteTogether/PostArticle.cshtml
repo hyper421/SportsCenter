@@ -130,6 +130,11 @@
 							<textarea class="ckeditor form-control" name="txtarea" id="txtarea">
 							
 							</textarea>
+							<label@* class="btn btn-info" style="color:aliceblue"*@>
+								@*<input type="text" name="name" id="name" />*@
+								<input type="file" name="files" id="files"  accept=".png, .jpg, .jpeg"  />
+								@*<i class="fa fa-photo"></i> 上傳圖片*@
+							</label>
 
 						</div>
 
@@ -166,11 +171,13 @@
 	$("#PostArticle").on("click", function () {
 		let type = $("#GetCategory").find(":selected").text();
 		let title = $("#title").val();
-		let content = CKEDITOR.instances.txtarea.getData()
+		let content = CKEDITOR.instances.txtarea.getData();
+		var files = $('#files')[0].files;
 		let data = {
 			type: type,
 			content: content,
 			title: title,
+			files:files,
 		}
 		fetch("/api/PostArticle/post", {
 
@@ -196,7 +203,7 @@
 
 	//下拉選單
 	$.ajax({
-		url: '/api/PostArticle/get',
+		url: '/api/PostArticle/GetInviteCategoryid',
 		data: {
 			sportCategory: [],
 		},

@@ -76,7 +76,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
 using SportsCenter.Models;
+using SportsCenter.Services;
+using System;
 using System.Security.Claims;
+using System.Security.Cryptography.Pkcs;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -85,6 +89,8 @@ namespace SportsCenter.Controllers.Api
     public class PostArticleApiController : ControllerBase
     {
         private readonly SportsCenterDbContext dbContext;
+      
+
         public PostArticleApiController(SportsCenterDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -99,19 +105,57 @@ namespace SportsCenter.Controllers.Api
 
             //var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
 
-            dbContext.Posts.Add(new DataAccess.Entity.Post
+            //foreach (var file in post.files)
+            //{ 
+            //var file = uploadService.Upload(post.files, "Users");
+            var root = $@"{dbContext.Posts}\wwwroot\PostArticle";
+            var temp = "";
+            if (file.FileName.Contains(".png"))
             {
-                IsActive = true,
-                InviteCategory_Id = 1,
-                Member_Id = 1,
-                Title = post.Title,
-                Content = post.Content,
-                CreatedDate = DateTime.Now,
-                ImagePath = "https://images.pexels.com/photos/1828525/pexels-photo-1828525.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            });
-            dbContext.SaveChanges();
+                temp = root + "picture";
+            }
+            else
+            {
+                temp = root + "other";
+            }
+            var path = temp + "\\" + DateTime.Now.Ticks.ToString() + file.FileName;
+            using (var fs = System.IO.File.Create(path))
+            {
+                file.CopyTo(fs);
+                var u = new DataAccess.Entity.Post
+                {
+                    IsActive = true,
+                    InviteCategory_Id = 1,//下拉選單秀出來
+                    Member_Id = 1,
+                    Title = post.Title,
+                    Content = post.Content,
+                    CreatedDate = DateTime.Now,
+                    ImagePath = "\\" + path.Replace(root, ""),
+                };
+                dbContext.Posts.Add(u);
+                dbContext.SaveChanges();
 
-            return true;
+                return true;
+            }
+            //}
+            //return false;
+
+
+            //dbContext.Posts.Add(new DataAccess.Entity.Post
+            //{
+            //    IsActive = true,
+            //    InviteCategory_Id = 1,//下拉選單秀出來
+            //    Member_Id = 1,
+            //    Title = post.Title,
+            //    Content = post.Content,
+            //    CreatedDate = DateTime.Now,
+            //    ImagePath = "https://images.pexels.com/photos/1828525/pexels-photo-1828525.jpeg?auto=compress&cs=tinysrgb&w=1600",
+            //});
+            //dbContext.SaveChanges();
+
+            //return true;
+
+
         }
 
 
@@ -158,12 +202,19 @@ namespace SportsCenter.Controllers.Api
 
             return Ok(data);
         }
+        [HttpGet]
+        public object GetInviteCategoryid()
+        {
+            return dbContext.InviteCategory.Select(x => new GetInviteCategoryModel
+            {
+                IsActive = true,
+                Name = x.Name,
+
+
+            }).ToList();
+        }
 
     }
-
-  
-
-
 
 
 }
