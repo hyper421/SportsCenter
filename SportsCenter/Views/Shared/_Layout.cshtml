@@ -30,8 +30,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery-3.0.0.min.js"></script>
 </head>
 <body class="main-layout @(!ishome?"inner_page":"")">
+    
+
     <div class="loader_bg">
         <div class="loader"><img src="~/images/loading.gif" alt="#" /></div>
     </div>
@@ -57,7 +62,7 @@
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarsExample04">
-                                <ul class="navbar-nav mr-auto">
+                                <ul class="navbar-nav mr-auto" id="navMenus">
                                     <li class="nav-item ">
                                         <a class="nav-link" href="~/home/index">首頁</a>
                                     </li>
@@ -123,12 +128,27 @@
             }
         </div>
     </footer>
+    <script>
+        $(document).ready(function ($) {
+            var url = window.location.href;
+            var activePage = url;
+            $('#navMenus a').each(function () {
+                var linkPage = this.href;
+
+                if (activePage == linkPage) {
+                    $(this).closest("li").addClass("active");
+                }
+            });
+        });
+    </script>
+
 </body>
-<script src="~/js/jquery.min.js"></script>
-<script src="~/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/jquery-3.0.0.min.js"></script>
+
+
 <!-- sidebar -->
 <script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="~/js/custom.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
+
+
 </html>
