@@ -4,5 +4,6 @@
     {
         public bool IsActive { get; set; }
         public object Name { get; set; }
+        public int CategoryId { get; set; }
     }
 }

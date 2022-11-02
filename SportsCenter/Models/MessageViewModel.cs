@@ -6,8 +6,8 @@
 
         public int Id { get; set; }
 
-        public int Member_Id { get; set; }
-        public int Post_Id { get; set; }
+        public int MemberId { get; set; }
+        public int PostId { get; set; }
         public string Body { get; set; }
 
         public DateTime CreateDate { get; set; }

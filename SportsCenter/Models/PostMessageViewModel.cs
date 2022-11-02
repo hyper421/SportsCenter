@@ -7,11 +7,13 @@ namespace SportsCenter.Models
     public class PostMessageViewModel
     {
         public int Id { get; set; }
-        public int Member_Id { get; set; }
+        public string Member_Id { get; set; }
+
         public int InviteCategory_Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
         public string ImagePath { get; set; }
+        public string MemberImagePath { get; set; }
         public string Content { get; set; }
         public string CreatedDate { get; set; }
 
