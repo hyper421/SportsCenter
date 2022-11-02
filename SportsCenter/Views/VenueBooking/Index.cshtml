@@ -121,22 +121,23 @@
 <div class="container-fluid p-5">
     <div id="app">
         <vue-good-wizard :steps="steps"
-                         :onNext="nextClicked"
-                         :onBack="backClicked"
+                         :on-Next="nextClicked"
+                         :on-Back="backClicked"
                          :previous-Step-Label="'上一步'"
                          :next-Step-Label="'下一步'"
-                         :final-Step-Label="'完成預約'">
+                         :final-Step-Label="'完成預約'"
+                            ref="my-wizard">
             <div slot="page1">
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="item in listData.category">
-                        <div class="card text-white card-has-bg click-col" v-bind:style="{ 'background-image': 'url(' + 'https://localhost:7187/system/Category/638026137233089011_1b74981886c474fe8ade85d442295c35-max-w-1024.jpg' + ')' }">
+                        <div class="card text-white card-has-bg click-col" v-bind:style="{ 'background-image': 'url(' + '/system/'+ encodeURI(item.path) + ')' }">
                             <div class="card-img-overlay d-flex flex-column">
                                 <div class="card-body d-flex justify-content-center align-items-center">
                                     <h1 class="card-title mt-0 text-white ">{{item.name}}</h1>
                                 </div>
                                 <div class="card-footer">
                                     <div class="media">
-                                        <button class="btn btn-primary w-100">選擇</button>
+                                        <button class="btn btn-primary w-100" @@click="selectCategory(item)">選擇</button>
                                     </div>
                                 </div>
                             </div>
@@ -179,26 +180,44 @@
                     {label: '選擇預約時間',slot: 'page3',options: {}},
                     {label: '預約資訊',slot: 'page4',options: {nextDisabled: true}},
                 ],
+                selectItem:{
+                    category:{}
+                },
                 listData:{
-                    category:[]
+                    category:[],
+                    venue:[]
                 }
             },
             mounted:function(){
                 this.getCategoryData();
+                document.querySelector('.wizard__next').hidden = true;
+                this.getVenueData();
             },
             methods: {
+                selectCategory(category){
+                    console.log(category);
+                    this.selectItem.category = category;
+                    this.$refs['my-wizard'].goNext(true);
+                    document.querySelector('.wizard__next').hidden = false;
+                },
                 nextClicked(currentPage) {
                     console.log('next clicked', currentPage)
                     return true; //return false if you want to prevent moving to next page
                 },
                 backClicked(currentPage) {
                     console.log('back clicked', currentPage);
+                    if(currentPage == 1) document.querySelector('.wizard__next').hidden = true;
+
                     return true; //return false if you want to prevent moving to previous page
                 },
                 getCategoryData(){
                     let self = this;
                     axios.get('/api/category/getall').then(res=> self.listData.category = res.data)                
                 },
+                getVenueData(){
+                    let self = this;
+                    axios.get('/api/Venue').then(res=> self.listData.venue = res.data)                
+                }
             }
     })
 </script>
