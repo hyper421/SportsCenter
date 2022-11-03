@@ -35,7 +35,7 @@
     <script src="~/js/jquery-3.0.0.min.js"></script>
 </head>
 <body class="main-layout @(!ishome?"inner_page":"")">
-    
+
 
     <div class="loader_bg">
         <div class="loader"><img src="~/images/loading.gif" alt="#" /></div>
@@ -88,10 +88,15 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="~/memberedit/index">歡迎 @User.Identity.Name</a>
                                             </li>
-                                        }else {
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="~/account/login">註冊/登入</a>
-                                        </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="~/account/login">登出</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="~/account/login">註冊/登入</a>
+                                            </li>
                                         }
                                     }
                                 </ul>
@@ -129,10 +134,10 @@
         </div>
     </footer>
     <script>
-        $(document).ready(function ($) {
+        $(document).ready(function($) {
             var url = window.location.href;
             var activePage = url;
-            $('#navMenus a').each(function () {
+            $('#navMenus a').each(function() {
                 var linkPage = this.href;
 
                 if (activePage == linkPage) {
