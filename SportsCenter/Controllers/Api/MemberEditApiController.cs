@@ -117,7 +117,7 @@ namespace SportsCenter.Controllers.Api
             var data = (from a in _context.LocationOrder
                         join b in _context.LocationBranch
                        on a.LocationBranchId equals b.Id
-                        select new { a.Id, a.MemberId, b.LocationId, a.LocationBranchId, b.CategoryId, a.Price, a.Time });
+                        select new { a.Id, a.MemberId, b.LocationId, a.LocationBranchId, b.CategoryId, a.Price, a.DateTime });
 
             return data.Select(x => new
             {
@@ -127,7 +127,7 @@ namespace SportsCenter.Controllers.Api
                 brunchName = _context.LocationBranch.Where(a => a.Id == x.LocationBranchId).Select(b => b.Name).FirstOrDefault(),
                 category = _context.Category.Where(a => a.Id == x.CategoryId).Select(b => b.Name).FirstOrDefault(),
                 x.Price,
-                x.Time
+                x.DateTime
             });
         }
     }
