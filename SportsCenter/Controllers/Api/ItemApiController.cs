@@ -41,7 +41,7 @@ namespace SportsCenter.Controllers.Api
         {
             try
             {
-                var data = context.Category.FirstOrDefault(x => x.Id == model.Id);
+                var data = context.Item.FirstOrDefault(x => x.Id == model.Id);
                 if (data == null) return false;
                 data.IsActive = model.IsActive ? 1 : 0;
                 data.Name = model.Name;

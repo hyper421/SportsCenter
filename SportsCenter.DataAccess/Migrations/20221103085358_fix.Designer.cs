@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCenter.DataAccess;
 
@@ -11,9 +12,10 @@ using SportsCenter.DataAccess;
 namespace SportsCenter.DataAccess.Migrations
 {
     [DbContext(typeof(SportsCenterDbContext))]
-    partial class SportsCenterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221103085358_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,6 +212,9 @@ namespace SportsCenter.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasColumnName("LocationBranch_Id");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int")
                         .HasColumnName("Member_Id");
@@ -218,6 +223,8 @@ namespace SportsCenter.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex(new[] { "LocationBranchId" }, "IX_LocationOrder_LocationBranch_Id");
 
@@ -532,6 +539,10 @@ namespace SportsCenter.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SportsCenter.DataAccess.Entity.Location", null)
+                        .WithMany("LocationOrder")
+                        .HasForeignKey("LocationId");
+
                     b.HasOne("SportsCenter.DataAccess.Entity.Member", "Member")
                         .WithMany("LocationOrder")
                         .HasForeignKey("MemberId")
@@ -653,6 +664,8 @@ namespace SportsCenter.DataAccess.Migrations
                     b.Navigation("LocationBranch");
 
                     b.Navigation("LocationImage");
+
+                    b.Navigation("LocationOrder");
                 });
 
             modelBuilder.Entity("SportsCenter.DataAccess.Entity.LocationBranch", b =>

@@ -1,14 +1,14 @@
 ﻿
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title">
-                    <h2>場館介紹</h2>
-                </div>
+<div class="back_re">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title">
+                <h2>場館介紹</h2>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="location" class="container-fluid p-5">
     <div>
@@ -17,87 +17,139 @@
                 搜尋
             </div>
             <div class="card-body">
-                <form class="row g-3">
-                    <div class="col-md-auto">
+                <form class="row g-3" v-on:submit.prevent>
+                   <div class="col-md-auto">
                         <label class="form-label">地區</label>
-                        <select v-model="selected"class="form-control">
-                            <option :value="items.id" v-for="items in venue":key="items.id"> {{items.area}} </option>
+                        <select v-model="areas" class="form-control">
+                            <option :value="items" v-for="items in areaOptionList" :key="items"> {{items}} </option>
                         </select>
                     </div>
                     <div class="col-md-auto">
                         <label for="category" class="form-label">種類</label>
-                        <select class="form-control" id="category">
-                            <option>1</option>
-                            <option>1</option>
-                            <option>1</option>
+                        <select class="form-control" v-model="categories">
+                        <option :value="i" v-for="i in category" :key="i"> {{i.name}} </option>
+
                         </select>
                     </div>
                     <div class="col-md-auto">
                         <label for="keywords" class="form-label">關鍵字</label>
-                        <input type="text" class="form-control" v-model="keywords">
+                        <input type="text" class="form-control" v-model="keywords" @@keyup.enter.prevent.stop ="search" placeholder="請輸入關鍵字搜尋...">
                     </div>
                     <div class="col-md-auto d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">搜尋</button>
+                        <button type="button" class="btn btn-primary" @@click.prevent="search"> 搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <!--卡片-->
     <div class="row">
-         <div v-for="item in venue" class="col-md-4">
-            <div  class="p-3">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <div  class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 badge rounded-pill bg-warning">{{item.area}}</strong>
-                        <h3 class="fw-bolder mb-0">{{item.name}}</h3>
-                        <div class="mb-1 text-muted">{{item.englishName}}</div>
-                        <p class="mb-auto">{{item.description}}</p>
-                        <a href="/venue/details" class="stretched-link">更多資訊</a>
+        <div v-for="item in temp" :key="item.id" class="col-md-4">
+            <div class="p-3">
+                <div class="row g-0 border rounded flex-md-row mb-4 shadow-sm">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">{{item.area}}</strong>
+                        <h1 class="fw-bolder mb-1 justify-content-center">{{item.name}}</h1>
+                        <div class="mb-auto text-muted">{{item.englishName}}</div>
+                        <p class="mb-auto">{{item.description}}</p> 
+                        <a class="btn btn-dark" @@click="GetDetail(item.id)">詳細資訊</a> 
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img v-bind:src="`/images/${item.imagePath}`"width="200" >
+                        <img :src="`/images/${item.imagePath}`" class="bd-placeholder-img" width="200" height="400" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></img>
+@*                        <img class="bd-placeholder-img" width="200" height="250" :src="item.imagePath" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>*@
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
-   
-    </div>
-</div>
+
 
 <script>
 let app = new Vue({
     el: "#location",
-    data: {        
-       // venue: [{ Name: '111',Area:'215'}, { Name: '222' }, {Name:'333'}],
+    data: {
+        DetailUrl: "/Venue/Detail",
+        name: "",
+        englishname: "",
+        address: "",
+        keywords: "",
+        areas: "",
+        categories: "",
         venue: [],
-        keywords:'',
-        selected:'',
+        temp: [],
+        category: []
+
     },
+    methods: {
+        hasKeyWords: function(str) {
+            if (this.keywords.trim() == "") {
+                return true;
+            }
+            if (str.includes(this.keywords.trim())) {
+                return true;
+            }
+            return false;
+        },
+        hasArea: function(str) {
+            if (this.areas.trim() == "") {
+                return true;
+            }
+            if (str.includes(this.areas.trim())) {
+                return true;
+            }
+            return false;
+        },
+        hasCategory: function(str) {
+            if (this.categories == "") {
+                return true;
+            }
+            if (str.includes(this.categories)) {
+                return true;
+            }
+            return false;
+        },
+        search: function() {
+            let self = this;
+            self.temp = self.venue.filter(function(item) {
+             return (self.hasKeyWords(item.description) && self.hasArea(item.area) && self.hasCategory(item.categoryIds))
+            });
+        },
+        GetDetail:function(id){
+		const url = this.DetailUrl + "?id="+id;
+	    location.href=url;
+			   }
+    },
+    computed: {
+        areaOptionList: function() {
+            let self = this;
+            return Array.from(new Set(self.venue.map(x => x.area)));
+        },
+        categoryOptionList: function() {
+            let self = this;
+            return Array.from(new Set(self.category.map(x => x.name)));
+        },
+
+       
+    },
+
+  
+
     mounted: function() {
         let self = this;
-        fetch("/api/Venue")
-           .then(function(response) { return response.json() })
-           .then(function(result) {
-              self.venue = result.map (function(x) {
-                    return x
-               })
-            })
-
+        fetch("/api/Venue/Get")
+            .then(function(response) { return response.json() })
+            .then(function(result) { self.venue = result; self.temp = result; })
+        fetch("/api/Category/GetAll")
+            .then(function(response) { return response.json() })
+            .then(function(result) { self.category = result;})
     },
-    getImage(imagepath) {
-     return require('../images'+imagepath +'.jpg')
-    }
-    //computed: {
-    //    search() {\
-    //        {
 
-    //            return this.venue.filter(search => search.this.match(this.keywords));
-    //  return this.venue.filter(search => {
-    //    return venue.title().includes(this.search())
-    //        }
-    //    }
-    //}
-})
+});
+
 
 </script>
+
+
+
 

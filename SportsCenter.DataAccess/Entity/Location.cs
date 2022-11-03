@@ -15,6 +15,5 @@
 
         public virtual ICollection<LocationBranch> LocationBranch { get; set; }
         public virtual ICollection<LocationImage> LocationImage { get; set; }
-        public virtual ICollection<LocationOrder> LocationOrder { get; set; }
     }
 }

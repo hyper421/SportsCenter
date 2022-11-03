@@ -102,25 +102,17 @@ namespace SportsCenter.DataAccess
 
             modelBuilder.Entity<LocationOrder>(entity =>
             {
-                entity.HasIndex(e => e.LocationBranchId1, "IX_LocationOrder_LocationBranchId");
-
                 entity.HasIndex(e => e.LocationBranchId, "IX_LocationOrder_LocationBranch_Id");
 
                 entity.HasIndex(e => e.MemberId, "IX_LocationOrder_Member_Id");
 
                 entity.Property(e => e.LocationBranchId).HasColumnName("LocationBranch_Id");
 
-                entity.Property(e => e.LocationBranchId1).HasColumnName("LocationBranchId");
-
                 entity.Property(e => e.MemberId).HasColumnName("Member_Id");
 
                 entity.HasOne(d => d.LocationBranch)
                     .WithMany(p => p.LocationOrder)
                     .HasForeignKey(d => d.LocationBranchId);
-
-                entity.HasOne(d => d.LocationBranchId1Navigation)
-                    .WithMany(p => p.LocationOrder)
-                    .HasForeignKey(d => d.LocationBranchId1);
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.LocationOrder)

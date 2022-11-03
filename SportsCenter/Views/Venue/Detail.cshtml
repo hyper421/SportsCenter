@@ -1,0 +1,68 @@
+﻿<div class="back_re">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title">
+                <h2>場館介紹</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" id="location">
+    <div class="row">
+        <div class="col-md-6">
+            <iframe width="550" height="400" frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCDlNcDwu5m9eCexhH6ACBZ4moB8GXPy7Y
+            &q=`${model.address}`"
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <div class="col-md-6">
+            <div class="venue">
+                <div class="venue-info">
+                    <h2>{{model.name}}</h2>
+                    <div class="counter"><i class="fa fa-flag" aria-hidden="true"></i><span class="mx-3">{{model.englishName}}</span></div>
+                    <div class="counter"><i class="fa fa-phone-square" aria-hidden="true"></i><span class="mx-3">{{model.contactPhone}}</span></div>
+                    <div class="counter"><i class="fa fa-address-book-o" aria-hidden="true"></i><span class="mx-3">{{model.address}}</span></div>
+                    <div class="counter"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="mx-3">{{model.website}}</span></div>
+                </div>
+                <div><i class="fa fa-info-circle" aria-hidden="true"></i><span class="mx-3">{{model.description}}</span></div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-dark pull-right" onclick="history.back()">回上頁</button>
+            <span class="mb-3"></span>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+let app = new Vue({
+    el: "#location",
+    data: {
+        model: {},
+    },
+    mounted: async function() {
+        var id = new URL(location.href).searchParams.get("id");
+        var url = "/api/Venue/GetDetail";
+        let response = await fetch(url + "?Id=" + id);
+        let data = await response.json();
+        this.model = data;
+    },
+    methods: {
+        GetDetail: function() {
+            var id = new URL(location.href).searchParams.get("id");
+            var url = "/api/Venue/GetDetail";
+            let response =  fetch(url + "?Id=" + id);
+            let data = response.json();
+            this.model = data;
+        },
+    }
+})
+
+
+
+    </script>
+    

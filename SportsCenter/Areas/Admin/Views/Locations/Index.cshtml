@@ -65,7 +65,7 @@
     });
     function deleteLocations(id){
         console.log(id)
-        if(window.confirm("是否刪除該類別?")){
+        if(window.confirm("是否刪除該場館?")){
             axios.delete(`/api/Locations/delete?id=${id}`)
             .then(function (response) {
                 if(response.data){

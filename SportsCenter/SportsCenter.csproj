@@ -35,6 +35,7 @@
     <Folder Include="wwwroot\System\Category\" />
 
     <Folder Include="wwwroot\System\Locations\" />
+    <Folder Include="wwwroot\System\LocationsBrunch\" />
     <Folder Include="wwwroot\System\Post\" />
     <Folder Include="wwwroot\System\Products\" />
     <Folder Include="wwwroot\System\Users\" />
