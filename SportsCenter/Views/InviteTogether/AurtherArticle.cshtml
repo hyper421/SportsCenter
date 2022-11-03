@@ -30,11 +30,13 @@
 	.user-info h5 {
 		margin: 0;
 	}
-	.UserNameS{
-		color:palevioletred;
+
+	.UserNameS {
+		color: palevioletred;
 	}
-	.UserTextS{
-		color:grey;
+
+	.UserTextS {
+		color: grey;
 	}
 
 	.tag {
@@ -51,11 +53,28 @@
 	.tag-teal {
 		background-color: #47bcd4;
 	}
-	.Hidden{
-		border:0px;
+
+	.tag-purple {
+		background-color: #5e76bf;
 	}
 
-	.Dashed{
+	.tag-pink {
+		background-color: #cd5b9f;
+	}
+
+	.tag-orange {
+		background-color: orange;
+	}
+
+	.tag-green {
+		background-color: #198754;
+	}
+
+	.Hidden {
+		border: 0px;
+	}
+
+	.Dashed {
 		border: 1px dashed;
 	}
 </style>
@@ -78,15 +97,15 @@
 		</div>*@
 		<div class="col-md-4 col-xs-auto">
 			<h2><strong>@*新手上路有人要不要一起打?*@{{model.title}}</strong></h2>
-			<label class="tag tag-teal">@*羽球*@{{model.inviteCategory_Id}}</label>
+			<label v-bind:class="tagColor(model.inviteCategory_Id)">@*羽球*@{{getCategoryName(model.inviteCategory_Id)}}</label>
 
 			<hr class="Hidden" />
-			<img src="https://d3nb97lilvchvx.cloudfront.net/category_page/badminton.jpg" />
+			<img :src=model.imagePath style="width: 50%" />
 		</div>
 		<div class="col-md-4 col-xs-auto">
 
 			<div class="user">
-				<img src="https://file.qqtouxiang.com/dongwu/2020-04-10/11395a5d68df9aeaa37267012c8a2c34.jpeg" alt="user" />
+				<img :src=model.memberImagePath alt="user" />
 				<div class="user-info">
 					<h5 style="margin-top:0.5rem;"><strong>@*無雙*@{{model.member_Id}}</strong></h5>
 					<small>有點小心情</small>
@@ -121,7 +140,7 @@
 
 			</svg>
 			<label><h3 style="bottom:-0.5rem;"><strong>簡介</strong></h3></label>
-			<h5>@*新北有一家新開的感覺很不錯*@{{model.content}}</h5>
+			<h5 v-html="model.content">@*新北有一家新開的感覺很不錯*@{{model.content}}</h5>
 		</div>
 	</div>
 	<div class="row">
@@ -159,41 +178,41 @@
 	<div class="row" v-for="message in model.message">
 		<div class="col-3 text-right">
 			<div class="users">
-				<img src="http://i1.wp.com/inews.gtimg.com/newsapp_bt/0/1775329636/641" alt="user" />
+				<img :src=message.memberImagePath alt="user" />
 			</div>
 		</div>
 		<div class="col-md-5 col-xs-auto">
-			<p class="UserNameS"><strong>@*伊凡*@{{message.member_Id}}</strong></p>
+			<p class="UserNameS"><strong>@*伊凡*@{{message.memberName}}</strong></p>
 			<p class="">@*請問具體有什麼要求嗎？*@{{message.body}}</p>
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
 				<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
 				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
 			</svg>
 			<label><small class="UserTextS">留言日期：@*2022/10/10*@{{message.createDate}}</small></label>
-			<label><button class="btn btn-outline-info btn-sm">回覆</button></label>
+			@*	<label><button class="btn btn-outline-info btn-sm">回覆</button></label>*@
 		</div>
 		<div class="col-md-4">
 		</div>
 	</div>
 	<br />
-@*	<div class="row ">
-		<div class="col-3 text-right">
-			<div class="users">
-				<img src="https://img.99tu.com:9988/uploads/allimg/c200919/1600461L13G20-52O8.jpg" alt="user" />
-			</div>
-		</div>
-		<div class="col-md-5 col-xs-auto">
-			<p class="UserNameS"><strong>克麗絲</strong></p>
-			<p class="">想參加！~</p>
-			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-				<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
-				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
-			</svg>
-			<label><small class="UserTextS">留言日期：2022/10/11</small></label>
-			<label><button class="btn btn-outline-info btn-sm">回覆</button></label>
-		</div>
-		<div class="col-md-4">
-		</div>
+	@*	<div class="row ">
+	<div class="col-3 text-right">
+	<div class="users">
+	<img src="https://img.99tu.com:9988/uploads/allimg/c200919/1600461L13G20-52O8.jpg" alt="user" />
+	</div>
+	</div>
+	<div class="col-md-5 col-xs-auto">
+	<p class="UserNameS"><strong>克麗絲</strong></p>
+	<p class="">想參加！~</p>
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+	<path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+	<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+	</svg>
+	<label><small class="UserTextS">留言日期：2022/10/11</small></label>
+	<label><button class="btn btn-outline-info btn-sm">回覆</button></label>
+	</div>
+	<div class="col-md-4">
+	</div>
 	</div>*@
 </div>
 
@@ -202,9 +221,11 @@
 		el: "#app",
 		data: {
 			model: {},
-			messagetext:"",
+			messagetext: "",
+			category: []
 		},
 		mounted: async function () {
+			let self = this;
 			var id = new URL(location.href).searchParams.get("id");
 			var url = "/api/PostArticle/GetDetail";
 			//fetch(url + "?Id=" + id).then(function (response) { return response.json() })
@@ -212,6 +233,11 @@
 			//        this.model=result;
 
 			//    });
+			fetch("/api/PostArticle/GetInviteCategoryid")
+				.then((response) => { return response.json() })
+				.then((result) => {
+					self.category = result;
+				})
 			let response = await fetch(url + "?Id=" + id);
 			let data = await response.json();
 			this.model = data;
@@ -230,32 +256,73 @@
 				this.model = data;
 			},
 			NewMessage: async function () {
-				
-				let data = {
-					body: this.messagetext
-				};
-			   let response=await	fetch("/api/AurtherArticle/PostMessage", {
+				var self = this;
+				var role = "@User.IsInRole("1")";
+				if (role === "True") {
+					let data = {
+						body: this.messagetext,
+						postId: self.model.id
+					};
+					let response = await fetch("/api/AurtherArticle/PostMessage", {
 
-					headers: {
-						'content-type': 'application/json'
-					},
-					body: JSON.stringify(data),
-					method: 'POST'
-				});
-				let result= await response.text();
-				if(result=="true"){
-					this.messagetext="";
-					this.model={};
-					console.log("good");
-					this.GetDetail();
+						headers: {
+							'content-type': 'application/json'
+						},
+						body: JSON.stringify(data),
+						method: 'POST'
+					});
+					let result = await response.text();
+					if (result == "true") {
+						this.messagetext = "";
+						this.model = {};
+						console.log("good");
+						this.GetDetail();
+					}
+					else {
+						console.log("false");
+					}
 				}
-				else{
-					console.log("false");
+				else {
+					alert("請登入!~");
 				}
 
-		
+			},
+			getCategoryName: function (id) {
+				if (!id) { return; }
+				let currentCategory = this.category.find(b => b.categoryId == id);
+				return currentCategory.name;
+			},
+			tagColor: function (n) {
+				console.log(n);
+				switch (n) {
+					case 4:
+						return {
+							tag: true,
+							"tag-teal": true
+						};
+					case 5:
+						return {
+							tag: true,
+							"tag-purple": true
+						};
+					case 6:
+						return {
+							tag: true,
+							"tag-pink": true
+						};
+					case 7:
+						return {
+							tag: true,
+							"tag-orange": true
+						};
+					case 8:
+						return {
+							tag: true,
+							"tag-green": true
+						};
+				}
+			},
 
-			}
 
 		}
 	})
