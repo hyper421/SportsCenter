@@ -4,6 +4,7 @@ using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
 using SportsCenter.Models;
 using SportsCenter.Services;
+using System.Security.Claims;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 
@@ -25,15 +26,13 @@ namespace SportsCenter.Controllers.Api
         [HttpPost]
         public async Task<bool> Post([FromForm] PostArticleCreateModel post)
         {
-            //var id = (from a in dbContext.InviteCategory
-            //          where a.Name == post.Type
-            //          select a.Id).FirstOrDefault();
+  
 
-            //var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
+            var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
 
             var posts = new Post
             {
-                Member_Id = 1, //userid,
+                Member_Id = userid,
                 Title = post.Title,
                 IsActive = true,
                 Content = post.Content,

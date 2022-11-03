@@ -1,8 +1,8 @@
 ﻿@{
-    // Layout = null;
-    //ViewData["Title"] = "Index";
-    ////var
-    ////if (Session["Member_Account"]==null&&)
+	// Layout = null;
+	//ViewData["Title"] = "Index";
+	////var
+	////if (Session["Member_Account"]==null&&)
 
 }
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
@@ -10,361 +10,394 @@
 <style>
 
 
-    .container {
-        display: flex;
-        width: 1040px;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-    }
+	.container {
+		display: flex;
+		width: 1040px;
+		justify-content: space-evenly;
+		flex-wrap: wrap;
+	}
 
-    .card {
-        margin: 10px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        width: 300px;
-    }
+	.card {
+		margin: 10px;
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+		width: 300px;
+	}
 
-    .card-header img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
+	.card-header img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
 
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 20px;
-        min-height: 250px;
-    }
+	.card-body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		padding: 20px;
+		min-height: 250px;
+	}
 
-    .tag {
-        background: #cccccc;
-        border-radius: 50px;
-        font-size: 12px;
-        margin: 0;
-        color: #fff;
-        padding: 2px 10px;
-        text-transform: uppercase;
-        cursor: pointer;
-    }
+	.tag {
+		background: #cccccc;
+		border-radius: 50px;
+		font-size: 12px;
+		margin: 0;
+		color: #fff;
+		padding: 2px 10px;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
 
-    .tag-teal {
-        background-color: #47bcd4;
-    }
+	.tag-teal {
+		background-color: #47bcd4;
+	}
 
-    .tag-purple {
-        background-color: #5e76bf;
-    }
+	.tag-purple {
+		background-color: #5e76bf;
+	}
 
-    .tag-pink {
-        background-color: #cd5b9f;
-    }
+	.tag-pink {
+		background-color: #cd5b9f;
+	}
 
-    .tag-orange {
-        background-color: orange;
-    }
+	.tag-orange {
+		background-color: orange;
+	}
 
-    .tag-green {
-        background-color: #198754;
-    }
+	.tag-green {
+		background-color: #198754;
+	}
 
-    .tag-red {
-        background-color: #FF5151;
-    }
-
-
-
-    .card-body p {
-        font-size: 13px;
-        margin: 0 0 40px;
-    }
-
-    .user {
-        display: flex;
-        margin-top: auto;
-    }
-
-        .user img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-    .user-info h5 {
-        margin: 0;
-    }
-
-    .user-info small {
-        color: #545d7a;
-    }
-
-    .ToolNavbar {
-        margin: auto;
-        border-radius: 100px;
-        font-size: 20px;
-        margin-right: 1rem;
-    }
-
-        /* body {
-                    background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
-                }*/
-
-        .ToolNavbar:hover {
-            transform: translate(-0.05em, -0.05em);
-            box-shadow: 0.15em 0.15em;
-            color: #212121;
-        }
-
-        .ToolNavbar:active {
-            transform: translate(0.05em, 0.05em);
-            box-shadow: 0.05em 0.05em;
-        }
+	.tag-red {
+		background-color: #FF5151;
+	}
 
 
-    .PostArticle {
-        position: relative;
-        padding: 5px 20px;
-        margin: 0px 10px 10px 0px;
-        float: left;
-        border-radius: 3px;
-        font-size: 20px;
-        color: #FFF;
-        text-decoration: none;
-        background-color: #2ecc71;
-        border: none;
-        border-bottom: 5px solid #27ae60;
-        text-shadow: 0px -2px #27ae60;
-        -webkit-transition: all 0.1s;
-        transition: all 0.1s;
-    }
 
-        .PostArticle:hover, .PostArticle:active {
-            -webkit-transform: translate(0px,5px);
-            -ms-transform: translate(0px,5px);
-            transform: translate(0px,5px);
-            border-bottom: 1px solid #2ecc71;
-        }
+	.card-body p {
+		font-size: 13px;
+		margin: 0 0 40px;
+	}
 
-    .CancelArticle {
-        position: relative;
-        padding: 5px 20px;
-        margin: 0px 10px 10px 0px;
-        float: left;
-        border-radius: 3px;
-        font-size: 20px;
-        color: #FFF;
-        text-decoration: none;
-        background-color: #6C757D;
-        border: none;
-        border-bottom: 5px solid #6C757D;
-        text-shadow: 0px -2px #6C757D;
-        -webkit-transition: all 0.1s;
-        transition: all 0.1s;
-    }
+	.user {
+		display: flex;
+		margin-top: auto;
+	}
 
-        .CancelArticle:hover, .CancelArticle:active {
-            -webkit-transform: translate(0px,5px);
-            -ms-transform: translate(0px,5px);
-            transform: translate(0px,5px);
-            border-bottom: 1px solid #6C757D;
-        }
+		.user img {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+		}
+
+	.user-info h5 {
+		margin: 0;
+	}
+
+	.user-info small {
+		color: #545d7a;
+	}
+
+	.ToolNavbar {
+		margin: auto;
+		border-radius: 100px;
+		font-size: 20px;
+		margin-right: 1rem;
+	}
+
+		/* body {
+							background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
+						}*/
+
+		.ToolNavbar:hover {
+			transform: translate(-0.05em, -0.05em);
+			box-shadow: 0.15em 0.15em;
+			color: #212121;
+		}
+
+		.ToolNavbar:active {
+			transform: translate(0.05em, 0.05em);
+			box-shadow: 0.05em 0.05em;
+		}
 
 
-    .LinkPostArticle {
-        padding: 15px 25px;
-        border: unset;
-        border-radius: 15px;
-        color: #212121;
-        z-index: 1;
-        background: #e8e8e8;
-        position: relative;
-        font-weight: 1000;
-        font-size: 17px;
-        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-        transition: all 250ms;
-        overflow: hidden;
-    }
+	.PostArticle {
+		position: relative;
+		padding: 5px 20px;
+		margin: 0px 10px 10px 0px;
+		float: left;
+		border-radius: 3px;
+		font-size: 20px;
+		color: #FFF;
+		text-decoration: none;
+		background-color: #2ecc71;
+		border: none;
+		border-bottom: 5px solid #27ae60;
+		text-shadow: 0px -2px #27ae60;
+		-webkit-transition: all 0.1s;
+		transition: all 0.1s;
+	}
 
-        .LinkPostArticle::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0;
-            border-radius: 15px;
-            background-color: #212121;
-            z-index: -1;
-            -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-            box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-            transition: all 250ms
-        }
+		.PostArticle:hover, .PostArticle:active {
+			-webkit-transform: translate(0px,5px);
+			-ms-transform: translate(0px,5px);
+			transform: translate(0px,5px);
+			border-bottom: 1px solid #2ecc71;
+		}
 
-        .LinkPostArticle:hover {
-            color: #e8e8e8;
-        }
+	.CancelArticle {
+		position: relative;
+		padding: 5px 20px;
+		margin: 0px 10px 10px 0px;
+		float: left;
+		border-radius: 3px;
+		font-size: 20px;
+		color: #FFF;
+		text-decoration: none;
+		background-color: #6C757D;
+		border: none;
+		border-bottom: 5px solid #6C757D;
+		text-shadow: 0px -2px #6C757D;
+		-webkit-transition: all 0.1s;
+		transition: all 0.1s;
+	}
 
-            .LinkPostArticle:hover::before {
-                width: 100%;
-            }
+		.CancelArticle:hover, .CancelArticle:active {
+			-webkit-transform: translate(0px,5px);
+			-ms-transform: translate(0px,5px);
+			transform: translate(0px,5px);
+			border-bottom: 1px solid #6C757D;
+		}
+
+
+	.LinkPostArticle {
+		padding: 15px 25px;
+		border: unset;
+		border-radius: 15px;
+		color: #212121;
+		z-index: 1;
+		background: #e8e8e8;
+		position: relative;
+		font-weight: 1000;
+		font-size: 17px;
+		-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+		box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+		transition: all 250ms;
+		overflow: hidden;
+	}
+
+		.LinkPostArticle::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 0;
+			border-radius: 15px;
+			background-color: #212121;
+			z-index: -1;
+			-webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+			box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+			transition: all 250ms
+		}
+
+		.LinkPostArticle:hover {
+			color: #e8e8e8;
+		}
+
+			.LinkPostArticle:hover::before {
+				width: 100%;
+			}
 </style>
 
 <div class="back_re">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="title">
-                    <h2>揪團去</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="title">
+					<h2>揪團去</h2>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="container-fluid p-5" id="cardstyle">
 
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-        <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="" style="text-decoration: none;" class="LinkPostArticle" @@click="goPost()">
-            @*<a asp-controller="InviteTogether" asp-action="PostArticle"  >*@
-            我要發文
-            @*</a>*@
-        </a>
-    </div>
+		<a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="" style="text-decoration: none;" class="LinkPostArticle" @@click="goPost()">
+			@*<a asp-controller="InviteTogether" asp-action="PostArticle"  >*@
+			我要發文
+			@*</a>*@
+		</a>
+	</div>
 
 
-    <div class="container justify-content-center">
-        <div class="btn-group me-2" role="group" aria-label="Basic radio toggle button group" id="222333">
+	<div class="container justify-content-center">
+		<div class="btn-group me-2" role="group" aria-label="Basic radio toggle button group" id="222333">
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-red" @@click="getCurrentCategory(99)" for="btnradio0">綜合</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-red" @@click="getCurrentCategory(99)" for="btnradio0">綜合</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-teal" @@click="getCurrentCategory(4)" for="btnradio1">羽球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-teal" @@click="getCurrentCategory(4)" for="btnradio1">羽球</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-purple" @@click="getCurrentCategory(5)" for="btnradio2">籃球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-purple" @@click="getCurrentCategory(5)" for="btnradio2">籃球</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-pink" @@click="getCurrentCategory(6)" for="btnradio3">桌球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-pink" @@click="getCurrentCategory(6)" for="btnradio3">桌球</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-orange" @@click="getCurrentCategory(7)" for="btnradio4">撞球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-orange" @@click="getCurrentCategory(7)" for="btnradio4">撞球</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" style="display:none;">
-            <label class="ToolNavbar tag tag-green" @@click="getCurrentCategory(8)" for="btnradio5">壁球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-green" @@click="getCurrentCategory(8)" for="btnradio5">壁球</label>
 
-        </div>
-    </div>
-    <div id="indexArticle">
-        <div class="container-fluid">
-            <div class="row ">
+		</div>
+	</div>
+	<div id="indexArticle">
+		<div class="container-fluid">
+			<div class="row ">
 
-                <a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;" v-for="style in temp">
+				<a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;" v-for="style in temp">
 
-                    <div class="card">
+					<div class="card">
 
-                        <div class="card-header">
-                            <img :src=style.imagePath alt="rover" />
-                        </div>
-                        <div class="card-body">
-                            <span class="tag tag-teal">{{ getCategoryName(style.inviteCategory_Id) }}</span>
-                            <h4>
-                                {{style.title}}
-                            </h4>
-                            <p v-html="style.content">
-                                {{style.content}}
-                            </p>
-                            <div class="user">
-                                
-                                <img :src=style.memberImagePath alt="user"/>
-                                <div class="user-info">
-                                    <h5>{{style.member_Id}}</h5>
-                                    <small>{{style.createdDate}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						<div class="card-header">
+							<img :src=style.imagePath alt="rover" />
+						</div>
+						<div class="card-body">
+							<span id="tagcolor" v-bind:class="tagColor(style.inviteCategory_Id)">{{ getCategoryName(style.inviteCategory_Id) }}</span>
+							<h4>
+								{{style.title}}
+							</h4>
+							<p v-html="style.content">
+								{{style.content}}
+							</p>
+							<div class="user">
 
-                </a>
-            </div>
-        </div>
+								<img :src=style.memberImagePath alt="user" />
+								<div class="user-info">
+									<h5>{{style.member_Id}}</h5>
+									<small>{{style.createdDate}}</small>
+								</div>
+							</div>
+						</div>
+					</div>
 
-    </div>
+				</a>
+			</div>
+		</div>
+
+	</div>
 
 </div>
 
 <script>
-    let PostCard = new Vue({
-        el: "#cardstyle",
-        data: {
-            DetailUrl: "/InviteTogether/AurtherArticle",
-            cards: [],
-            category: [],
-            temp: []
-        },
-        mounted: function() {
-            let self = this;
-            fetch("/api/PostArticle/GetAll")
-                .then(function(response) { return response.json() })
-                .then(function(result) {
-                    self.cards = result.map(function(x) {
-                        return x
-                    });
-                    self.temp = self.cards;
-                });
-            fetch("/api/PostArticle/GetInviteCategoryid")
-                .then((response) => { return response.json() })
-                .then((result) => {
-                    self.category = result;
-                })
-        },
-        methods: {
-            GetDetail: function(id) {
-                const url = this.DetailUrl + "?id=" + id;
-                location.href = url;
-            },
-            getCategoryName: function(id) {
-                let currentCategory = this.category.find(b => b.categoryId == id);
-                return currentCategory.name;
-            },
-            getCurrentCategory: function(id) {
-                if (id == 99) {
-                    this.temp = this.cards;
-                } else {
-                    this.temp = this.cards.filter(x => x.inviteCategory_Id == id);
-                }
+	let PostCard = new Vue({
+		el: "#cardstyle",
+		data: {
+			DetailUrl: "/InviteTogether/AurtherArticle",
+			cards: [],
+			category: [],
+			temp: []
+		},
+		mounted: function () {
+			let self = this;
+			fetch("/api/PostArticle/GetAll")
+				.then(function (response) { return response.json() })
+				.then(function (result) {
+					self.cards = result.map(function (x) {
+						return x
+					});
+					self.temp = self.cards;
+				});
+			fetch("/api/PostArticle/GetInviteCategoryid")
+				.then((response) => { return response.json() })
+				.then((result) => {
+					self.category = result;
+				})
+		},
+		methods: {
+			GetDetail: function (id) {
+				const url = this.DetailUrl + "?id=" + id;
+				location.href = url;
+			},
+			getCategoryName: function (id) {
+				let currentCategory = this.category.find(b => b.categoryId == id);
 
-                return;
-            },
-            goPost: function() {
-                var role = "@User.IsInRole("1")";
-                console.log(role);
-                if (role === "True") {
-                    window.location.href = '/InviteTogether/PostArticle';
-                }
-                else {
-                    alert("請登入");
-                    //Swal.fire({
-                    //    icon: 'error',
-                    //    title: '請登入',
-                    //    text: '請登入!',
-                    //    footer: '<a href="">Why do I have this issue?</a>'
-                    //})
 
-                }
+				return currentCategory.name;
+			},
+			getCurrentCategory: function (id) {
+				if (id == 99) {
+					this.temp = this.cards;
+				} else {
+					this.temp = this.cards.filter(x => x.inviteCategory_Id == id);
+				}
 
-            }
-        }
+				return;
+			},
+			goPost: function () {
+				var role = "@User.IsInRole("1")";
+				console.log(role);
+				if (role === "True") {
+					window.location.href = '/InviteTogether/PostArticle';
+				}
+				else {
+					alert("請登入!~");
+					//Swal.fire({
+					//    icon: 'error',
+					//    title: '請登入',
+					//    text: '請登入!',
+					//    footer: '<a href="">Why do I have this issue?</a>'
+					//})
 
-    })
+				}
+
+			},
+			tagColor: function (n) {
+				console.log(n);
+				switch (n) {
+					case 4:
+						return {
+							tag: true,
+							"tag-teal": true
+						};
+					case 5:
+						return {
+							tag: true,
+							"tag-purple": true
+						};
+					case 6:
+						return {
+							tag: true,
+							"tag-pink": true
+						};
+					case 7:
+						return {
+							tag: true,
+							"tag-orange": true
+						};
+					case 8:
+						return {
+							tag: true,
+							"tag-green": true
+						};
+				}
+			}
+		},
+
+
+	})
 
 
 </script>
