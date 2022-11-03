@@ -20,28 +20,22 @@ namespace SportsCenter.Controllers.Api
             var category =  _context.Category.Include(x=>x.LocationBranch).ThenInclude(x=>x.Location).FirstOrDefault(x => x.Id == categoryId);
             if (category == null) return null;
 
-            var temp2 = category.LocationBranch.Select(x => new
+            return category.LocationBranch.Select(x => new
             {
+                x.Location.Area,
+                LocationName = x.Location.Name,
+                x.Location.Description,
+                x.Location.ImagePath,
+                LocationId = x.Location.Id,
+                x.Location.Address,
                 x.Name,
                 x.Id,
                 x.Price,
                 x.Memo
+            }).GroupBy(x => new { x.Area, x.LocationName, x.Description, x.ImagePath, x.LocationId }, (area, place) => new {
+                area,
+                place
             });
-            var venue = category.LocationBranch.First().Location;
-            var venueObj = new
-            {
-                venue.Area,
-                venue.Name,
-                venue.Description,
-                venue.ImagePath,
-                venue.Id,
-                venue.Address
-            };
-            return new
-            {
-                venueObj,
-                temp2
-            };
         }
 
         #region  回傳Location資料
