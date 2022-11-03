@@ -4,8 +4,9 @@ using SportsCenter.Models.LeoModel;
 using System.Security.Claims;
 using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SportsCenter.Extensions;
+using SportsCenter.Service;
+using SportsCenter.Models;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -14,9 +15,14 @@ namespace SportsCenter.Controllers.Api
     public class CartApiController : ControllerBase
     {
         private readonly SportsCenterDbContext dbContext;
-        public CartApiController(SportsCenterDbContext dbContext)
+        private readonly IConfiguration _configuration;
+        private readonly CryptoService _cryptoService;
+
+        public CartApiController(SportsCenterDbContext dbContext, IConfiguration configuration, CryptoService cryptoService)
         {
             this.dbContext = dbContext;
+            _configuration = configuration;
+            _cryptoService = cryptoService;
         }
         [HttpGet]
         public object GetUser()
@@ -128,6 +134,59 @@ namespace SportsCenter.Controllers.Api
             }
             dbContext.SaveChanges();
             return true;
+        }
+
+
+
+        [HttpPost]
+        public SpgatewayInputModel GetInfoData(PayData data)
+        {
+            var cart = dbContext.ProductsCart.Include(x => x.Products).Where(x => x.MemberId == User.GetId());
+            dbContext.ProductsOrder.Add(new ProductsOrder
+            {
+                MemberId = User.GetId(),
+                MemberAddress = data.Address,
+                MemberCellphone = data.Phone,
+                OrderDate = DateTime.Now,
+                ProductsOrderDetail = cart.Select(x => new ProductsOrderDetail
+                {
+                    ProductId = x.ProductsId.ToString(),
+                    ProductName = x.Products.ProductsName,
+                    ProductsPrice = x.Products.ProductsPrice,
+                    Count = x.Count
+                }).ToList()
+            });
+            dbContext.SaveChanges();
+
+
+            TradeInfo tradeInfo = new TradeInfo()
+            {
+                MerchantID = _configuration["Pay:MerchantID"],
+                RespondType = "JSON",
+                TimeStamp = DateTimeOffset.Now.ToOffset(new TimeSpan(8, 0, 0)).ToUnixTimeSeconds().ToString(),
+                Version = _configuration["Pay:Version"],
+                MerchantOrderNo = $"{DateTime.Now.Ticks}_{User.GetId()}",
+                Amt = data.TotalPrice.ToString(),
+                ItemDesc = "商品資訊(自行修改)",
+                ReturnURL = _configuration["Pay:ReturnURL"],
+                NotifyURL = _configuration["Pay:NotifyURL"],
+                Email = User.GetMail(),
+                EmailModify = 0,
+                CREDIT = 1,
+            };
+
+            var inputModel = new SpgatewayInputModel
+            {
+                MerchantID = _configuration["Pay:MerchantID"],
+                Version = _configuration["Pay:Version"]
+            };
+
+            var tradeQueryPara = string.Join("&", tradeInfo.ToKeyValuePairList().Select(x => $"{x.Key}={x.Value}"));
+            inputModel.TradeInfo = _cryptoService.EncryptAESHex(tradeQueryPara, _configuration["Pay:HashKey"], _configuration["Pay:HashIV"]);
+            inputModel.TradeSha = _cryptoService.EncryptSHA256($"HashKey={_configuration["Pay:HashKey"]}&{inputModel.TradeInfo}&HashIV={_configuration["Pay:HashIV"]}");
+
+            return inputModel;
+
         }
     }
 }

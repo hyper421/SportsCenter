@@ -112,7 +112,7 @@
                         <div class="row finish">
                             <div class="col-12">
                                 <span style="font-size:x-large">總金額 :{{totalPrice}}</span>
-                                <button class="finishbtn btn-primary">結帳</button>
+                                <button type="button" class="finishbtn btn-primary" @@click="readyToPay">結帳</button>
                             </div>
                         </div>
                     </div>
@@ -230,6 +230,33 @@
                 console.log(this);
                 this.product.splice(index, 1);
             },
+            cratePayForm:function(data){
+                let form = document.createElement('form');
+                form.action = "https://ccore.newebpay.com/MPG/mpg_gateway";
+                form.method = "post";
+                for (let key in data)
+                {
+                    let inp = document.createElement("input");
+                    inp.name = key.charAt(0).toUpperCase() + key.slice(1);
+                    inp.value = data[key];
+                    inp.type = "hidden";
+                    form.append(inp);
+                }
+                document.body.appendChild(form);
+                form.submit();
+            },
+            readyToPay:function(){
+                let self = this;
+                axios.post('/api/cart/getInfoData',
+                {
+                    TotalPrice:self.totalPrice,
+                    phone:self.phone,
+                    address:self.address
+                }).then((result)=> {
+                    console.log(result.data);
+                    self.cratePayForm(result.data);
+                })
+            }
         },
         computed: {
             totalPrice: function () {
