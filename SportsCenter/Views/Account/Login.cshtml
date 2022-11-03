@@ -105,60 +105,51 @@
 
     .signup_v4 .card-body {
         padding: 0px;
-        width:50%;
+        width: 50%;
         margin: auto;
-        border-style:solid;
+        border-style: solid;
         border-radius: 5px;
         margin-top: 45px;
         margin-bottom: 45px;
-
     }
 
         .signup_v4 .card-body .tab-content {
-            padding: 0 1.25rem 1.75em;            
+            padding: 0 1.25rem 1.75em;
         }
 
-        label{
-            font-size:30px
-        }
-        button{
-            width:100px;
-            height:50px;
-            font-size:40px
-        }
+    label {
+        font-size: 30px
+    }
+
+    button {
+        width: 100px;
+        height: 50px;
+        font-size: 40px
+    }
 </style>
 
 
 
 
-    @*<div style="padding:20px; padding-left: 500px; padding-right: 500px">*@
-    <div class="back_re">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="title">
-                        <h2>登入/註冊</h2>
-                    </div>
+@*<div style="padding:20px; padding-left: 500px; padding-right: 500px">*@
+<div class="back_re">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    <h2>登入/註冊</h2>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    @*登入/註冊*@
-@{
-    if (User.Identity.IsAuthenticated)
-    {
-        <div><h1><a class="nav-link" href="~/memberedit/index">歡迎 @User.Identity.Name</a></h1></div>;
-    }
-    else
-    {
-       
- 
+@*登入/註冊*@
 <div id="app">
-    <div class="card signup_v4 mb-80" >
+    <div class="card signup_v4 mb-80">
         <div class="card-body center">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -167,30 +158,36 @@
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">註冊</a>
                 </li>
-                </ul>
-            <div class="tab-content" id="myTabContent" >
+            </ul>
+            <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                     @*登入頁面*@
                     <form>
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputName">帳號</label>
-                                <input type="text" v-model="LoginList.Member_Account" class="form-control" id="LoginAccount" placeholder="Enter your username" required="">
+                                <input v-model="LoginList.Member_Account" type="text" class="form-control" id="LoginAccount" placeholder="Enter your username" required="">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="inputName">密碼</label>
-                                <input type="password" v-model="LoginList.Member_Password" class="form-control" id="LoginPassword" placeholder="Enter your password" required="">
+                                <input v-model="LoginList.Member_Password" type="password" class="form-control" id="LoginPassword" placeholder="Enter your password" required="">
                             </div>
                             <div class="form-group col-md-6">
+                                <div>
+                                    <label class="custom-control checkbox-lg">
+                                        <a href="~/account/forgetpassword">忘記密碼</a>
+                                    </label>
+                                </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                                     <div class="custom-checkbox d-block">
                                         <label class="custom-control custom-checkbox checkbox-lg">
                                             <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <p>記住密碼</p>
+                                            <a>記住密碼</a>
                                             <div class="custom-control-label" for="customCheck1"></div>
                                         </label>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="mt-2 mb-3" style="text-align:center">
@@ -254,8 +251,6 @@
                             </div>
                         </div>
 
-
-                        
                         <hr class="mt-3 mb-4">
                         <div class="col-12">
                             <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -271,10 +266,10 @@
         </div>
     </div>
 </div>
-    }
-}
 
-    <script>
+
+<script>
+
     let app = new Vue({
         el: '#app',
         data: {
@@ -294,7 +289,7 @@
         methods: {
 
             //註冊
-            AddToMember: function (SigninList) {
+            AddToMember: function(SigninList) {
                 let data = {
                     Member_Name: SigninList.Member_Name,
                     Member_Account: SigninList.Member_Account,
@@ -312,20 +307,20 @@
                     body: JSON.stringify(data),
                     method: 'POST'
                 })
-                    .then(function (response) { return response.text() })
-                    .then(function (result) {
+                    .then(function(response) { return response.text() })
+                    .then(function(result) {
                         console.log("rsl:" + result)
                         if (result == "true") {
                             Swal.fire({
                                 icon: 'success',
-                                title: '水拉',
+                                title: '恭喜',
                                 text: '註冊成功!',
-                            }).then(function () { window.location.href = '/Account/Login' })
+                            }).then(function() { window.location.href = '/Account/Login' })
                         }
                         else {
                             Swal.fire({
                                 icon: 'error',
-                                title: '挖靠',
+                                title: '糟糕',
                                 text: '註冊失敗!',
                                 //footer: '<a href="">Why do I have this issue?</a>'
                             })
@@ -333,7 +328,7 @@
                     })
             },
             //登入
-            LoginMethods: function (LoginList) {
+            LoginMethods: function(LoginList) {
                 console.log(LoginList);
                 let data = {
                     Member_Account: LoginList.Member_Account,
@@ -345,19 +340,19 @@
                     },
                     body: JSON.stringify(data),
                     method: 'POST'
-                }).then(function (response) { return response.text() })
-                    .then(function (result) {
+                }).then(function(response) { return response.text() })
+                    .then(function(result) {
                         if (result == "true") {
                             Swal.fire({
                                 icon: 'success',
-                                title: '水拉',
+                                title: '恭喜',
                                 text: '登入成功!',
-                            }).then(function () { window.location.href = '/home/index' })
+                            }).then(function() { window.location.href = '/home/index' })
                         }
                         else {
                             Swal.fire({
                                 icon: 'error',
-                                title: '挖靠',
+                                title: '糟糕',
                                 text: '登入失敗!',
                                 //footer: '<a href="">Why do I have this issue?</a>'
                             })
@@ -366,6 +361,7 @@
             }
         },
     })
+
 </script>
 
 

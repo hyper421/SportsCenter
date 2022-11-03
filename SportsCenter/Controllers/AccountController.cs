@@ -57,7 +57,7 @@ namespace SportsCenter.Controllers
                     ImagePath = ""
                 });
                 HttpContext.Response.Cookies.Append("UserEmail", signin.Member_Email);
-                var msg = await RazorTemplateEngine.RenderAsync<SigninModel>("Views/Register/Authorize.cshtml", signin);
+                var msg = await RazorTemplateEngine.RenderAsync<SigninModel>("Views/Account/Authorize.cshtml", signin);
                 mail.SendMail(signin.Member_Email, msg, "開約GO 會員認證信件");
                 _context.SaveChanges();
                 return true;
@@ -127,7 +127,7 @@ namespace SportsCenter.Controllers
                 return false;
             }
             HttpContext.Response.Cookies.Append("ID", member.Id.ToString());
-            var msg = await RazorTemplateEngine.RenderAsync<Member>("Views/Register/MailToReset.cshtml", member);
+            var msg = await RazorTemplateEngine.RenderAsync<Member>("Views/Account/MailToReset.cshtml", member);
             mail.SendMail(member.Email, msg, "開約GO 密碼重設信件");
             return true;
         }
