@@ -79,7 +79,7 @@ namespace SportsCenter.Controllers.Api
 
                 if (model.Image != null)
                 {
-                    var result = await uploadService.Upload(model.Image, "Category");
+                    var result = await uploadService.Upload(model.Image, "Users");
                     if (!result.Item1) return false;
                     path = result.Item2;
                 }

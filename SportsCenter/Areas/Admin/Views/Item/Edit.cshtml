@@ -67,21 +67,23 @@
             });
         },
         methods: {
-            update: function() {
+            update: function () {
                 let self = this;
-                const formData = new FormData();
-                formData.append('id', self.id);
-                formData.append('isActive', self.isActive);
-                formData.append('name', self.name);
-                fetch('/api/Item/Update', {
+                let data = {
+                    id: self.id,
+                    isActive: self.isActive,
+                    name: self.name
+                }
+                fetch('/api/item/Update', {
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify(formData), method: 'POST'
+                    body: JSON.stringify(data), method: 'POST'
                 })
                     .then(response => response.json()).then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' })
+                                .then(function () { window.location.href = '/admin/Item/index' });
                         } else {
                             Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
                         }

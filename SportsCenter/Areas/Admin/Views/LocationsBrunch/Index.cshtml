@@ -64,9 +64,9 @@
     fetch('/api/LocationsBrunch/getall').then(response => response.json()).then(result => {
         initialDataTable(result)
     });
-    function deleteLocationsBrunchi(id) {
+    function deleteLocationsBrunch(id) {
         console.log(id)
-        if (window.confirm("是否刪除該類別?")) {
+        if (window.confirm("是否刪除該場地?")) {
             axios.delete(`/api/LocationsBrunch/delete?id=${id}`)
                 .then(function(response) {
                     if (response.data) {
