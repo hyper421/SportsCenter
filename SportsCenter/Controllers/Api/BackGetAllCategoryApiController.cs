@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.DataAccess;
+using System.Security.Claims;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -42,6 +43,17 @@ namespace SportsCenter.Controllers.Api
                 IsActive = x.IsActive == 1,
                 x.Id,
             }).ToList();
+        }
+        [HttpGet]
+        public object GetMember()
+        {
+            var id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+            var data = context.Member.FirstOrDefault(x => x.Id == int.Parse(id));
+            return new
+            {
+                path = data.ImagePath,
+                data.Name,
+            };
         }
         [HttpGet]
         public object GetItem()
