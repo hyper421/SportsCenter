@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.DataAccess;
+using SportsCenter.Service;
 using SportsCenter.Services;
 using System.Security.Claims;
 
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<UploadService>();
+builder.Services.AddTransient<CryptoService>();
 
 //Googleµn¤J
 builder.Services.AddAuthentication(options =>
