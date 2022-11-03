@@ -111,8 +111,8 @@
 	}
 
 		/* body {
-			background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
-		}*/
+							background: linear-gradient(to bottom, #E9ECEF, #c8cde0, #b0b3d8);
+						}*/
 
 		.ToolNavbar:hover {
 			transform: translate(-0.05em, -0.05em);
@@ -227,46 +227,47 @@
 	</div>
 </div>
 
-<div class="container-fluid p-5">
+<div class="container-fluid p-5" id="cardstyle">
 
 
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-		<a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""><a asp-controller="InviteTogether" asp-action="PostArticle" style="text-decoration:none;" class="LinkPostArticle">我要發文</a></a>
+		<a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="" style="text-decoration: none;" class="LinkPostArticle" @@click="goPost()">
+			@*<a asp-controller="InviteTogether" asp-action="PostArticle"  >*@
+			我要發文
+			@*</a>*@
+		</a>
 	</div>
 
 
 	<div class="container justify-content-center">
 		<div class="btn-group me-2" role="group" aria-label="Basic radio toggle button group" id="222333">
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" onchange="Comprehensive()" style="display:none;">
-			<label class="ToolNavbar tag tag-red" for="btnradio0">綜合</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-red" @@click="getCurrentCategory(99)" for="btnradio0">綜合</label>
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onchange="Badminton()" style="display:none;">
-			<label class="ToolNavbar tag tag-teal" for="btnradio1">羽球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-teal" @@click="getCurrentCategory(4)" for="btnradio1">羽球</label>
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onchange="Basketball()" style="display:none;">
-			<label class="ToolNavbar tag tag-purple" for="btnradio2">籃球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-purple" @@click="getCurrentCategory(5)" for="btnradio2">籃球</label>
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onchange="TableTennis()" style="display:none;">
-			<label class="ToolNavbar tag tag-pink" for="btnradio3">桌球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-pink" @@click="getCurrentCategory(6)" for="btnradio3">桌球</label>
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onchange="PoolBall()" style="display:none;">
-			<label class="ToolNavbar tag tag-orange" for="btnradio4">撞球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-orange" @@click="getCurrentCategory(7)" for="btnradio4">撞球</label>
 
-			<input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" onchange="SquashBall()" style="display:none;">
-			<label class="ToolNavbar tag tag-green" for="btnradio5">壁球</label>
+			<input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" style="display:none;">
+			<label class="ToolNavbar tag tag-green" @@click="getCurrentCategory(8)" for="btnradio5">壁球</label>
 
 		</div>
 	</div>
-	<div id="indexArticle" >
-		<div class="container-fluid" id="cardstyle" >
-			<div class="row " >
+	<div id="indexArticle">
+		<div class="container-fluid">
+			<div class="row ">
 
-
-
-
-				<a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;" v-for="style in cards">
+				<a @@click="GetDetail(style.id)" style="text-decoration:none; color:black;" v-for="style in temp">
 
 					<div class="card">
 
@@ -274,15 +275,16 @@
 							<img :src=style.imagePath alt="rover" />
 						</div>
 						<div class="card-body">
-							<span class="tag tag-teal">{{style.inviteCategory_Id}}</span>
+							<span id="tagcolor" v-bind:class="tagColor(style.inviteCategory_Id)">{{ getCategoryName(style.inviteCategory_Id) }}</span>
 							<h4>
 								{{style.title}}
 							</h4>
-							<p>
+							<p v-html="style.content">
 								{{style.content}}
 							</p>
 							<div class="user">
-								<img src="https://file.qqtouxiang.com/dongwu/2020-04-10/11395a5d68df9aeaa37267012c8a2c34.jpeg" alt="user" />
+
+								<img :src=style.memberImagePath alt="user" />
 								<div class="user-info">
 									<h5>{{style.member_Id}}</h5>
 									<small>{{style.createdDate}}</small>
@@ -305,10 +307,8 @@
 		data: {
 			DetailUrl: "/InviteTogether/AurtherArticle",
 			cards: [],
-			postInfotest: [
-				{ type: "a", title: "b", content: "c", CreatedDate: "d" },
-				{ type: "1", title: "2", content: "3", CreatedDate: "4" },
-				{ type: "5", title: "6", content: "7", CreatedDate: "8" },]
+			category: [],
+			temp: []
 		},
 		mounted: function () {
 			let self = this;
@@ -317,21 +317,87 @@
 				.then(function (result) {
 					self.cards = result.map(function (x) {
 						return x
-
 					});
-
+					self.temp = self.cards;
 				});
-
-
+			fetch("/api/PostArticle/GetInviteCategoryid")
+				.then((response) => { return response.json() })
+				.then((result) => {
+					self.category = result;
+				})
 		},
 		methods: {
-			 GetDetail:function(id){
-		const url = this.DetailUrl + "?id="+id;
-	    location.href=url;
-			   }
-			}
+			GetDetail: function (id) {
+				const url = this.DetailUrl + "?id=" + id;
+				location.href = url;
+			},
+			getCategoryName: function (id) {
+				let currentCategory = this.category.find(b => b.categoryId == id);
 
-		})
+
+				return currentCategory.name;
+			},
+			getCurrentCategory: function (id) {
+				if (id == 99) {
+					this.temp = this.cards;
+				} else {
+					this.temp = this.cards.filter(x => x.inviteCategory_Id == id);
+				}
+
+				return;
+			},
+			goPost: function () {
+				var role = "@User.IsInRole("1")";
+				console.log(role);
+				if (role === "True") {
+					window.location.href = '/InviteTogether/PostArticle';
+				}
+				else {
+					alert("請登入!~");
+					//Swal.fire({
+					//    icon: 'error',
+					//    title: '請登入',
+					//    text: '請登入!',
+					//    footer: '<a href="">Why do I have this issue?</a>'
+					//})
+
+				}
+
+			},
+			tagColor: function (n) {
+				console.log(n);
+				switch (n) {
+					case 4:
+						return {
+							tag: true,
+							"tag-teal": true
+						};
+					case 5:
+						return {
+							tag: true,
+							"tag-purple": true
+						};
+					case 6:
+						return {
+							tag: true,
+							"tag-pink": true
+						};
+					case 7:
+						return {
+							tag: true,
+							"tag-orange": true
+						};
+					case 8:
+						return {
+							tag: true,
+							"tag-green": true
+						};
+				}
+			}
+		},
+
+
+	})
 
 
 </script>

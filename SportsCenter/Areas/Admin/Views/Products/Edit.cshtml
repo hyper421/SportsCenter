@@ -35,7 +35,7 @@
 
                                 <div class="form-group row">
                                     <label for="inp1" class="col-sm-2 col-form-label">商品類別</label>
-                                    <select v-model="itemName">
+                                    <select v-model="type">
                                         <option value="" selected disabled>{{type}}</option>
                                         <option v-for="type in getItemName">{{type.name}}</option>
                                     </select>
@@ -81,7 +81,6 @@
             productsName: "",
             productsPrice: "",
             productsInventory: "",
-            itemName: "",
             getItemName: []
         },
         mounted: function() {
@@ -116,7 +115,7 @@
                 const formData = new FormData();
                 formData.append('productsId', self.productsId);
                 formData.append('image', self.images);
-                formData.append('itemName', self.itemName);
+                formData.append('itemName', self.type);
                 formData.append('productsName', self.productsName);
                 formData.append('productsPrice', self.productsPrice);
                 formData.append('productsInventory', self.productsInventory);
@@ -127,9 +126,10 @@
                     .then(response => response.json())
                     .then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '修改成功!' })
+                                .then(function () { window.location.href = '/admin/Products/index' });
                         } else {
-                            Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
+                            Swal.fire({ icon: 'error', title: '錯誤', text: '修改失敗!' });
                         }
                         self.name = "",
                             self.isActive = false

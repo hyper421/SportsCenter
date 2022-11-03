@@ -99,11 +99,7 @@
 								<select id="GetCategory" class="form-select" aria-label="Default select example">
 
 									<option value="" selected disabled>請選擇...</option>
-									<option value="">羽球</option>
-									<option value="">籃球</option>
-									<option value="">桌球</option>
-									<option value="">撞球</option>
-									<option value="">壁球</option>
+
 								</select>
 							</div>
 						</div>
@@ -130,6 +126,11 @@
 							<textarea class="ckeditor form-control" name="txtarea" id="txtarea">
 							
 							</textarea>
+							<label@* class="btn btn-info" style="color:aliceblue"*@>
+								@*<input type="text" name="name" id="name" />*@
+								<input type="file" name="files" id="files"   />
+								@*<i class="fa fa-photo"></i> 上傳圖片*@
+							</label>
 
 						</div>
 
@@ -164,20 +165,18 @@
 <script type="text/javascript">
 
 	$("#PostArticle").on("click", function () {
-		let type = $("#GetCategory").find(":selected").text();
+		let categoryId = $("#GetCategory").find(":selected").val();
 		let title = $("#title").val();
-		let content = CKEDITOR.instances.txtarea.getData()
-		let data = {
-			type: type,
-			content: content,
-			title: title,
-		}
-		fetch("/api/PostArticle/post", {
+		let content = CKEDITOR.instances.txtarea.getData();
+		var files = $('#files')[0].files;
+		let formData = new FormData();
+        formData.append('CategoryId', categoryId);
+		formData.append('content', content);
+		formData.append('title', title);
+		formData.append('files', files[0]);
 
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify(data),
+		fetch("/api/PostArticle/post", {
+			body: formData,
 			method: 'POST'
 		})
 			.then(function (response) { return response.text() })
@@ -196,7 +195,7 @@
 
 	//下拉選單
 	$.ajax({
-		url: '/api/PostArticle/get',
+		url: '/api/PostArticle/GetInviteCategoryid',
 		data: {
 			sportCategory: [],
 		},
@@ -204,13 +203,13 @@
 		datatype: 'json',
 		success: function (data) {
 			if (data.length > 0) {
+                console.log(data);
 				$('#GetCategory').empty();
 				$('#GetCategory').append($('<option selected disabled></option>').val('').text('--請選擇種類--'));
 				//測試data是否有值
 				//$('#GetCategory').append($('<option></option>').val('').text(data[0].name));
 				for (i = 0; i < data.length; i++) {
-					$('#GetCategory').append($('<option></option>').val('').text(data[i].name));
-					console.log(data[i].name);
+                    $('#GetCategory').append(`<option value="${data[i].categoryId}"> ${data[i].name} </option>`);
 				}
 				//show data 迴圈
 				// $('#GetCategory').append($('<option></option>').val('').text.get(data));

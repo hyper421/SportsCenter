@@ -4,8 +4,11 @@ namespace SportsCenter.Models
 {
     public class PostArticleCreateModel
     {
-        public string Type { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public int CategoryId { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
+        public IFormFile? Files { get; set; }
+        
+
     }
 }

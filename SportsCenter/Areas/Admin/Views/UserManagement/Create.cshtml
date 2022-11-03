@@ -133,7 +133,8 @@
                     .then(response => response.json())
                     .then(result => {
                         if (result) {
-                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' });
+                            Swal.fire({ icon: 'success', title: '成功', text: '新增成功!' })
+                                .then(function () { window.location.href = '/admin/UserManagement/index' });
                         } else {
                             Swal.fire({ icon: 'error', title: '錯誤', text: '新增失敗!' });
                         }
