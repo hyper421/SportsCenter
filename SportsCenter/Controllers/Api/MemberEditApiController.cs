@@ -106,6 +106,9 @@ namespace SportsCenter.Controllers.Api
             return new { 
                 path = data.ImagePath,
                 data.Name,
+                data.Email,
+                data.Phone,
+                data.Address
             };
         }
         [HttpGet]

@@ -61,7 +61,17 @@
     }
 
 </style>
-
+<div class="back_re">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    <h2>會員中心</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="Medit">
     <!-- 你們的nav bar -->
@@ -74,7 +84,11 @@
                 </div>
             </div>
             <div class="col-8">
-                <h3>姓名:{{name}}</h3>
+                <h5>姓名:{{name}}</h5>
+                <h5>電話:{{phone}}</h5>
+                <h5>信箱:{{email}}</h5>
+                <h5>地址:{{address}}</h5>
+               
             </div>
         </div>
     </div>
@@ -257,6 +271,9 @@
             LocationDetail: [],
             name:"",
             path:"",
+            email:"",
+            address:"",
+            phone:"",
             images:null,
         },
         methods: {
@@ -329,6 +346,9 @@
                 axios.get('/api/MemberEdit/getpath').then(result => {
                     self.name = result.data.name;
                     self.path = result.data.path;
+                    self.email = result.data.email;
+                    self.phone = result.data.phone;
+                    self.address = result.data.address;
                 });
             },
             update: function () {
