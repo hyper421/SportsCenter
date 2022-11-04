@@ -503,8 +503,10 @@
                 <div>
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                         <div v-for="time in listData.activeTime">
-                            <input type="checkbox" class="btn-check" :id="time" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btncheck1">{{time}}</label>
+@*                            <input type="checkbox" class="btn-check" :id="time" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck1">{{time}}</label>*@
+                            <input type="radio" class="btn-check" name="btnradio" :id="time" autocomplete="off">
+                            <label class="btn btn-outline-primary" :for="time">{{time}}</label>
                         </div>
                     </div>
 
@@ -520,92 +522,92 @@
 
 <script>
     let app = new Vue({
-            el: '#app',
-            components: {vuejsDatepicker},
-            data: {
-                steps: [
-                    {label: '選擇運動項目',slot: 'page1'},
-                    {label: '選擇場館',slot: 'page2',},
-                    {label: '選擇預約時間',slot: 'page3',options: {}},
-                    {label: '預約資訊',slot: 'page4',options: {nextDisabled: true}},
-                ],
-                setting:{
-                    disabledDates:{
-                        to: "",
-                        from: "",
-                    }
-                },
-                selectItem:{
-                    category:{},
-                    place:{}
-                },
-                listData:{
-                    category:[],
-                    venue:[],
-                    activeTime:[]
+        el: '#app',
+        components: { vuejsDatepicker },
+        data: {
+            steps: [
+                { label: '選擇運動項目', slot: 'page1' },
+                { label: '選擇場館', slot: 'page2', },
+                { label: '選擇預約時間', slot: 'page3', options: {} },
+                { label: '預約資訊', slot: 'page4', options: { nextDisabled: true } },
+            ],
+            setting: {
+                disabledDates: {
+                    to: "",
+                    from: "",
                 }
             },
-            computed:{
-                from:function(){
-                    let d = new Date();
-                    d.setDate(d.getDate()+7);
-                    return d;
-                },
-                to:function(){
-                    let d = new Date();
-                    d.setDate(d.getDate()+1);
-                    return new Date(2022,11,1);
-                }
+            selectItem: {
+                category: {},
+                place: {}
             },
-            mounted:function(){
-                this.getCategoryData();
-                document.querySelector('.wizard__next').hidden = true;
-                this.initialDate();
-            },
-            methods: {
-                selectDate(val){
-                    console.log(val);
-                    var item = ["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"];
-                    this.listData.activeTime = item;
-                },
-                selectCategory(category){
-                    console.log(category);
-                    this.getVenueData(category.id)
-                    this.selectItem.category = category;
-                    this.$refs['my-wizard'].goNext(true);
-                    //document.querySelector('.wizard__next').hidden = false;
-                },
-                selectPlace(place){
-                    console.log(place);
-                    this.selectItem.place = place;
-                    this.$refs['my-wizard'].goNext(true);
-                },
-                nextClicked(currentPage) {
-                    console.log('next clicked', currentPage)
-                    return true; //return false if you want to prevent moving to next page
-                },
-                backClicked(currentPage) {
-                    console.log('back clicked', currentPage);
-                    if(currentPage == 1) document.querySelector('.wizard__next').hidden = true;
-
-                    return true; //return false if you want to prevent moving to previous page
-                },
-                getCategoryData(){
-                    let self = this;
-                    axios.get('/api/category/getall').then(res=> self.listData.category = res.data)
-                },
-                getVenueData(id){
-                    let self = this;
-                    axios.get('/api/Venue/GetVenueByCategory?categoryId='+id).then(res=> self.listData.venue = res.data)
-                },
-                initialDate(){
-                    let to = new Date();
-                    to.setDate(to.getDate()-1);
-                    this.setting.disabledDates.to = to;
-                    let from = new Date();
-                    from.setDate(from.getDate()+7);
-                    this.setting.disabledDates.from = from;
-                }
+            listData: {
+                category: [],
+                venue: [],
+                activeTime: []
             }
+        },
+        computed: {
+            from: function() {
+                let d = new Date();
+                d.setDate(d.getDate() + 7);
+                return d;
+            },
+            to: function() {
+                let d = new Date();
+                d.setDate(d.getDate() + 1);
+                return new Date(2022, 11, 1);
+            }
+        },
+        mounted: function() {
+            this.getCategoryData();
+            document.querySelector('.wizard__next').hidden = true;
+            this.initialDate();
+        },
+        methods: {
+            selectDate(val) {
+                console.log(val);
+                var item = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+                this.listData.activeTime = item;
+            },
+            selectCategory(category) {
+                console.log(category);
+                this.getVenueData(category.id)
+                this.selectItem.category = category;
+                this.$refs['my-wizard'].goNext(true);
+                //document.querySelector('.wizard__next').hidden = false;
+            },
+            selectPlace(place) {
+                console.log(place);
+                this.selectItem.place = place;
+                this.$refs['my-wizard'].goNext(true);
+            },
+            nextClicked(currentPage) {
+                console.log('next clicked', currentPage)
+                return true; //return false if you want to prevent moving to next page
+            },
+            backClicked(currentPage) {
+                console.log('back clicked', currentPage);
+                if (currentPage == 1) document.querySelector('.wizard__next').hidden = true;
+
+                return true; //return false if you want to prevent moving to previous page
+            },
+            getCategoryData() {
+                let self = this;
+                axios.get('/api/category/getall').then(res => self.listData.category = res.data)
+            },
+            getVenueData(id) {
+                let self = this;
+                axios.get('/api/Venue/GetVenueByCategory?categoryId=' + id).then(res => self.listData.venue = res.data)
+            },
+            initialDate() {
+                let to = new Date();
+                to.setDate(to.getDate() - 1);
+                this.setting.disabledDates.to = to;
+                let from = new Date();
+                from.setDate(from.getDate() + 7);
+                this.setting.disabledDates.from = from;
+            }
+        }
     })
 </script>
