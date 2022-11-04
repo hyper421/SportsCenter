@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(options =>
     //沒權限
     option.AccessDeniedPath = new PathString("/Register/NoAccess");
     //登入時間設置
-    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
+    //option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
 }).AddGoogle(options =>
 {
     options.ClientId = builder.Configuration.GetSection("OAuth:Google:ClientId").Value;
