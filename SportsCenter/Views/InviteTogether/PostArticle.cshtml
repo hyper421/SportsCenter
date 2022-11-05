@@ -206,8 +206,7 @@
                 console.log(data);
 				$('#GetCategory').empty();
 				$('#GetCategory').append($('<option selected disabled></option>').val('').text('--請選擇種類--'));
-				//測試data是否有值
-				//$('#GetCategory').append($('<option></option>').val('').text(data[0].name));
+	
 				for (i = 0; i < data.length; i++) {
                     $('#GetCategory').append(`<option value="${data[i].categoryId}"> ${data[i].name} </option>`);
 				}
