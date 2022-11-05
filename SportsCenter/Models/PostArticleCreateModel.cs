@@ -8,7 +8,5 @@ namespace SportsCenter.Models
         public string? Title { get; set; }
         public string? Content { get; set; }
         public IFormFile? Files { get; set; }
-        
-
     }
 }
