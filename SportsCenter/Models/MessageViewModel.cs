@@ -12,10 +12,5 @@
 
         public DateTime CreateDate { get; set; }
 
-        //public virtual Member Member { get; set; }
-
-        //public virtual Post Post { get; set; }
-
-
     }
 }

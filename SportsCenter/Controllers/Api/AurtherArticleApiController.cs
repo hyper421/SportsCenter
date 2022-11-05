@@ -33,15 +33,12 @@ namespace SportsCenter.Controllers.Api
         [HttpPost]
         public bool PostMessage([FromBody] MessageViewModel message)
         {
-            //var ID = (from a in dbContext.InviteCategory
-            //          where a.Name == post.type
-            //          select a.Id).FirstOrDefault();
 
             var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
 
             dbContext.Message.Add(new DataAccess.Entity.Message
             {
-                //Id = 1,
+
                 Member_Id = userid,
                 Post_Id = message.PostId,
                 Body = message.Body,
@@ -55,7 +52,7 @@ namespace SportsCenter.Controllers.Api
 
     }
 
-   
+
 
 
 }

@@ -26,7 +26,7 @@ namespace SportsCenter.Controllers.Api
         [HttpPost]
         public async Task<bool> Post([FromForm] PostArticleCreateModel post)
         {
-  
+
 
             var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
 
