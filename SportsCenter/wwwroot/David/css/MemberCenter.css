@@ -35,6 +35,5 @@ body {
     }
 /* 調整input間距 */
 .wrapper .form-group {
-    border-bottom: 1px solid #ccc;
     margin-bottom: 2rem;
 }

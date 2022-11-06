@@ -30,7 +30,7 @@
                             <li class="nav-item border-bottom w-100 collapsed" data-toggle="collapse"
                                 data-target="#category1" aria-expanded="false" aria-controls="category1">
                                 <a class="nav-link d-flex justify-content-between align-items-center"
-                                   @@click="selectType(index+4)">{{item.name}}<i class="fa fa-chevron-right"></i></a>
+                                   @@click="selectType(index)">{{item.name}}<i class="fa fa-chevron-right"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -65,13 +65,13 @@
                     <h1 class="mb-0 fs-1">商品區</h1>
                 </div>
             </div>
-            
+
             <!-- row -->
             <div>
                 <div class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
                     <div class="col-3" v-for="item in searchFilter">
                         <div class="card p-3 my-1 " style="border:none">
-                            <img :src="item.productsImagePath" class="card-img-top" alt="" data-bs-toggle="modal">
+                            <img :src="'/system/'+ item.productsImagePath" class="card-img-top" alt="" data-bs-toggle="modal">
                             <div class="card-body">
                                 <div style="height:40px">
                                     <h5 class="card-title">{{item.productsName}}</h5>
@@ -139,11 +139,6 @@
         },
         mounted: function () {
             let self = this;
-            fetch("/api/Product/GetMember")
-                .then(function (response) { return response.json() })
-                .then(function (result) {
-                    self.products = result.map(function (x) {x.qty = 0;return x})
-                }
             self.GetItem();
             self.GetProduct();
         },
@@ -154,7 +149,8 @@
                 this.price = 30000;
             },
             selectType(x) {
-                this.keynumber = x;
+                let key = this.items[x].id;
+                this.keynumber = key;
             },
             GetItem: function () {
                 let self = this;
@@ -190,6 +186,23 @@
                     },
                     method: 'POST',
                 })
+                .then(function (response) { return response.text() })
+                    .then(function (result) {
+                        console.log("rsl:" + result)
+                        if (result == "true") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '加入成功!',
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '加入失敗!',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
             }
         }
     })

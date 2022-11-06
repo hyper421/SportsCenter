@@ -1,14 +1,18 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.DataAccess;
+using SportsCenter.Service;
 using SportsCenter.Services;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<UploadService>();
+builder.Services.AddTransient<CryptoService>();
 
 //Google登入
 builder.Services.AddAuthentication(options =>
@@ -21,11 +25,11 @@ builder.Services.AddAuthentication(options =>
     //沒權限
     option.AccessDeniedPath = new PathString("/Register/NoAccess");
     //登入時間設置
-    option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
+    //option.ExpireTimeSpan = TimeSpan.FromSeconds(100);
 }).AddGoogle(options =>
 {
-    options.ClientId = builder.Configuration.GetSection("OAuth:Google:id").Value;
-    options.ClientSecret = builder.Configuration.GetSection("OAuth:Google:Secret").Value;
+    options.ClientId = builder.Configuration.GetSection("OAuth:Google:ClientId").Value;
+    options.ClientSecret = builder.Configuration.GetSection("OAuth:Google:ClientSecret").Value;
     options.Events.OnCreatingTicket = ctx =>
     {
         ctx.Identity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.Role, "1"));

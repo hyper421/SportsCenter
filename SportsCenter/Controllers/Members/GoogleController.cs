@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using SportsCenter.DataAccess;
+using SportsCenter.DataAccess.Entity;
+using System;
+using System.Net;
+using System.Security.Claims;
 
 namespace SportsCenter.Controllers.Members
 {
@@ -23,15 +27,50 @@ namespace SportsCenter.Controllers.Members
         }
         public async Task<IActionResult> LoginResult()
         {
+            Random random = new Random();
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var json = result.Principal.Claims.Select(x => new
+            var name = result.Principal.Claims.Where(x => x.Type.Contains("name")).Select(a => a.Subject.Name).FirstOrDefault();
+            var email = result.Principal.Claims.Where(x => x.Type.Contains("emailaddress")).Select(a => a.Value).FirstOrDefault();
+            var role = result.Principal.Claims.Where(x => x.Type.Contains("role")).Select(a => a.Value).FirstOrDefault();
+            var password = result.Principal.Claims.Where(x => x.Type.Contains("nameidentifier")).Select(a => a.Value).FirstOrDefault();
+            var users = (from a in _context.Member
+                         where a.Account == email
+                         select a).FirstOrDefault();
+            if (users != null)
             {
-                x.Value,
-                x.Type,
-                x.Issuer,
-                x.OriginalIssuer
-            });
-            return Json(json);
+                var claims = new List<Claim>
+                {
+                new Claim(ClaimTypes.Name, users.Name),
+                new Claim(ClaimTypes.Sid, users.Id.ToString()),
+                new Claim(ClaimTypes.Email, users.Email),
+                new Claim(ClaimTypes.StreetAddress, users.Address),
+                new Claim(ClaimTypes.HomePhone, users.Phone),
+                new Claim(ClaimTypes.Role, users.Role.ToString()),
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var clainPrincipal = new ClaimsPrincipal(claimsIdentity);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, clainPrincipal);
+            }
+            else
+            {
+                _context.Member.Add(new Member
+                {
+                    Name = name,
+                    Account = email,
+                    Password = password,
+                    Salt = random.Next(0, 100).ToString(),
+                    Email = email,
+                    CreateTime = DateTime.Now,
+                    IsActive = 1,
+                    Address = "",
+                    Role = int.Parse(role),
+                    ImagePath = "/Logo//logo.jpg",
+                    Phone = ""
+
+                });
+                _context.SaveChanges();
+            }
+            return RedirectToAction("index", "home");
         }
     }
 }

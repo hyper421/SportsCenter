@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.DataAccess;
@@ -36,13 +37,13 @@ namespace SportsCenter.Controllers.Api
             //          where a.Name == post.type
             //          select a.Id).FirstOrDefault();
 
-            //var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
-      
+            var userid = int.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
+
             dbContext.Message.Add(new DataAccess.Entity.Message
             {
                 //Id = 1,
-                Member_Id = 1,
-                Post_Id = 2,
+                Member_Id = userid,
+                Post_Id = message.PostId,
                 Body = message.Body,
                 CreateDate = DateTime.Now,
 
