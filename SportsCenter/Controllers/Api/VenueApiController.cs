@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using SportsCenter.DataAccess;
 using SportsCenter.DataAccess.Entity;
+using SportsCenter.Extensions;
+using SportsCenter.Models;
+using SportsCenter.Service;
+using System.Security.Claims;
 
 namespace SportsCenter.Controllers.Api
 {
@@ -11,13 +15,19 @@ namespace SportsCenter.Controllers.Api
     {
 
         private readonly SportsCenterDbContext _context;
-        public VenueApiController(SportsCenterDbContext _context)
+        private readonly IConfiguration _configuration;
+        private readonly CryptoService _cryptoService;
+
+
+        public VenueApiController(SportsCenterDbContext _context, IConfiguration configuration, CryptoService cryptoService)
         {
             this._context = _context;
+            _configuration = configuration;
+            _cryptoService = cryptoService;
         }
         public object GetVenueByCategory(int categoryId)
         {
-            var category =  _context.Category.Include(x=>x.LocationBranch).ThenInclude(x=>x.Location).FirstOrDefault(x => x.Id == categoryId);
+            var category = _context.Category.Include(x => x.LocationBranch).ThenInclude(x => x.Location).FirstOrDefault(x => x.Id == categoryId);
             if (category == null) return null;
 
             return category.LocationBranch.Select(x => new
@@ -27,12 +37,12 @@ namespace SportsCenter.Controllers.Api
                 x.Location.Description,
                 x.Location.ImagePath,
                 LocationId = x.Location.Id,
+                LocationBranchId = x.Id,
                 x.Location.Address,
                 x.Name,
-                x.Id,
                 x.Price,
                 x.Memo
-            }).GroupBy(x => new { x.Area, x.LocationName, x.Description, x.ImagePath, x.LocationId }, (area, place) => new {
+            }).GroupBy(x => new { x.Area, x.LocationName, x.Description, x.ImagePath, x.LocationId, x.LocationBranchId }, (area, place) => new {
                 area,
                 place
             });
@@ -41,7 +51,6 @@ namespace SportsCenter.Controllers.Api
         #region  回傳Location資料
 
         [HttpGet]
-
         public object Get()
         {
             return _context.Location.Select(x => new
@@ -83,6 +92,60 @@ namespace SportsCenter.Controllers.Api
         }
 
         #endregion
+
+
+        [HttpPost]
+        public SpgatewayInputModel GetInfoData(bookingData data)
+        {
+            var id = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
+            //var order = _context.Category.Include(x => x.LocationBranch).ThenInclude(x => x.Location).FirstOrDefault(x => x.Id == categoryId);
+            _context.LocationOrder.Add(new LocationOrder
+            {
+                LocationBranchId = data.LocationBranchId,
+                MemberId = User.GetId(),
+                Price = data.Price,
+                DateTime = DateTime.Now,
+            });
+            _context.SaveChanges();
+
+
+            TradeInfo tradeInfo = new TradeInfo()
+            {
+                MerchantID = _configuration["Pay:MerchantID"],
+                RespondType = "JSON",
+                TimeStamp = DateTimeOffset.Now.ToOffset(new TimeSpan(8, 0, 0)).ToUnixTimeSeconds().ToString(),
+                Version = _configuration["Pay:Version"],
+                MerchantOrderNo = $"{DateTime.Now.Ticks}_{User.GetId()}",
+                //Amt = data.TotalPrice.ToString(),
+                Amt = data.Price.ToString(),
+                ItemDesc = data.Name + data.Category,
+                ReturnURL = _configuration["Pay:ReturnURL"],
+                NotifyURL = _configuration["Pay:NotifyURL"],
+                Email = User.GetMail(),
+                EmailModify = 0,
+                CREDIT = 1,
+            };
+
+            var inputModel = new SpgatewayInputModel
+            {
+                MerchantID = _configuration["Pay:MerchantID"],
+                Version = _configuration["Pay:Version"]
+            };
+
+            var tradeQueryPara = string.Join("&", tradeInfo.ToKeyValuePairList().Select(x => $"{x.Key}={x.Value}"));
+            inputModel.TradeInfo = _cryptoService.EncryptAESHex(tradeQueryPara, _configuration["Pay:HashKey"], _configuration["Pay:HashIV"]);
+            inputModel.TradeSha = _cryptoService.EncryptSHA256($"HashKey={_configuration["Pay:HashKey"]}&{inputModel.TradeInfo}&HashIV={_configuration["Pay:HashIV"]}");
+
+            return inputModel;
+
+        }
+
+
+
+
+
+
+
 
 
 

@@ -503,10 +503,10 @@
                 <div>
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                         <div v-for="time in listData.activeTime">
-@*                            <input type="checkbox" class="btn-check" :id="time" autocomplete="off">
+                            @*                            <input type="checkbox" class="btn-check" :id="time" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck1">{{time}}</label>*@
                             <input type="radio" class="btn-check" name="btnradio" :id="time" autocomplete="off">
-                            <label class="btn btn-outline-primary" :for="time">{{time}}</label>
+                            <label class="btn btn-outline-primary" :for="time" @@click="selectDatetime(time)">{{time}}</label>
                         </div>
                     </div>
 
@@ -515,6 +515,16 @@
             <div slot="page4">
                 <h4>Step 4</h4>
                 <p>This is step 4</p>
+                <div>
+                    <h3>運動項目:{{selectItem.category.name}}</h3>
+                    <h3>運動場地:{{selectItem.place.memo}}</h3>
+                    <h3>運動場地:{{selectItem.place.locationBranchId}}</h3>
+                    <h3>場地地址:{{selectItem.place.address}}</h3>
+                    <h3>場地費用:{{selectItem.place.price}}</h3>
+                    <h3>租借日期:{{selectItem.date}}</h3>
+                    <h3>租借時間:{{selectItem.time}}</h3>
+                    <button type="button" class="btn btn-primary" @@click="readyToPay">確認付款</button>
+                </div>
             </div>
         </vue-good-wizard>
     </div>
@@ -539,7 +549,9 @@
             },
             selectItem: {
                 category: {},
-                place: {}
+                place: {},
+                date: {},
+                time: {},
             },
             listData: {
                 category: [],
@@ -567,6 +579,8 @@
         methods: {
             selectDate(val) {
                 console.log(val);
+                let date = val.toISOString().split('T')[0];
+                this.selectItem.date = date;
                 var item = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
                 this.listData.activeTime = item;
             },
@@ -580,6 +594,12 @@
             selectPlace(place) {
                 console.log(place);
                 this.selectItem.place = place;
+
+                this.$refs['my-wizard'].goNext(true);
+            },
+            selectDatetime(time) {
+                console.log(time);
+                this.selectItem.time = time;
                 this.$refs['my-wizard'].goNext(true);
             },
             nextClicked(currentPage) {
@@ -602,12 +622,42 @@
             },
             initialDate() {
                 let to = new Date();
-                to.setDate(to.getDate() - 1);
+                to.setDate(to.getDate());
                 this.setting.disabledDates.to = to;
                 let from = new Date();
                 from.setDate(from.getDate() + 7);
                 this.setting.disabledDates.from = from;
-            }
+            },
+            cratePayForm(data) {
+                let form = document.createElement('form');
+                form.action = "https://ccore.newebpay.com/MPG/mpg_gateway";
+                form.method = "post";
+                for (let key in data) {
+                    let inp = document.createElement("input");
+                    inp.name = key.charAt(0).toUpperCase() + key.slice(1);
+                    inp.value = data[key];
+                    inp.type = "hidden";
+                    form.append(inp);
+                }
+                document.body.appendChild(form);
+                form.submit();
+            },
+            readyToPay() {
+                let self = this;
+                axios.post('/api/Venue/getInfoData',
+                    {
+
+                        LocationBranchId: self.selectItem.place.locationBranchId,
+                        Price: self.selectItem.place.price,
+                        Name: self.selectItem.place.memo,
+                        Category: self.selectItem.category.name
+
+                    }).then((result) => {
+                        console.log(result.data);
+                        self.cratePayForm(result.data);
+                    })
+            },
+
         }
     })
 </script>
