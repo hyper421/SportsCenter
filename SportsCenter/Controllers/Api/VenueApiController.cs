@@ -42,7 +42,7 @@ namespace SportsCenter.Controllers.Api
                 x.Name,
                 x.Price,
                 x.Memo
-            }).GroupBy(x => new { x.Area, x.LocationName, x.Description, x.ImagePath, x.LocationId, x.LocationBranchId }, (area, place) => new {
+            }).GroupBy(x => new { x.Area, x.LocationName, x.Description, x.ImagePath, x.LocationId, /*x.LocationBranchId*/ }, (area, place) => new {
                 area,
                 place
             });
