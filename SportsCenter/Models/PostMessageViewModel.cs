@@ -18,6 +18,5 @@ namespace SportsCenter.Models
         public string CreatedDate { get; set; }
 
         public IEnumerable<MessagesLoadingViewModel> Message { get; set; }
-        //public IEnumerable<GetInviteCategoryModel> InviteCategory  {get; set; }//？？需要嗎
     }
 }
