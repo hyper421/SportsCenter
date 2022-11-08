@@ -130,7 +130,7 @@ namespace SportsCenter.Controllers.Api
                 brunchName = _context.LocationBranch.Where(a => a.Id == x.LocationBranchId).Select(b => b.Name).FirstOrDefault(),
                 category = _context.Category.Where(a => a.Id == x.CategoryId).Select(b => b.Name).FirstOrDefault(),
                 x.Price,
-                x.DateTime
+                DateTime = x.DateTime.ToString("yyyy/M/dd-HH:mm:ss")
             });
         }
     }
