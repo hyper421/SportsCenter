@@ -167,7 +167,7 @@ namespace SportsCenter.Controllers.Api
                 Version = _configuration["Pay:Version"],
                 MerchantOrderNo = $"{DateTime.Now.Ticks}_{User.GetId()}",
                 Amt = data.TotalPrice.ToString(),
-                ItemDesc = "商品資訊(自行修改)",
+                ItemDesc = "vince carter復古球衣",
                 ReturnURL = _configuration["Pay:ReturnURL"],
                 NotifyURL = _configuration["Pay:NotifyURL"],
                 Email = User.GetMail(),
