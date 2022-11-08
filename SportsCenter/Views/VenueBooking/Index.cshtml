@@ -517,10 +517,10 @@
                         </div>
                         <div class="col-md-7">
                             <div class="card-body">
-                                <h2 class="card-title">確認訂單資訊</h2>
+                                <h2 class="card-title">確認預約資訊</h2>
                                 <ul>
-                                    <li>運動項目:{{selectItem.category.name}}</li>
                                     <li>運動場地:{{selectItem.place.memo}}</li>
+                                    <li>運動項目:{{selectItem.category.name}}場</li>
                                     <li>場地地址:{{selectItem.place.address}}</li>
                                     <li>場地費用:{{selectItem.place.price}}</li>
                                     <li>租借日期:{{selectItem.date}}</li>
@@ -588,7 +588,7 @@
             },
             to: function() {
                 let d = new Date();
-                d.setDate(d.getDate() + 1);
+                d.setDate(d.getDate());
                 return new Date(2022, 11, 1);
             }
         },
