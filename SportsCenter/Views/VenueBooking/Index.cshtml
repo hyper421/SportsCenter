@@ -472,11 +472,11 @@
             </div>
             <div slot="page2">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-6">
-                        <article class="postcard dark blue" v-for="v in listData.venue">
-                            <a class="postcard__img_link" href="#">
-                                <img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />
-                            </a>
+                    <div class="col-sm-12 col-md-12 col-lg-4" v-for="v in listData.venue">
+                        <article class="postcard dark blue">
+                            @*<a class="postcard__img_link" href="#">
+                            <img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />
+                            </a>*@
                             <div class="postcard__text">
                                 <h1 class="postcard__title blue" style="color:white"><a href="#">{{v.area.locationName}}</a></h1>
                                 <div class="postcard__subtitle small">
@@ -497,8 +497,6 @@
                 </div>
             </div>
             <div slot="page3">
-                <h4>Step 3</h4>
-                <p>This is step 3</p>
                 <vuejs-datepicker :inline="true" :disabled-dates="setting.disabledDates" @@selected="selectDate"></vuejs-datepicker>
                 <div>
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -509,22 +507,46 @@
                             <label class="btn btn-outline-primary" :for="time" @@click="selectDatetime(time)">{{time}}</label>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div slot="page4">
-                <h4>Step 4</h4>
-                <p>This is step 4</p>
-                <div>
-                    <h3>運動項目:{{selectItem.category.name}}</h3>
-                    <h3>運動場地:{{selectItem.place.memo}}</h3>
-                    <h3>運動場地:{{selectItem.place.locationBranchId}}</h3>
-                    <h3>場地地址:{{selectItem.place.address}}</h3>
-                    <h3>場地費用:{{selectItem.place.price}}</h3>
-                    <h3>租借日期:{{selectItem.date}}</h3>
-                    <h3>租借時間:{{selectItem.time}}</h3>
-                    <button type="button" class="btn btn-primary" @@click="readyToPay">確認付款</button>
+                <div class="card mb-12" style="max-width: 800px;">
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            @*<img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />*@
+                            <img class="postcard__img" src="https://images.pexels.com/photos/4482900/pexels-photo-4482900.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Image Title" />
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h2 class="card-title">確認訂單資訊</h2>
+                                <ul>
+                                    <li>運動項目:{{selectItem.category.name}}</li>
+                                    <li>運動場地:{{selectItem.place.memo}}</li>
+                                    <li>場地地址:{{selectItem.place.address}}</li>
+                                    <li>場地費用:{{selectItem.place.price}}</li>
+                                    <li>租借日期:{{selectItem.date}}</li>
+                                    <li>租借時間:{{selectItem.time}}</li>                                    
+                                </ul>
+                                <a href="#" class="btn btn-primary" @@click="readyToPay" style="float:right">確認付款</a>                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @*<div>
+                <div class="card">
+                <div class="card-header">
+                確認訂單資訊
+                </div>
+                <div class="card-body">
+                <h5 class="card-title">運動項目:{{selectItem.category.name}}</h5>
+                <p class="card-text">運動場地:{{selectItem.place.memo}}</p>
+                <p class="card-text">場地費用:{{selectItem.place.price}}</p>
+                <p class="card-text">租借日期:{{selectItem.date}}</p>
+                <p class="card-text">租借時間:{{selectItem.time}}</p>
+                <a href="#" class="btn btn-primary" @@click="readyToPay">確認付款</a>
+                </div>
+                </div>
+                </div>*@
             </div>
         </vue-good-wizard>
     </div>
@@ -581,7 +603,7 @@
                 console.log(val);
                 let date = val.toISOString().split('T')[0];
                 this.selectItem.date = date;
-                var item = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+                var item = ["08:00~09:00", "09:00~10:00", "10:00~11:00", "11:00~12:00", "12:00~13:00", "13:00~14:00", "14:00~15:00", "15:00~16:00", "16:00~17:00", "17:00~18:00"];
                 this.listData.activeTime = item;
             },
             selectCategory(category) {
