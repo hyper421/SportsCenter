@@ -118,7 +118,7 @@ namespace SportsCenter.Controllers.Api
                 MerchantOrderNo = $"{DateTime.Now.Ticks}_{User.GetId()}",
                 //Amt = data.TotalPrice.ToString(),
                 Amt = data.Price.ToString(),
-                ItemDesc = data.Name + data.Category,
+                ItemDesc = data.Name + data.Category ,
                 ReturnURL = _configuration["Pay:ReturnURL"],
                 NotifyURL = _configuration["Pay:NotifyURL"],
                 Email = User.GetMail(),

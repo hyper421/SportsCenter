@@ -137,13 +137,13 @@ namespace SportsCenter.Controllers
         [HttpPost]
         public bool ApiResetPassword([FromBody] ResetPassword model)
         {
-            var userID = HttpContext.Request.Cookies.FirstOrDefault(x => x.Key == "ID").Value;
+            var userID = HttpContext.Request.Cookies.FirstOrDefault(x => x.Key == "UserEmail").Value;
             if (userID == null)
             {
                 return false;
             }
             var user = (from b in _context.Member
-                        where b.Id == int.Parse(userID)
+                        where b.Email == userID
                         select b).FirstOrDefault();
             if (user == null)
             {
