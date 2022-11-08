@@ -19,7 +19,7 @@ namespace SportsCenter.Controllers.Api
             return context.ProductsOrder.Select(x => new
             {
                 x.Id,
-                x.OrderDate,
+                OrderDate = x.OrderDate.ToString("yyyy/M/dd-HH:mm:ss"),
                 x.MemberAddress,
                 x.MemberCellphone,
                 name = (from a in context.Member

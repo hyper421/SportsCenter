@@ -39,7 +39,6 @@
                                             <th>類別</th>
                                             <th>價格</th>
                                             <th>簡介</th>
-                                            <th>圖片</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -95,13 +94,7 @@
                     data: "price"
                 },  {
                     data: "memo"
-                },  {
-                    data: "path",
-                    render: function(data, type, row) {
-                        console.log(data);
-                        return `<img src="/system/${data}" class="pic">`
-                    }
-                },
+                },  
                 {
                     data: 'id',
                     width: "10%",
