@@ -37,12 +37,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
+
             </ul>
 
             <!-- Right navbar links -->
@@ -172,14 +167,14 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex" id="home">
+@*                <div class="user-panel mt-3 pb-3 mb-3 d-flex" id="home">
                     <div class="image">
                         <img :src="'/system/'+path" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{name}}</a>
                     </div>
-                </div>
+                </div>*@
 
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
@@ -420,19 +415,3 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="~/area/dist/js/pages/dashboard3.js"></script>
 </html>
-<script>
-    var app = new Vue({
-        el: '#home',
-        data: {
-            name: "",
-            path: "",
-        },
-        mounted: function () {
-            let self = this;
-            axios.get('/api/BackGetAllCategory/GetMember').then(result => {
-                self.name = result.data.name;
-                self.path = result.data.path;
-            });
-        },
-    })
-</script>
